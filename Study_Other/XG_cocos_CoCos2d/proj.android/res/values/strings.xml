@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="app_name">CoCos2d</string>
-    <string name="title_activity_co_cos_demo">CoCosDemo</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_xgdemo">XGDemoActivity</string>
-
-</resources>

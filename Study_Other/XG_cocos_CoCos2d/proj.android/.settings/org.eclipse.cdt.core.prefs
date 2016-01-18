@@ -1,9 +1,0 @@
-eclipse.preferences.version=1
-environment/project/0.1438612375/COCOS2DX_ROOT/delimiter=;
-environment/project/0.1438612375/COCOS2DX_ROOT/operation=replace
-environment/project/0.1438612375/COCOS2DX_ROOT/value=D\:\\ProgramFiles\\XG2.0\\cocos2d-x-2.2.6\\cocos2d-x-2.2.6
-environment/project/0.1438612375/NDK_ROOT/delimiter=;
-environment/project/0.1438612375/NDK_ROOT/operation=replace
-environment/project/0.1438612375/NDK_ROOT/value=D\:\\ProgramFiles\\android\\android-ndk-r5c
-environment/project/0.1438612375/append=true
-environment/project/0.1438612375/appendContributed=true
