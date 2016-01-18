@@ -1,0 +1,147 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="430dp"
+    android:layout_gravity="center"
+    android:background="#999999" >
+
+    <EditText
+        android:id="@+id/EditText01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:text="数据统计测试" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/closeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="X" />
+
+    <Button
+        android:id="@+id/crashBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/onCreateRoleBtn"
+        android:layout_marginTop="14dp"
+        android:text="崩溃" />
+
+    <EditText
+        android:id="@+id/eventIdText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/eventBodyText"
+        android:layout_alignTop="@+id/textView1"
+        android:ems="10"
+        android:text="exp_eventId" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/eventIdText"
+        android:text="事件内容" />
+
+    <EditText
+        android:id="@+id/eventBodyText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_toRightOf="@+id/crashBtn"
+        android:ems="10"
+        android:text="exp_eventBody" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/ndkCrashBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/crashBtn"
+        android:layout_alignBottom="@+id/crashBtn"
+        android:layout_alignLeft="@+id/eventIdText"
+        android:layout_marginLeft="17dp"
+        android:text="ndk崩溃" />
+
+    <Button
+        android:id="@+id/onEventBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventBodyText"
+        android:layout_toRightOf="@+id/textView2"
+        android:text="事件定义" />
+
+    <Button
+        android:id="@+id/pingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/ndkCrashBtn"
+        android:layout_alignBottom="@+id/ndkCrashBtn"
+        android:layout_alignRight="@+id/eventIdText"
+        android:text="Ping网络" />
+
+    <Button
+        android:id="@+id/roleConsume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:text="消费" />
+
+    <Button
+        android:id="@+id/logoutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/crashBtn"
+        android:layout_toRightOf="@+id/onCreateRoleBtn"
+        android:text="退出游戏" />
+
+    <Button
+        android:id="@+id/accountSignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="17dp"
+        android:layout_toRightOf="@+id/textView2"
+        android:text="创建账号" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/roleConsume"
+        android:layout_below="@+id/roleConsume"
+        android:layout_marginTop="58dp"
+        android:text="事件id" />
+
+    <Button
+        android:id="@+id/onCreateRoleBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/closeBtn"
+        android:layout_centerHorizontal="true"
+        android:text="角色创建" />
+
+    <Button
+        android:id="@+id/sizeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/roleConsume"
+        android:layout_alignLeft="@+id/ndkCrashBtn"
+        android:text="流量" />
+
+</RelativeLayout>

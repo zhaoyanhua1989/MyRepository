@@ -1,0 +1,10 @@
+Temp/
+*.exe
+windows-unity_Data/
+Library/
+ProjectSettings/
+Assembly-CSharp*.*
+xgsdk-unity3d-android-demo*.*
+*.apk
+Assets/Plugins/Android/assets/xgsdk-test.*
+
