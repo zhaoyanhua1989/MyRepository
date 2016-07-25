@@ -1,0 +1,8 @@
+bin/
+gen/
+.settings/
+target/
+interface-unity3d/xgsdk-unity3d-android/Temp
+*.iml
+.idea
+hs_err_*.log
