@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- pressed state -->
+    <item android:drawable="@drawable/update_dialog_button_3_selected" android:state_pressed="true"/>
+    <!-- focused state -->
+    <item android:drawable="@drawable/update_dialog_button_3_selected" android:state_focused="true"/>
+    <!-- default state -->
+    <item android:drawable="@drawable/update_dialog_button_3_normal" android:state_pressed="false"/>
+
+</selector>

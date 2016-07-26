@@ -1,0 +1,51 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <!-- 这是AlertDialog的样式 -->
+    <style name="updateDialogStyle" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <!-- 这是NotificationCameraActivity的样式 -->
+    <style name="Theme.FloatActivity" parent="android:style/Theme.Dialog">
+
+        <!-- 定义的窗口背景 ，这个不是必须的 -->
+        <item name="android:windowBackground">@drawable/notification_float_box</item>
+        <!-- 设置点击窗口以外的地方不会是Activity finish，要求API Level>=11 -->
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <!-- 设置窗口半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <!-- 自定义启动Theme 设置背景图 -->
+    <!-- 优点：启动快，先显示背景图 -->
+    <style name="MyAppThemeWithBackground" parent="AppBaseTheme">
+        <item name="android:windowBackground">@drawable/background2</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!-- 自定义启动Theme 设置透明背景，不建议使用 -->
+    <!-- 启动慢，界面一次性出来会同步刷新。但是如果设置了Activity之间切换的animation时，因为windowIsTranslucent无法显示 -->
+    <style name="MyAppThemeWithTranslucent" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+</resources>

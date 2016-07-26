@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>发送消息</head>
+<body>
+1、Hanlder
+	创建的过程中，在主线程中，可以不定义Looper，默认为主线程的Looper。工作线程中需要定义Looper。
+	处理机制：
+	 1、Handler h = new Handler(){重写handleMessage};  h.handleMessage(msg);
+	 2、final ProgressDialog dialog = new ProgressDialog(this);
+	    Handler h = new Handler();
+	    h.post(new Runnable() {
+			@Override
+			public void run() {
+				num++;
+				if (num <= 10) {
+					dialog.setProgress(num);
+					h.postDelayed(this, 1000);
+				} else {
+					dialog.cancel();
+					num = 0;
+				}
+			}
+		});
+	 3、Message.obtain(Handler h, int what, int arg1, int arg2, Object obj);
+</body>
+</html>
