@@ -1,8 +1,6 @@
 package com.example.test.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -16,12 +14,12 @@ import android.widget.Toast;
 
 import com.example.test.MyApplication;
 import com.example.test.R;
+import com.example.test.model.AlertDialogService;
 import com.example.test.model.CompressService;
 import com.example.test.model.LanguageConventService;
 import com.example.test.util.MessageUtil;
 import com.example.test.util.MyLog;
 import com.example.test.util.RUtil;
-import com.example.test.view.MyAlertDialog;
 
 public class MainActivity extends Activity {
 
@@ -46,19 +44,20 @@ public class MainActivity extends Activity {
 	protected void onRestart() {
 		MyLog.i("onRestart, mBitMap=" + mBitMap);
 		super.onRestart();
-		// 设置背景图片
-		mBitMap = CompressService.compressAssign(this, RUtil.getDrawable(this, "background3"), 540, 960);
-		imageView.setImageBitmap(mBitMap);
+		// 如果背景图片被回收，需要重新设置背景图片。回收见：CompressService.releaseBitMap(mBitMap);
+		// mBitMap = CompressService.compressAssign(this,
+		// RUtil.getDrawable(this, "background3"), 540, 960);
+		// imageView.setImageBitmap(mBitMap);
 	}
 
 	public void doClick(View v) {
 		switch (v.getId()) {
 		case R.id.main_button1:
-			CompressService.releaseBitMap(mBitMap);
+			// CompressService.releaseBitMap(mBitMap);
 			startActivity(new Intent(this, GetRAndImeiActivity.class));
 			break;
 		case R.id.main_button2:
-			CompressService.releaseBitMap(mBitMap);
+			// CompressService.releaseBitMap(mBitMap);
 			startActivity(new Intent(this, DirTestActivity.class));
 			break;
 		case R.id.main_button3:
@@ -74,17 +73,16 @@ public class MainActivity extends Activity {
 			break;
 		case R.id.main_button5:
 			// 测试自定义AlertDialog
-			MyAlertDialog myDialog = new MyAlertDialog(this);
-			myDialog.showMyAlertDialog();
+			AlertDialogService.showUpdateDialog(this);
 			break;
 		case R.id.main_button6:
 			// 测试ListView和ViewPager
-			CompressService.releaseBitMap(mBitMap);
+			// CompressService.releaseBitMap(mBitMap);
 			startActivity(new Intent(this, ViewPagerActivity.class));
 			break;
 		case R.id.main_button7:
 			// 测试notifycation和拉起另一个应用
-			CompressService.releaseBitMap(mBitMap);
+			// CompressService.releaseBitMap(mBitMap);
 			startActivity(new Intent(this, NotificationActivity.class));
 			break;
 		}
@@ -92,22 +90,13 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		AlertDialog dialog = new AlertDialog.Builder(this).setTitle("确认退出吗")
-				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						for (Activity activity : MyApplication.activitys) {
-							activity.finish();
-						}
-						System.exit(0);
-					}
-				}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.cancel();
-					}
-				}).setMultiChoiceItems(new String[] { "清除记录", "其他" }, new boolean[] { true, false }, null).create();
-		dialog.show();
+		// 系统退出弹窗
+		// AlertDialogService.showSystemExitDialog(this);
+		// 自定义退出弹窗1
+		 AlertDialogService.showSimpleCustomExitDialog(this);;
+		// 自定义退出弹窗2
+//		AlertDialogService.showCustemDialogForExit(this);
+		
 	}
 
 	/*************************** Activity右上角menu *****************************/

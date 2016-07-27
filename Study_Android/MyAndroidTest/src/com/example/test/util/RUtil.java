@@ -30,6 +30,10 @@ public class RUtil {
     	return getResIdentifier(context, name, "array");
     }
     
+    public static int getStyle(Context context, String name) {
+    	return getResIdentifier(context, name, "style");
+    }
+    
     public static String getValuesString(Activity activity, String name){
 		return activity.getResources().getString(getString(activity, name));
 	}

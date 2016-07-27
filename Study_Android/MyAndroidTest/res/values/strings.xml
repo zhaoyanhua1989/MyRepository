@@ -9,6 +9,11 @@
     <string name="title_activity_view_pager">ViewPagerActivity</string>
     <string name="title_activity_notifycation">NotifycationActivity</string>
 	<string name="welcome_advertisement">https://www.baidu.com</string>
+	<string name="text_exit">确认退出吗</string>
+	<string name="text_cancel">取消</string>
+	<string name="text_sure">确定</string>
+	<string name="custom_dialog_titleImageViewDescription">titleImageView</string>
+	<string name="custom_dialog_contentImageViewDescription">contentImageView</string>
 	
     <string-array name="notifycation_main">
         <item>发送消息1</item>

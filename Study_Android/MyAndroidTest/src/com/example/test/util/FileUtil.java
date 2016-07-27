@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.text.TextUtils;
 
 public class FileUtil {
 
@@ -62,50 +63,44 @@ public class FileUtil {
 	public static SharedPreferences getPreferences(Activity activity) {
 		return activity.getPreferences(Activity.MODE_PRIVATE);
 	}
-
+	
 	/**
-	 * 删除给定文件下面的所有文件
-	 * @param file File
-	 * @param deletDir 是否删除文件夹
+	 * 获得sdcard应用程序私有目录中的PICTURES目录或者文件
+	 * @param activity
+	 * @param name 文件名，如果为null，则返回PICTURES目录
 	 * @return
 	 */
-	public static boolean deleteSDFile(File file, boolean deletDir) {
-		// file目标文件夹绝对路径
-		if (file.isFile()) { // 该路径名表示的文件是否是一个标准文件
-			if (file.getName().startsWith("MYJPEG_")) {
-				file.delete(); // 删除该文件
-				MyLog.d("delete file：" + file.getName());
-			}
-		} else if (file.isDirectory()) { // 该路径名表示的文件是否是一个目录（文件夹）
-			File[] files = file.listFiles(); // 列出当前文件夹下的所有文件
-			for (File f : files) {
-				deleteSDFile(f, deletDir); // 递归删除
-			}
+	public static File getPrivatePictureFile(Activity activity, String name) {
+		File pic = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+		if (TextUtils.isEmpty(name)) {
+			return pic;
 		}
-		// 删除文件夹, 如果这里是内置存储根目录，不建议删除。
-		if (deletDir)
-			file.delete();
-		return true;
+		return new File(pic, name);
 	}
 
 	/**
 	 * 限制删除删除给定文件下面的文件
 	 * @param file File
-	 * @param limit 限制删除的文件名开头
+	 * @param limit 限制删除的文件名开头，没有限制则填null
 	 * @param deletDir 是否删除文件夹
 	 * @return
 	 */
 	public static boolean deleteSDFile(File file, String limit, boolean deletDir) {
 		// file目标文件夹绝对路径
 		if (file.isFile()) { // 该路径名表示的文件是否是一个标准文件
-			if (file.getName().startsWith(limit)) {
+			if(!TextUtils.isEmpty(limit)) {
+				if (file.getName().startsWith(limit)) {
+					file.delete(); // 删除该文件
+					MyLog.d("delete file：" + file.getName());
+				}
+			} else {
 				file.delete(); // 删除该文件
 				MyLog.d("delete file：" + file.getName());
 			}
 		} else if (file.isDirectory()) { // 该路径名表示的文件是否是一个目录（文件夹）
 			File[] files = file.listFiles(); // 列出当前文件夹下的所有文件
 			for (File f : files) {
-				deleteSDFile(f, deletDir); // 递归删除
+				deleteSDFile(f, limit, deletDir); // 递归删除
 			}
 		}
 		// 删除文件夹, 如果这里是内置存储根目录，不建议删除。

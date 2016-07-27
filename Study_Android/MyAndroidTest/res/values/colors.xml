@@ -6,5 +6,18 @@
     <color name="text_shadow">#7F000000</color>
     <color name="text_shadow_white">#FFFFFF</color>
     <color name="text_highlighted">#00FF40</color>
+    <color name="z_ql_transparent">#00000000</color>
+    <color name="z_dlg_window_bg">#99000000</color>
+    <color name="z_text_color_small">#818181</color>
+    <color name="background_y_color1">#FEFB02</color>
+    <color name="background_bg_color1">#C1BBBB</color>
+    <color name="background_bg_color2">#A89696</color>
+    <color name="background_bg_color3">#D6D2D2</color>
+    <color name="background_bg_color4">#C5C5E7</color>
+    <color name="background_bg_color5">#A5A5DB</color>
+    <color name="bbutton_danger_pressed">#B53A37</color>
+    <color name="bbutton_danger_disabled">#D9534F</color>
+    <color name="bbutton_info_pressed">#299CBD</color>
+    <color name="bbutton_info_disabled">#5BC0DE</color>
 
 </resources>

@@ -59,7 +59,7 @@
             android:name="com.example.test.activity.ViewPagerActivity"
             android:label="@string/title_activity_view_pager"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/center_float_dialog" >
         </activity>
         <activity
             android:name="com.example.test.activity.NotificationActivity"
@@ -72,7 +72,7 @@
             android:configChanges="keyboard|orientation|navigation|screenSize"
             android:label="@string/title_activity_camera"
             android:screenOrientation="sensor"
-            android:theme="@style/Theme.FloatActivity" >
+            android:theme="@style/center_float_dialog" >
         </activity>
     </application>
 
