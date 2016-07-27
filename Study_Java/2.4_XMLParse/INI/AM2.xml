@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.xgsdk.client.test.demo" android:versionCode="999999"
+	android:versionName="999999.9">
+	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="20" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<application android:name="com.xgsdk.client.api.XGApplication"
+		android:allowBackup="true" android:icon="@drawable/ic_launcher"
+		android:label="XGDemo">
+		<activity android:name="com.xgsdk.client.api.splash.XGSplashActivity"
+			android:launchMode="singleTop" android:screenOrientation="landscape"
+			android:configChanges="fontScale|orientation|keyboardHidden|locale|navigation|screenSize|uiMode"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name="com.xgsdk.client.testdemo.orders.OrdersActivity"
+			android:screenOrientation="landscape"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name="com.xgsdk.client.testdemo.MainActivity"
+			android:launchMode="singleTop"
+			android:configChanges="fontScale|orientation|keyboardHidden|locale|navigation|screenSize|uiMode"
+			android:screenOrientation="landscape"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+			<meta-data />
+		</activity>
+	</application>
+</manifest>
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.xgsdk.client.test.demo" android:versionCode="999999" android:versionName="999999.9"><uses-sdk android:minSdkVersion="8" android:targetSdkVersion="20"/><uses-permission android:name="android.permission.INTERNET"/><uses-permission android:name="android.permission.READ_PHONE_STATE"/><application android:name="com.xgsdk.client.api.XGApplication" android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="XGDemo"><activity android:name="com.xgsdk.client.api.splash.XGSplashActivity" android:launchMode="singleTop" android:screenOrientation="landscape" android:configChanges="fontScale|orientation|keyboardHidden|locale|navigation|screenSize|uiMode" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity><activity android:name="com.xgsdk.client.testdemo.orders.OrdersActivity" android:screenOrientation="landscape" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity><activity android:name="com.xgsdk.client.testdemo.MainActivity" android:launchMode="singleTop" android:configChanges="fontScale|orientation|keyboardHidden|locale|navigation|screenSize|uiMode" android:screenOrientation="landscape" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter><meta-data/></activity></application></manifest>
