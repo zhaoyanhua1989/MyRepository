@@ -82,7 +82,8 @@
 	    监听：
 	   onOptionsItemSelected()：item.getItemId()==100
 	3、创建PopupMenu：弹出式菜单，不需要长按，示例代码如下：
-	   new PopupMenu(context, 依赖的view).getMenuInflater().inflate(R.menu.pop, popup.getMenu());
+	   PopupMenu popM = new PopupMenu(context, 依赖的view).
+	   getMenuInflater().inflate(R.menu.pop, popM.getMenu());
 	        需要在res/menu/下面创建菜单pop.xml
 	   监听：
 	   popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {...});

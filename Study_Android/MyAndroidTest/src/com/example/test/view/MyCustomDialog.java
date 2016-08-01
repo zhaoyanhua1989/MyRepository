@@ -196,7 +196,7 @@ public class MyCustomDialog extends Dialog {
 			// instantiate the dialog with the custom Theme
 			final MyCustomDialog dialog = new MyCustomDialog(activity, R.style.center_float_dialog);
 			dialog.setCanceledOnTouchOutside(false);
-			View layout = inflater.inflate(R.layout.custom_dialog_layout, null);
+			View layout = inflater.inflate(R.layout.dialog_custom_layout, null);
 			dialog.addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 			// get views
 			Button positiveButton = (Button) layout.findViewById(R.id.customDialog_positiveButton);
@@ -252,7 +252,7 @@ public class MyCustomDialog extends Dialog {
 				StringBuilder sb = new StringBuilder();
 				sb.append("<HTML><body bgcolor='#f3f3f3'><div align=center><IMG src='file:///android_asset/");
 				sb.append(contentGifName);
-				sb.append("'/></div></body></html>");
+				sb.append("'/></div></body></HTML>");
 				contentTextView.loadDataWithBaseURL(null, sb.toString(), "text/html", "UTF-8",null);
 			}
 			if (contentView != null) {

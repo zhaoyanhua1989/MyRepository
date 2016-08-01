@@ -5,8 +5,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="14" />
+        android:minSdkVersion="11"
+        android:targetSdkVersion="15" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -22,6 +22,7 @@
         android:name="com.example.test.MyApplication"
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
+        android:label="goodLuck"
         android:theme="@style/MyAppThemeWithBackground" >
         <activity
             android:name="com.example.test.activity.WelcomeActivity"

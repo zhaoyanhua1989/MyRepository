@@ -1,5 +1,6 @@
 package com.example.test.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,7 +19,6 @@ import com.example.test.model.AlertDialogService;
 import com.example.test.model.CompressService;
 import com.example.test.model.LanguageConventService;
 import com.example.test.util.MessageUtil;
-import com.example.test.util.MyLog;
 import com.example.test.util.RUtil;
 
 public class MainActivity extends Activity {
@@ -42,7 +42,6 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onRestart() {
-		MyLog.i("onRestart, mBitMap=" + mBitMap);
 		super.onRestart();
 		// 如果背景图片被回收，需要重新设置背景图片。回收见：CompressService.releaseBitMap(mBitMap);
 		// mBitMap = CompressService.compressAssign(this,
@@ -50,10 +49,11 @@ public class MainActivity extends Activity {
 		// imageView.setImageBitmap(mBitMap);
 	}
 
+	@SuppressLint("NewApi")
 	public void doClick(View v) {
 		switch (v.getId()) {
 		case R.id.main_button1:
-			// CompressService.releaseBitMap(mBitMap);
+			// CompressService.releaseBitMap(mBitMap); // 调用此方法，和onRestart中重设背景图片对应
 			startActivity(new Intent(this, GetRAndImeiActivity.class));
 			break;
 		case R.id.main_button2:
@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
 			break;
 		case R.id.main_button5:
 			// 测试自定义AlertDialog
-			AlertDialogService.showUpdateDialog(this);
+			showDialogs(v);
 			break;
 		case R.id.main_button6:
 			// 测试ListView和ViewPager
@@ -88,15 +88,17 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	private void showDialogs(View v) {
+		// 显示PopupMenu(不能设置background)，来展示自定义Dialog
+		// AlertDialogService.showPopupMenu(this, v);
+		// 显示PopupWindow(可以设置background)，来展示自定义Dialog
+		AlertDialogService.showPopupWindow(this, v);
+	}
+
 	@Override
 	public void onBackPressed() {
-		// 系统退出弹窗
-		// AlertDialogService.showSystemExitDialog(this);
 		// 自定义退出弹窗1
-		 AlertDialogService.showSimpleCustomExitDialog(this);;
-		// 自定义退出弹窗2
-//		AlertDialogService.showCustemDialogForExit(this);
-		
+		AlertDialogService.showSimpleCustomExitDialog(MainActivity.this);
 	}
 
 	/*************************** Activity右上角menu *****************************/

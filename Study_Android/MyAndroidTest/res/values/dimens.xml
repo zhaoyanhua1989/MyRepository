@@ -2,5 +2,7 @@
 <resources>
     
     <dimen name="z_text_size_small">14sp</dimen>
+    <dimen name="popwindow_button_textsize">9sp</dimen>
+    
     
 </resources>

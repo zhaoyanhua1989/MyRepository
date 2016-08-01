@@ -14,6 +14,11 @@
 	<string name="text_sure">确定</string>
 	<string name="custom_dialog_titleImageViewDescription">titleImageView</string>
 	<string name="custom_dialog_contentImageViewDescription">contentImageView</string>
+	<string name="popMenu1">自定义AlertDialog(更新)</string>
+	<string name="popMenu2">系统退出窗口</string>
+	<string name="popMenu3">系统退出窗口,设置了style(使用Dialog)</string>
+	<string name="popMenu4">自定义退出弹窗(使用Dialog)</string>
+	<string name="popMenu5">自定义退出弹窗(继承Dialog的类实现)</string>
 	
     <string-array name="notifycation_main">
         <item>发送消息1</item>
