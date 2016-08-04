@@ -19,23 +19,13 @@ public class ViewPagerHandler extends Handler{
      */
     public static final int MSG_UPDATE_IMAGE = 1;
     /**
-     * 请求暂停轮播
-     */
-    public static final int MSG_KEEP_SILENT = 2;
-    /**
-     * 请求恢复轮播
-     */
-    public static final int MSG_BREAK_SILENT = 3;
-    /**
-     * 记录最新的页号，当用户手动滑动时需要记录新页号，否则会使轮播的页面出错。
-     * 例如当前如果在第一页，本来准备播放的是第二页，而这时候用户滑动到了末页，
-     * 则应该播放的是第一页，如果继续按照原来的第二页播放，则逻辑上有问题。
-     */
-    public static final int MSG_PAGE_CHANGED = 4;
-    /**
      * 翻页时间间隔
      */
     public static final long MSG_DELAY = 3000;
+    /**
+     * 当手动点击时的翻页时间间隔，会延长
+     */
+    public static final long MSG_DELAY_LONG = 5000;
     /**
      * 使用弱引用避免Handler泄露.这里的泛型参数可以不是Activity，也可以是Fragment等
      */
@@ -62,16 +52,18 @@ public class ViewPagerHandler extends Handler{
 			break;
 		case MSG_UPDATE_IMAGE:
 			MyLog.d("请求更新显示的View");
+			mActivity.currentPage++;
+			// 如果当前页面的页数大于页面总数，则置零
+			if (mActivity.currentPage > mActivity.mImages.length - 1) {
+				mActivity.h.removeMessages(MSG_UPDATE_IMAGE);
+				mActivity.currentPage = 0;
+			}
+			mActivity.viewPager.setCurrentItem(mActivity.currentPage);
+			// 每次翻页完了就清空消息一次，不然可能会出现连着翻两页的情况
+			mActivity.h.removeMessages(MSG_UPDATE_IMAGE);
+			// 准备下一次翻页
+			mActivity.h.sendEmptyMessageDelayed(MSG_UPDATE_IMAGE, MSG_DELAY);
 			break;
-		case MSG_KEEP_SILENT:
-			MyLog.d("请求暂停轮播");
-			break;
-		case MSG_BREAK_SILENT:
-			MyLog.d("请求恢复轮播");
-			break;
-		case MSG_PAGE_CHANGED:
-			MyLog.d("记录当前的页号");
-			break;
-		}
+    	 }
     }
 }

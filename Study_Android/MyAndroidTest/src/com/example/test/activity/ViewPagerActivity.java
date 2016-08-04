@@ -27,13 +27,13 @@ import com.example.test.view.MyCircle;
 public class ViewPagerActivity extends FragmentActivity implements OnPageChangeListener {
 
 	private MyCircle myCircle;
-	private int[] mImages = new int[] { R.drawable.viewpager_1, R.drawable.viewpager_2, R.drawable.viewpager_3,
+	public int[] mImages = new int[] { R.drawable.viewpager_1, R.drawable.viewpager_2, R.drawable.viewpager_3,
 			R.drawable.viewpager_4, -1 };
 	public ViewPager viewPager;
-	private int currentPage; // viewPager的当前页码
+	public int currentPage; // viewPager的当前页码
 	private Thread pagingThread; // 用于发送viewPager翻页的msg的线程
 	private boolean flag = true; // 用于判断viewPager翻页的线程是否继续工作
-	ViewPagerHandler h = new ViewPagerHandler(new WeakReference<ViewPagerActivity>(this));
+	public ViewPagerHandler h = new ViewPagerHandler(new WeakReference<ViewPagerActivity>(this));
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,13 @@ public class ViewPagerActivity extends FragmentActivity implements OnPageChangeL
 		showViewPager();
 		// 画圆
 		showBolls();
-		// 实现viewPager的自动跳转
-		paging();
+
+		// 实现viewPager的自动跳转，以下两种方式
+		// 1.通过线程，不推荐，不好控制
+		// paging();
+		// 2.完全通过Handler实现
+		doPaging();
+
 		// 设置左边和下边的Fragment
 		addFragment();
 	}
@@ -87,7 +92,18 @@ public class ViewPagerActivity extends FragmentActivity implements OnPageChangeL
 	// 手动滑动页面和Thread导致页面自动翻滚时，都会执行，无法判断是否手动翻页
 	@Override
 	public void onPageScrollStateChanged(int arg0) {
-
+		// 下面的逻辑匹配doPaging的翻页方法，不匹配paging
+		switch (arg0) {
+		case ViewPager.SCROLL_STATE_DRAGGING: // 当手指按下时，暂停翻页
+			// 将现有的翻页消息清除
+			h.removeMessages(ViewPagerHandler.MSG_UPDATE_IMAGE);
+			break;
+		case ViewPager.SCROLL_STATE_IDLE: // 当手指松开时，恢复翻页，但是页面停留时间增加
+			h.sendEmptyMessageDelayed(ViewPagerHandler.MSG_UPDATE_IMAGE, ViewPagerHandler.MSG_DELAY_LONG);
+			break;
+		default:
+			break;
+		}
 	}
 
 	// 手动滑动页面和Thread导致页面自动翻滚时，都会执行，无法判断是否手动翻页
@@ -106,10 +122,11 @@ public class ViewPagerActivity extends FragmentActivity implements OnPageChangeL
 	// 手动滑动页面和Thread导致页面自动翻滚时，都会执行，无法判断是否手动翻页
 	@Override
 	public void onPageSelected(int position) {
-		MyLog.d("onPageSelected");
+		MyLog.d("ViewPagerActivity onPageSelected...");
 	}
 
 	// viewPager的自动翻页
+	@SuppressWarnings("unused")
 	private void paging() {
 		pagingThread = new Thread(new Runnable() {
 			@Override
@@ -156,6 +173,10 @@ public class ViewPagerActivity extends FragmentActivity implements OnPageChangeL
 		}, "pagingThread");
 		pagingThread.start();
 	}
+	
+	private void doPaging() {
+		h.sendEmptyMessageDelayed(ViewPagerHandler.MSG_UPDATE_IMAGE, ViewPagerHandler.MSG_DELAY);
+	}
 
 	public void viewPagerClicked() {
 		flag = true;
@@ -166,10 +187,16 @@ public class ViewPagerActivity extends FragmentActivity implements OnPageChangeL
 		MyLog.d("ViewPagerActivity notifyPaging...");
 		// 当选中小球改变viewPager页码时，从新设定当前自动翻译的页面位置
 		currentPage = position;
-		// 当选中小球改变viewPager页码时，先终止翻页线程休眠一段时间后重新开始
-		viewPagerClicked();
 		// 选中小球，改变viewPager页码
 		viewPager.setCurrentItem(position);
+		
+		// 选中小球改变了页面时，页面停留时间增加
+		// 当选中小球改变viewPager页码时，先终止翻页线程休眠一段时间后重新开始，该方法匹配paging
+		viewPagerClicked();
+		// 当选中小球改变viewPager页码时，先清除正在执行的翻页消息，然后发送延迟时间增加的翻页消息,该方法匹配doPaging
+		h.removeMessages(ViewPagerHandler.MSG_UPDATE_IMAGE);
+		h.sendEmptyMessageDelayed(ViewPagerHandler.MSG_UPDATE_IMAGE, ViewPagerHandler.MSG_DELAY_LONG);
+		
 		// 翻页时通知改变Fragment
 		replaceFrg(!fragmentFlag);
 	}
@@ -198,6 +225,12 @@ public class ViewPagerActivity extends FragmentActivity implements OnPageChangeL
 			ft.replace(R.id.viewPager_FragmentLL_left, frg2);
 		}
 		ft.commit();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		h.removeMessages(ViewPagerHandler.MSG_UPDATE_IMAGE);
 	}
 
 }
