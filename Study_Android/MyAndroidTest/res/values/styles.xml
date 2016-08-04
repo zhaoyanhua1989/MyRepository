@@ -44,11 +44,12 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
     
-    <!-- 这是退出的AlertDialog的样式 -->
+    <!-- 这是退出的Dialog的样式 -->
     <style name="exitDialogStyle" parent="@android:style/Theme.Dialog">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
-        <!-- <item name="android:windowContentOverlay">@null</item> -->
+		<!-- 这一条很重要，不加下面这条dialog显示时会计算标题行高度，在屏幕偏下位置显示 -->
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <!-- 这是NotificationCameraActivity的样式 -->
@@ -68,6 +69,11 @@
         <item name="android:windowBackground">@drawable/welcometext</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+    
+    <style name="MyAppThemeWithBackground2" parent="AppBaseTheme">
+        <item name="android:windowNoTitle">true</item>  
+        <item name="android:windowContentOverlay">@null</item>  
+    </style>
 
     <!-- 自定义启动Theme 设置透明背景，不建议使用 -->
     <!-- 启动慢，界面一次性出来会同步刷新。但是如果设置了Activity之间切换的animation时，因为windowIsTranslucent无法显示 -->
@@ -76,7 +82,7 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <!-- 华为的style begin -->
+    <!-- channel_huawei 的style begin -->
     <style name="center_float_dialog" parent="android:Theme.Dialog">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -96,10 +102,10 @@
         <item name="android:windowBackground">@color/z_ql_transparent</item>
         <item name="android:backgroundDimEnabled">true</item><!-- 模糊 -->
     </style>
-    <!-- 华为的style end -->
+    <!-- channel_huawei 的style end -->
 
 
-    <!-- vivo的style begin -->
+    <!-- channel_vivo 的style begin -->
     <style name="animation_transparent">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@color/z_dlg_window_bg</item>
@@ -135,6 +141,25 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-    <!-- vivo的style end -->
+    <!-- channel_vivo 的style end -->
+    
+    <!-- 窗体内容详解
+    windowCloseOnTouchOutside-点击外部是否可关闭boolean
+    android:windowIsTranslucent-窗体是否半透明boolean
+    android:backgroundDimEnabled-背景是否模糊显示boolean
+    windowBackground-窗体的背景@null
+    windowFrame-Dialog 是否有边框boolean
+    windowNoTitle-窗体是否有标题boolean
+    windowFullscreen-是否为全屏boolean
+    windowOverscan- 是否要求窗体铺满整屏幕boolean
+    windowIsFloating-窗体是否浮在下层之上boolean
+    windowContentOverlay-设置窗体内容背景,自定义Titlebar时去掉多余的阴影@null
+    windowShowWallpaper-是否显示壁纸boolean
+    windowTitleStyle-窗体的标题栏Style
+    windowTitleSize-窗体文字大小
+    android:windowAnimationStyle-窗体切换时的动画样式
+    android:windowSoftInputMode-在使用输入法时窗体的适配
+    windowActionBar- 是否打开ActionBar boolean
+    -->
 
 </resources>

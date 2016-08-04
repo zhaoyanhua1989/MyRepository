@@ -14,6 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ImageView.ScaleType;
 
+/**
+ * ViewPager的Adapter，继承自PagerAdapter。
+ * 如果ViewPager中需要自定义布局，则不建议使用这个Adapter，不方便。
+ * 
+ * @author HKW2962
+ *
+ */
 public class ViewPagerAdapter extends PagerAdapter {
 
 	private Activity mActivity;

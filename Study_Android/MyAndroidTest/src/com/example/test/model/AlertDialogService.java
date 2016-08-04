@@ -151,7 +151,7 @@ public class AlertDialogService {
 
 	/**
 	 * 显示自定义退出弹窗，这里使用Dialog而非AlertDialog，因为使用AlertDialog，会造成圆角出现尖角问题(白色或黑色尖角)
-	 * 这里用到了showGif.jar显示动态图
+	 * 这里用到了showGif.jar显示动态图(GifImageView对象展示)
 	 */
 	@SuppressLint("InflateParams")
 	public static void showSimpleCustomExitDialog(Activity activity) {

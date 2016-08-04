@@ -88,10 +88,11 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	// 显示Popup弹窗，展示自定义view
 	private void showDialogs(View v) {
-		// 显示PopupMenu(不能设置background)，来展示自定义Dialog
+		// 显示PopupMenu(不能设置background)
 		// AlertDialogService.showPopupMenu(this, v);
-		// 显示PopupWindow(可以设置background)，来展示自定义Dialog
+		// 显示PopupWindow(可以设置background)
 		AlertDialogService.showPopupWindow(this, v);
 	}
 

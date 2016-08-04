@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,7 +31,6 @@ public class MyCircle extends View {
 	private float offset; // 偏移量
 	private Point[] circleCenters; // 各原点的圆心，设置监听用
 	private boolean flag; // 判断circleCenters数组是否已填充满
-	private ViewPager viewPager;
 	private ViewPagerActivity mactivity; // 上下文对象，用于页码翻页的调整
 
 	public MyCircle(Context context) {
@@ -111,19 +109,11 @@ public class MyCircle extends View {
 			Point mpoint = circleCenters[i];
 			if (Math.sqrt(Math.pow(point.x - mpoint.x, 2) + Math.pow(point.y - mpoint.y, 2)) <= radius) {
 				MyLog.d("点击选中小球：" + i);
-				// 当选中小球改变viewPager页码时，从新设定当前自动翻译的页面位置
-				mactivity.setCurrentPage(i);
-				// 当选中小球改变viewPager页码时，先终止翻页线程休眠一段时间后重新开始
-				mactivity.viewPagerClicked();
-				// 选中小球，改变viewPager页码
-				viewPager.setCurrentItem(i);
+				// 选中小球通知翻页
+				mactivity.notifyPaging(i);
 				break;
 			}
 		}
-	}
-
-	public void setViePagerChangeByBollListener(ViewPager viewPager) {
-		this.viewPager = viewPager;
 	}
 
 	public void setContext(ViewPagerActivity activity) {

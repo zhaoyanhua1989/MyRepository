@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MyAndroidTest2</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_activity1">Activity1</string>
+    <string name="title_activity_activity2">Activity2</string>
+    <string name="title_activity_end">EndActivity</string>
+
+</resources>

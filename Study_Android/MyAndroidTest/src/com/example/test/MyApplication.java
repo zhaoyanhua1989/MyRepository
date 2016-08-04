@@ -24,6 +24,7 @@ public class MyApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		MyLog.d("MyApplication oncreate...");
+		MyLog.openLog(true);
 	}
 
 	//当终止应用程序对象时调用，不保证一定被调用，当程序是被内核终止以便为其他应用程序释放资源，那

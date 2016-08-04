@@ -5,8 +5,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
-        android:targetSdkVersion="15" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -60,7 +60,7 @@
             android:name="com.example.test.activity.ViewPagerActivity"
             android:label="@string/title_activity_view_pager"
             android:screenOrientation="portrait"
-            android:theme="@style/center_float_dialog" >
+            android:theme="@style/AppTheme" >
         </activity>
         <activity
             android:name="com.example.test.activity.NotificationActivity"

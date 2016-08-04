@@ -1,12 +1,11 @@
 package com.example.test.model;
 
-import com.example.test.util.BitmapBiz;
-import com.example.test.util.ScreenUtil;
-
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
+import com.example.test.util.BitmapBiz;
+import com.example.test.util.ScreenUtil;
 
 /**
  * 压缩业务类
