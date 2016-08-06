@@ -43,7 +43,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
-		MyLog.d("页面翻页，滑动position=" + position);
+		MyLog.d("ViewPagerAdapter, position=" + position);
 		//当设置第5个位置时(viewPager从0开始数)，显示其他图片
 		if (position == 4) {
 			//由于container单独添加view会自动填满，所以需要一个父控件来控制自定义图片，防止拉伸。
