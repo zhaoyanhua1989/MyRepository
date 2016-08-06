@@ -75,7 +75,7 @@ public class ViewPagerActivity extends FragmentActivity implements OnPageChangeL
 			@SuppressLint("ClickableViewAccessibility")
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				viewPagerClicked();
+				viewPagerClicked(); // 这里适配paging()方法，如果是doPaging()，这可以不设置触摸监听
 				// 这里不能返回true，不然会导致无法触发手指触摸翻页
 				return false;
 			}
@@ -89,11 +89,11 @@ public class ViewPagerActivity extends FragmentActivity implements OnPageChangeL
 		myCircle.setCount(mImages.length);
 	}
 
-	// 手动滑动页面和Thread导致页面自动翻滚时，都会执行，无法判断是否手动翻页
+	// 手动滑动页面、页面自动翻页、小球点击变化后页面翻页，都会执行2次(模拟按下时，松开时)，无法判断是否手动翻页
 	@Override
-	public void onPageScrollStateChanged(int arg0) {
+	public void onPageScrollStateChanged(int state) {
 		// 下面的逻辑匹配doPaging的翻页方法，不匹配paging
-		switch (arg0) {
+		switch (state) {
 		case ViewPager.SCROLL_STATE_DRAGGING: // 当手指按下时，暂停翻页
 			// 将现有的翻页消息清除
 			h.removeMessages(ViewPagerHandler.MSG_UPDATE_IMAGE);
@@ -106,23 +106,23 @@ public class ViewPagerActivity extends FragmentActivity implements OnPageChangeL
 		}
 	}
 
-	// 手动滑动页面和Thread导致页面自动翻滚时，都会执行，无法判断是否手动翻页
+	// 手动滑动页面、页面自动翻页、小球点击变化后页面翻页，都会执行多次，无法判断是否手动翻页，可以计算偏移量。
 	@Override
 	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 		myCircle.reDraw(position, positionOffset);
 		// 当手动滑动页面时从新设定当前自动翻译的页面位置
-		if(currentPage != position){
-			MyLog.d("翻页：position="+position+",currentPage="+currentPage);
-			// 手动翻页时，也通知改变Fragment
-			replaceFrg(!fragmentFlag);
-		}
-		currentPage = position;
 	}
 
-	// 手动滑动页面和Thread导致页面自动翻滚时，都会执行，无法判断是否手动翻页
+	// 手动滑动页面、页面自动翻页、小球点击变化后页面翻页，都会执行一次，无法判断是否手动翻页
 	@Override
 	public void onPageSelected(int position) {
-		MyLog.d("ViewPagerActivity onPageSelected...");
+		MyLog.d("ViewPagerActivity, onPageSelected...");
+		MyLog.i("onPageSelected：position="+position+",currentPage="+currentPage+",viewPagerPage="+viewPager.getCurrentItem());
+		synchronized (ViewPagerActivity.class) {
+			currentPage = position;
+		}
+		// 翻页时(不管是手动导致还是小球点击后变化导致，都走这里)，通知改变Fragment
+		replaceFrg(!fragmentFlag);
 	}
 
 	// viewPager的自动翻页
@@ -161,7 +161,7 @@ public class ViewPagerActivity extends FragmentActivity implements OnPageChangeL
 						flag = false;
 					}
 					currentPage++;
-					MyLog.d("currentPage=" + currentPage);
+					MyLog.d("VIewPagerActivity, currentPage=" + currentPage);
 					if (currentPage > mImages.length - 1)
 						currentPage = 0;
 					Message msg = Message.obtain();
@@ -184,7 +184,7 @@ public class ViewPagerActivity extends FragmentActivity implements OnPageChangeL
 
 	// 当下标小球被点击选中时，通知viewPager翻页
 	public void notifyPaging(int position) {
-		MyLog.d("ViewPagerActivity notifyPaging...");
+		MyLog.d("ViewPagerActivity, notifyPaging...");
 		// 当选中小球改变viewPager页码时，从新设定当前自动翻译的页面位置
 		currentPage = position;
 		// 选中小球，改变viewPager页码
@@ -196,9 +196,6 @@ public class ViewPagerActivity extends FragmentActivity implements OnPageChangeL
 		// 当选中小球改变viewPager页码时，先清除正在执行的翻页消息，然后发送延迟时间增加的翻页消息,该方法匹配doPaging
 		h.removeMessages(ViewPagerHandler.MSG_UPDATE_IMAGE);
 		h.sendEmptyMessageDelayed(ViewPagerHandler.MSG_UPDATE_IMAGE, ViewPagerHandler.MSG_DELAY_LONG);
-		
-		// 翻页时通知改变Fragment
-		replaceFrg(!fragmentFlag);
 	}
 
 	/*************************以下是不完善的Fragment案例*************************/
@@ -210,12 +207,14 @@ public class ViewPagerActivity extends FragmentActivity implements OnPageChangeL
 	private void addFragment() {
 		frg1 = new Fragment1();
 		frg2 = new Fragment2();
-		replaceFrg(fragmentFlag);
+		replaceFrg(!fragmentFlag);
 	}
 
 	// 动态更新Fragment
 	public void replaceFrg(boolean flag) {
+		MyLog.e("before fragmentFlag ="+fragmentFlag);
 		fragmentFlag = flag;
+		MyLog.e("after fragmentFlag ="+fragmentFlag);
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
 		if (!fragmentFlag) {
@@ -231,6 +230,7 @@ public class ViewPagerActivity extends FragmentActivity implements OnPageChangeL
 	public void onBackPressed() {
 		super.onBackPressed();
 		h.removeMessages(ViewPagerHandler.MSG_UPDATE_IMAGE);
+		h = null;
 	}
 
 }
