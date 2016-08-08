@@ -6,7 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_dir_test">DirTestActivity</string>
-    <string name="title_activity_view_pager">ViewPagerActivity</string>
+    <string name="title_activity_view_pager">ActionBar显示</string>
     <string name="title_activity_notifycation">NotifycationActivity</string>
 	<string name="welcome_advertisement">https://www.baidu.com</string>
 	<string name="text_exit">确认退出吗</string>
@@ -19,6 +19,11 @@
 	<string name="popMenu3">系统退出窗口,设置了style(使用Dialog)</string>
 	<string name="popMenu4">自定义退出弹窗(使用Dialog)</string>
 	<string name="popMenu5">自定义退出弹窗(继承Dialog的类实现)</string>
+	<string name="mainActivity_menu_delete">删除</string>
+	<string name="viewPagerActivity_menu_google">Google+</string>
+	<string name="viewPagerActivity_menu_gmail">Gmail</string>
+	<string name="viewPagerActivity_menu_facebook">FaceBook</string>
+	<string name="viewPagerActivity_menu_twitter">Twitter</string>
 	
     <string-array name="notifycation_main">
         <item>发送消息1</item>

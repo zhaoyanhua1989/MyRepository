@@ -56,11 +56,16 @@
             android:label="@string/title_activity_dir_test"
             android:theme="@style/AppTheme" >
         </activity>
+        <!-- 下面的label和logo，单独设置Activity的title和图标(左上角) -->
         <activity
             android:name="com.example.test.activity.ViewPagerActivity"
             android:label="@string/title_activity_view_pager"
+            android:logo="@drawable/apps_nest"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.test.activity.MainActivity" />
         </activity>
         <activity
             android:name="com.example.test.activity.NotificationActivity"

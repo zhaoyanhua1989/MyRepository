@@ -114,7 +114,7 @@ public class AlertDialogService {
 	/**
 	 * 显示系统退出弹窗，这里用AlertDialog
 	 */
-	public static void showSystemExitDialog(Activity activity) {
+	public static void showSystemExitDialog(final Activity activity) {
 		AlertDialog dialog = new AlertDialog.Builder(activity).setTitle("确认退出吗")
 				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 					@Override
@@ -123,6 +123,7 @@ public class AlertDialogService {
 						for (Activity activity : MyApplication.activitys) {
 							activity.finish();
 						}
+						MyApplication.destroy(activity);
 						System.exit(0);
 					}
 				}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -154,7 +155,7 @@ public class AlertDialogService {
 	 * 这里用到了showGif.jar显示动态图(GifImageView对象展示)
 	 */
 	@SuppressLint("InflateParams")
-	public static void showSimpleCustomExitDialog(Activity activity) {
+	public static void showSimpleCustomExitDialog(final Activity activity) {
 		View view = activity.getLayoutInflater().inflate(R.layout.dialog_exit_layout, null);
 		final Dialog dialog = new Dialog(activity, R.style.exitDialogStyle);
 		// 显示动态图片
@@ -188,6 +189,7 @@ public class AlertDialogService {
 				for (Activity activity : MyApplication.activitys) {
 					activity.finish();
 				}
+				MyApplication.destroy(activity);
 				System.exit(0);
 			}
 		});
@@ -198,7 +200,7 @@ public class AlertDialogService {
 	 * 这里用到了WebView显示动态图
 	 * @param activity
 	 */
-	public static void showCustemDialogForExit(Activity activity) {
+	public static void showCustemDialogForExit(final Activity activity) {
 		MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(activity);
 		customBuilder.setTitle("退出").setContentWebView("run.gif")
 				.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -211,6 +213,7 @@ public class AlertDialogService {
 						for (Activity activity : MyApplication.activitys) {
 							activity.finish();
 						}
+						MyApplication.destroy(activity);
 						System.exit(0);
 					}
 				});

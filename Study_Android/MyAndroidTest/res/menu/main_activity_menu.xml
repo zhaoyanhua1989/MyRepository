@@ -8,7 +8,7 @@
         android:id="@+id/delete"
         android:orderInCategory="200"
         android:showAsAction="always"
-        android:title="删除"
+        android:title="@string/mainActivity_menu_delete"
         android:icon="@drawable/ic_menu_delete"/>
 
 </menu>

@@ -48,7 +48,7 @@
 
 12、RadioGroup(RadioButton单选框)：
 	一般是添加RadioButton做选择，单选，通过getCheckedRadioButtonId()获取选择的button的id。
-	RadioButton通过设置button值为@null删除原有背景图片，设置drawable***值设置图片，设置padding值改变内边距
+	RadioButton通过设置button值为@null删除原有背景图片，设置drawableRight等值设置图片，设置padding值改变内边距
 
 13、ScrollView(垂直滚动)、HorizontalScrollView(水平滚动).
 
@@ -118,6 +118,32 @@
 	3、Adapter继承自FragmentStatePagerAdapter，适合viewPager页面布局复杂(需自定义)时用。
 		需要：主Activity继承自FragmentActivity。
 		
+21、ActionBar，导航条，包含两部分：左上角的logo图标、Label标签和logo下面的Tab标签
+	具体实现参考ViewPagerActivity中的initActionBar();
+	设置ActionBar漂浮于Activity之上：requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+	导航：
+		通过ActionBar返回主Activity的导航，应该和onBackpress不一样：
+			比如一个邮箱Activity，打开一份邮件A，然后点下一封邮件B。这时按back键是回到邮件A，点ActionBar导航，应该回到上一个Activity。
+		怎么实现(参考ViewPagerActivity的ActionBar实现)：
+			1、在该AndroidManifest中，ActionBar的Activity添加meta-data：
+				<!-- <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.XXX.XXX.MainActivity" /> -->
+                                      或者当最小API>=16时，在在该AndroidManifest中，ActionBar的Activity添加
+                android:parentActivityName="com.XXX.XXX.MainActivity"属性
+            2、actionBar.setDisplayHomeAsUpEnabled(true); // 可以点击使用导航
+            3、onOptionsItemSelected方法监听，item.getItemId()==android.R.id.home时
+            	// 获取跳转到MainActivity的intent
+				Intent upIntent = NavUtils.getParentActivityIntent(this);
+				// 如果需要创建task(不在同一个task中)，则创建task再跳转，否则直接通过navigateUpTo跳转
+				if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+	        		TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();  
+	        	} else {
+	        		upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	            	NavUtils.navigateUpTo(this, upIntent);
+	        	}
+				return true;
+
 
 </body>
 </html>

@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
 	// 重写菜单，显示menu
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.main_activity_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
