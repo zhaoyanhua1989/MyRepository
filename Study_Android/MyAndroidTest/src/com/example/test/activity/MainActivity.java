@@ -85,6 +85,11 @@ public class MainActivity extends Activity {
 			// CompressService.releaseBitMap(mBitMap);
 			startActivity(new Intent(this, NotificationActivity.class));
 			break;
+		case R.id.main_button8:
+			// 测试侧滑菜单
+			// CompressService.releaseBitMap(mBitMap);
+			startActivity(new Intent(this, SideslipActivity.class));
+			break;
 		}
 	}
 

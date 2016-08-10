@@ -20,6 +20,11 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+/**
+ * 欢迎页面，6秒后会加载到下一个页面
+ * 当点击页面进入广告时，加载下一页面会暂停，不然下一页面创建出来会遮挡住广告
+ * @author HKW2962
+ */
 public class WelcomeActivity extends Activity {
 
 	private boolean isHangUp; // 加载广告页面，判断此Activity是否被挂起
