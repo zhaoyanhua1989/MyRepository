@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>发送消息
+</head>
+<body>
+	1、广播的两种实现方式：动态和静态
+	2、广播的安全级：跨应用调用与本本应用内部使用 限制本应用内部使用方法： 
+		1. 静态广播，AndroidManifest中注册，添加android:exported="false"即可
+		2. 动态广播，利用LocalBroadcastManager与广播结合
+		如： BroadcastReceiver cameraPicBroadcastReceiver = new BroadcastReceiver() { 
+		@Override 
+		public void onReceive(Contextcontext, Intent intent) { 
+	​ ​ ​ ​ ​.......//更新状态 } }; 
+	
+		IntentFilter intentFilter = new IntentFilter( MConstants.KEY_INTENT_LOGIN_RESULT);
+		
+		final LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(ctx);
+		localBroadcastManager.registerReceiver(cameraPicBroadcastReceiver, intentFilter);
+		
+		广播的发送方的写法如下：
+		Intent loginSucessIntent = new Intent();
+		loginSucessIntent.setAction(MConstants.KEY_INTENT_LOGIN_RESULT);
+		loginSucessIntent.putExtra(MConstants.KEY_LOGIN_SUCESS, false);
+		
+		LocalBroadcastManager.getInstance(context).sendBroadcast(loginSucessIntent);
+		
+		※※LocalBroadcastManager是单例的，使用方式很简单，它还可以解决Service和Activity的交互问题。
+
+
+
+</body>
+</html>

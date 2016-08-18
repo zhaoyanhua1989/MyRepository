@@ -22,7 +22,7 @@ import com.example.test.util.MyLog;
 /**
  * ViewPager的Adapter，继承自FragmentStatePagerAdapter ，要求调用的Activity继承FragmentActivity。
  * 如果ViewPager中需要自定义布局，则建议使用这个Adapter。ViewPager在显示时，实际上是显示Fragment布局。
- * 特点：当前页面的fragment和左右两侧的fragment会被缓存进内存。
+ * 特点：当前页面的fragment和左右两侧的fragment会被缓存进内存，页面较多时适合使用。
  * @author HKW2962
  *
  */

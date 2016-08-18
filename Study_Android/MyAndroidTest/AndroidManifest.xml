@@ -22,7 +22,7 @@
         android:name=".MyApplication"
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
-        android:label="goodLuck"
+        android:label="@string/app_name"
         android:theme="@style/MyAppThemeWithBackground" >
         <activity
             android:name=".activity.WelcomeActivity"
@@ -84,7 +84,7 @@
             android:name=".activity.SideslipActivity"
             android:logo="@drawable/apps_nest"
             android:label="@string/title_activity_sideslip"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/ActionBarCustomStyle" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.test.activity.MainActivity" />

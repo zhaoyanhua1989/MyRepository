@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/sideslip_viewpager_fragment_listview_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/sideslip_viewpager_fragment_listview_relativilayout"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@id/sideslip_viewpager_fragment_listview_relativilayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/sideslip_viewpager_fragment_listview_id" >
+
+        <TextView
+            android:id="@+id/sideslip_viewpager_fragment_listview_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sideslip_viewpager_fragment_listview_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/sideslip_viewpager_fragment_listview_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/sideslip_viewpager_fragment_listview_name"
+            android:textSize="15sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/sideslip_viewpager_fragment_listview_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sideslip_viewpager_fragment_listview_name"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="1dp"/>
+    </RelativeLayout>
+
+</RelativeLayout>

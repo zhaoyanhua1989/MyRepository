@@ -302,7 +302,7 @@ public class ViewPagerActivity extends FragmentActivity implements TabListener, 
 	// 重写菜单，显示menu
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.viewpager_activity_menu, menu);
+		// getMenuInflater().inflate(R.menu.viewpager_activity_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
