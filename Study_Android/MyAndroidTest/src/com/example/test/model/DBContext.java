@@ -29,7 +29,12 @@ public class DBContext {
 		// 1.打开数据库(不存在则创建)
 		SQLiteDatabase sdb = dbHelper.getWritableDatabase();
 		// 2.执行查询
-		Cursor c = sdb.rawQuery(sql, params);
+		Cursor c = null;
+		try {
+			c = sdb.rawQuery(sql, params);
+		} catch (Exception e) {
+			MyLog.e("execQuery error, exception is：" + e.getMessage());
+		}
 //		sdb.close();
 		return c;
 	}
@@ -45,7 +50,12 @@ public class DBContext {
 	 */
 	public long execInsert(ContentValues values) {
 		SQLiteDatabase sdb = dbHelper.getReadableDatabase();
-		long id = sdb.insert(mTableName, null, values);
+		long id = -1;
+		try {
+			id = sdb.insert(mTableName, null, values);
+		} catch (Exception e) {
+			MyLog.e("execInsert error, exception is：" + e.getMessage());
+		}
 		sdb.close();
 		return id;
 	}
@@ -70,7 +80,7 @@ public class DBContext {
 		/** 数据库创建时第一时间执行 */
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			MyLog.d("____________DBContext create database...");
+			MyLog.d("DBContext create database...");
 			String sql = "create table if not exists " + mTableName + "(id integer primary key autoincrement," + "name varchar(100) not null,"
 					+ "gender varchar(50) not null," + "addTime datetime not null)";
 			db.execSQL(sql);

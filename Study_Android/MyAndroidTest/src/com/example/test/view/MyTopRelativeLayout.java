@@ -111,6 +111,7 @@ class BaseMethod {
 	}
 
 	// 获取屏幕尺寸要分辨版本
+	@SuppressWarnings("deprecation")
 	public static Point getScreenSize() {
 		WindowManager localWindowManager = (WindowManager) mContext.getSystemService("window");
 		Display localDisplay = localWindowManager.getDefaultDisplay();

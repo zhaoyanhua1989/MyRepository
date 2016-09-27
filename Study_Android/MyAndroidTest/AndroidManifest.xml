@@ -27,7 +27,8 @@
         <activity
             android:name=".activity.WelcomeActivity"
             android:configChanges="keyboard|orientation|navigation|screenSize"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,7 +40,7 @@
             android:configChanges="keyboard|orientation|navigation|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="sensor"
-            android:theme="@style/AppTheme" >
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.mytest.MAIN" />
 
@@ -82,12 +83,17 @@
         </activity>
         <activity
             android:name=".activity.SideslipActivity"
-            android:logo="@drawable/apps_nest"
             android:label="@string/title_activity_sideslip"
+            android:logo="@drawable/apps_nest"
             android:theme="@style/ActionBarCustomStyle" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.test.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.test.activity.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/center_float_dialog" >
         </activity>
     </application>
 

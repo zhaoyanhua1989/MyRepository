@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
-<head>发送消息</head>
+<head>其他要点</head>
 <body>
+一、发送消息：
+
 1、Hanlder
 	创建的过程中，在主线程中，可以不定义Looper，默认为主线程的Looper。工作线程中需要定义Looper。
 	处理机制：
@@ -33,5 +35,20 @@
 		收到对应消息，再发送同样msg.what的空消息sendEmptyMessageDelayed。
 
 
+
+二、性能优化
+1、BitMap：
+	1)、图片放置文件位置：res下，存放的分辨率目录了越高加载出来的BitMap越占内存；
+	2)、显示前压缩图片；
+	3)、使用后recycle。
+
+
+
+三、keystore文件(签名文件)
+1、生成：
+2、查看keystore文件信息：
+	1).cmd，cd到java\jdk\bin目录下
+	2).输入：keytool -list -v -keystore "D:xgsdk.keystore"  // 假设这个keystore在D盘根目录
+	3).输入storepass(密钥库口令)，输入是看不到的，输入完点回车。
 </body>
 </html>

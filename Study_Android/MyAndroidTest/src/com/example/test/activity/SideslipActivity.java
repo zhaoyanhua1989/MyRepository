@@ -45,7 +45,6 @@ import com.example.test.util.RUtil;
  * @author HKW2962
  *
  */
-@SuppressWarnings("unused")
 public class SideslipActivity extends FragmentActivity implements TabListener {
 
 	private ActionBar mActionBar;
@@ -71,41 +70,41 @@ public class SideslipActivity extends FragmentActivity implements TabListener {
 	private void initData() {
 		DBContext dbContext = new DBContext(this, OverallVariable.CUSTOMDATABASE, "friends");
 		// 插入数据
-//		ContentValues values1 = new ContentValues();
-//		values1.put("id", 1);
-//		values1.put("name", "关羽");
-//		values1.put("gender", "男");
-//		values1.put("addTime", "206-08-16 15:36:33");
-//		long rowId1 = dbContext.execInsert(values1);
-//		MyLog.d("SideslipActivity initData end, rowId=" + rowId1);
-//		ContentValues values2 = new ContentValues();
-//		values2.put("id", 2);
-//		values2.put("name", "妙妙");
-//		values2.put("gender", "女");
-//		values2.put("addTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-//		long rowId2 = dbContext.execInsert(values2);
-//		MyLog.d("SideslipActivity initData end, rowId=" + rowId2);
-//		ContentValues values3 = new ContentValues();
-//		values3.put("id", 3);
-//		values3.put("name", "青河");
-//		values3.put("gender", "男");
-//		values3.put("addTime", "3056-12-22 21:36:59");
-//		long rowId3 = dbContext.execInsert(values3);
-//		MyLog.d("SideslipActivity initData end, rowId=" + rowId3);
-//		ContentValues values4 = new ContentValues();
-//		values4.put("id", 4);
-//		values4.put("name", "貂蝉");
-//		values4.put("gender", "女");
-//		values4.put("addTime", "226-12-11 9:50:12");
-//		long rowId4 = dbContext.execInsert(values4);
-//		MyLog.d("SideslipActivity initData end, rowId=" + rowId4);
-//		ContentValues values5 = new ContentValues();
-//		values5.put("id", 5);
-//		values5.put("name", "赵云");
-//		values5.put("gender", "男");
-//		values5.put("addTime", "229-10-02 17:55:09");
-//		long rowId5 = dbContext.execInsert(values5);
-//		MyLog.d("SideslipActivity initData end, rowId=" + rowId5);
+		ContentValues values1 = new ContentValues();
+		values1.put("id", 1);
+		values1.put("name", "关羽");
+		values1.put("gender", "男");
+		values1.put("addTime", "206-08-16 15:36:33");
+		long rowId1 = dbContext.execInsert(values1);
+		MyLog.d("SideslipActivity initData end, rowId=" + rowId1);
+		ContentValues values2 = new ContentValues();
+		values2.put("id", 2);
+		values2.put("name", "妙妙");
+		values2.put("gender", "女");
+		values2.put("addTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		long rowId2 = dbContext.execInsert(values2);
+		MyLog.d("SideslipActivity initData end, rowId=" + rowId2);
+		ContentValues values3 = new ContentValues();
+		values3.put("id", 3);
+		values3.put("name", "青河");
+		values3.put("gender", "男");
+		values3.put("addTime", "3056-12-22 21:36:59");
+		long rowId3 = dbContext.execInsert(values3);
+		MyLog.d("SideslipActivity initData end, rowId=" + rowId3);
+		ContentValues values4 = new ContentValues();
+		values4.put("id", 4);
+		values4.put("name", "貂蝉");
+		values4.put("gender", "女");
+		values4.put("addTime", "226-12-11 9:50:12");
+		long rowId4 = dbContext.execInsert(values4);
+		MyLog.d("SideslipActivity initData end, rowId=" + rowId4);
+		ContentValues values5 = new ContentValues();
+		values5.put("id", 5);
+		values5.put("name", "赵云");
+		values5.put("gender", "男");
+		values5.put("addTime", "229-10-02 17:55:09");
+		long rowId5 = dbContext.execInsert(values5);
+		MyLog.d("SideslipActivity initData end, rowId=" + rowId5);
 		// 获取数据
 		Cursor mCursor = dbContext.execQuery("select id,name,gender,addTime from friends");
 		while (mCursor.moveToNext()) {

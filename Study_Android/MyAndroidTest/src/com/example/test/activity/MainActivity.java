@@ -3,28 +3,20 @@ package com.example.test.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.Toast;
 
 import com.example.test.MyApplication;
 import com.example.test.R;
 import com.example.test.model.AlertDialogService;
-import com.example.test.model.CompressService;
 import com.example.test.model.LanguageConventService;
 import com.example.test.util.MessageUtil;
-import com.example.test.util.RUtil;
 
 public class MainActivity extends Activity {
-
-	private Bitmap mBitMap;
-	private ImageView imageView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,31 +25,15 @@ public class MainActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		MyApplication.activitys.add(this);
-		// 设置背景图片
-		mBitMap = CompressService.compressAssign(this, RUtil.getDrawable(this, "background3"), 540, 960);
-		imageView = (ImageView) findViewById(RUtil.getId(this, "main_backgroundImageView"));
-		imageView.setScaleType(ScaleType.FIT_XY);
-		imageView.setImageBitmap(mBitMap);
-	}
-
-	@Override
-	protected void onRestart() {
-		super.onRestart();
-		// 如果背景图片被回收，需要重新设置背景图片。回收见：CompressService.releaseBitMap(mBitMap);
-		// mBitMap = CompressService.compressAssign(this,
-		// RUtil.getDrawable(this, "background3"), 540, 960);
-		// imageView.setImageBitmap(mBitMap);
 	}
 
 	@SuppressLint("NewApi")
 	public void doClick(View v) {
 		switch (v.getId()) {
 		case R.id.main_button1:
-			// CompressService.releaseBitMap(mBitMap); // 调用此方法，和onRestart中重设背景图片对应
 			startActivity(new Intent(this, GetRAndImeiActivity.class));
 			break;
 		case R.id.main_button2:
-			// CompressService.releaseBitMap(mBitMap);
 			startActivity(new Intent(this, DirTestActivity.class));
 			break;
 		case R.id.main_button3:
@@ -77,18 +53,19 @@ public class MainActivity extends Activity {
 			break;
 		case R.id.main_button6:
 			// 测试ListView和ViewPager
-			// CompressService.releaseBitMap(mBitMap);
 			startActivity(new Intent(this, ViewPagerActivity.class));
 			break;
 		case R.id.main_button7:
 			// 测试notifycation和拉起另一个应用
-			// CompressService.releaseBitMap(mBitMap);
 			startActivity(new Intent(this, NotificationActivity.class));
 			break;
 		case R.id.main_button8:
 			// 测试侧滑菜单
-			// CompressService.releaseBitMap(mBitMap);
 			startActivity(new Intent(this, SideslipActivity.class));
+			break;
+		case R.id.main_button9:
+			// 测试登录
+			startActivity(new Intent(this, LoginActivity.class));
 			break;
 		}
 	}

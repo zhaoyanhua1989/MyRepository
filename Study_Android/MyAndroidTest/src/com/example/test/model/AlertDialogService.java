@@ -154,6 +154,7 @@ public class AlertDialogService {
 	 * 显示自定义退出弹窗，这里使用Dialog而非AlertDialog，因为使用AlertDialog，会造成圆角出现尖角问题(白色或黑色尖角)
 	 * 这里用到了showGif.jar显示动态图(GifImageView对象展示)
 	 */
+	@SuppressWarnings("deprecation")
 	@SuppressLint("InflateParams")
 	public static void showSimpleCustomExitDialog(final Activity activity) {
 		View view = activity.getLayoutInflater().inflate(R.layout.dialog_exit_layout, null);
@@ -203,11 +204,7 @@ public class AlertDialogService {
 	public static void showCustemDialogForExit(final Activity activity) {
 		MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(activity);
 		customBuilder.setTitle("退出").setContentWebView("run.gif")
-				.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				}).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
 						for (Activity activity : MyApplication.activitys) {
@@ -215,6 +212,10 @@ public class AlertDialogService {
 						}
 						MyApplication.destroy(activity);
 						System.exit(0);
+					}
+				}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
 					}
 				});
 		MyCustomDialog dialog = customBuilder.create();

@@ -190,6 +190,7 @@ public class MyCustomDialog extends Dialog {
 		/**
 		 * Create the custom dialog
 		 */
+		@SuppressWarnings("deprecation")
 		@SuppressLint("InflateParams")
 		public MyCustomDialog create() {
 			LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -217,7 +218,7 @@ public class MyCustomDialog extends Dialog {
 				}
 			} else {
 				// if no confirm button just set the visibility to GONE
-				layout.findViewById(R.id.customDialog_positiveButton).setVisibility(View.GONE);
+				positiveButton.setVisibility(View.GONE);
 			}
 
 			// set the cancel button
@@ -232,7 +233,7 @@ public class MyCustomDialog extends Dialog {
 				}
 			} else {
 				// if no confirm button just set the visibility to GONE
-				layout.findViewById(R.id.customDialog_negativeButton).setVisibility(View.GONE);
+				negativeButton.setVisibility(View.GONE);
 			}
 
 			// set the content message

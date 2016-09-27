@@ -34,7 +34,14 @@
     <string name="MainActivity_button6">测试ListView和ViewPager</string>
     <string name="MainActivity_button7">消息通知启动另一应用</string>
     <string name="MainActivity_button8">测试侧滑菜单</string>
-    <string name="MainActivity_button9">空</string>
+    <string name="MainActivity_button9">测试登录</string>
+    <string name="MainActivity_button10">空</string>
+    <string name="MainActivity_button11">空</string>
+    <string name="MainActivity_button12">空</string>
+    <string name="activity_login_account">账号：</string>
+    <string name="activity_login_password">密码：</string>
+    <string name="activity_login_login">登录</string>
+    <string name="activity_login_regist">注册</string>
 
     <string-array name="notifycation_main">
         <item>发送消息1</item>
@@ -53,5 +60,6 @@
     <string name="title_activity_camera">CameraActivity</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="title_activity_sideslip">goodLuck</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>

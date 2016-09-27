@@ -2,13 +2,13 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -85,6 +85,7 @@
 
     <!-- ActionBar的自定义样式 -->
     <style name="ActionBarCustomStyle" parent="@android:style/Theme.Holo">
+
         <!-- 这里改变了ActionBar的字体背景、颜色和Tabs背景 -->
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <!-- 这里改变了Tabs字体的颜色 -->
@@ -94,6 +95,7 @@
     </style>
 
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+
         <!-- 这里改变了ActionBar的颜色 -->
         <item name="android:background">#00000000</item>
         <!-- 这里改变了Tabs的颜色 -->
@@ -109,9 +111,19 @@
     <style name="MyActionBarTabText" parent="@android:style/Widget.Holo.ActionBar.TabText">
         <item name="android:textColor">#fff</item>
     </style>
-    
-    <style name="MyActionBarTabStyle" parent="@android:style/Widget.Holo.ActionBar.TabView"> 
-        <item name="android:background">@drawable/sideslip_actionbar_tab_indicator</item> 
+
+    <style name="MyActionBarTabStyle" parent="@android:style/Widget.Holo.ActionBar.TabView">
+        <item name="android:background">@drawable/sideslip_actionbar_tab_indicator</item>
+    </style>
+
+    <!-- 完全透明的Activity -->
+    <style name="TranslucentTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <!-- channel_huawei 的style begin -->
@@ -127,16 +139,16 @@
 
     <style name="huawei_ql_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
- <!-- 边框 -->
+        <!-- 边框 -->
         <item name="android:windowIsFloating">true</item>
- <!-- 是否浮现在activity之上 -->
+        <!-- 是否浮现在activity之上 -->
         <item name="android:windowIsTranslucent">true</item>
- <!-- 半透明 -->
+        <!-- 半透明 -->
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">@color/z_ql_transparent</item>
         <item name="android:windowBackground">@color/z_ql_transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
- <!-- 模糊 -->
+        <!-- 模糊 -->
     </style>
     <!-- channel_huawei 的style end -->
 
@@ -181,7 +193,7 @@
 
 
     <!--
-    窗体内容详解
+    	窗体内容详解
     windowCloseOnTouchOutside-点击外部是否可关闭boolean
     android:windowIsTranslucent-窗体是否半透明boolean
     android:backgroundDimEnabled-背景是否模糊显示boolean
@@ -197,7 +209,7 @@
     windowTitleSize-窗体文字大小
     android:windowAnimationStyle-窗体切换时的动画样式
     android:windowSoftInputMode-在使用输入法时窗体的适配
-    windowActionBar- 是否打开ActionBar boolean
+    windowActionBar- 是否打开ActionBar boolean
     -->
 
 </resources>
