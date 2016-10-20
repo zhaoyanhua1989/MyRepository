@@ -6,16 +6,31 @@
 	用JSP开发的Web应用是跨平台的，即能在Linux下运行，也能在其他操作系统上运行。
 	JSP与Java Servlet一样，是在服务器端执行的，通常返回该客户端的就是一个HTML文本，因此客户端只要有浏览器就能浏览。
 	JSP页面由HTML代码和嵌入其中的Java代码所组成。服务器在页面被客户端请求以后对这些Java代码进行处理，然后将生成的HTML页面返回给客户端的浏览器，JSP具备了Java技术的简单易用，完全的面向对象，具有平台无关性且安全可靠，主要面向因特网的所有特点。
-	
+
 	在编写过程中，可能遇到的问题：
-	1.创建Dynamic Web Project项目后，完成jsp的编写。运行时需要依赖tomcat；
+	1.创建Dynamic Web Project项目后，完成jsp的编写。运行一般挂在tomcat上，tomcat启动就行；
 	2.在eclipse中切换到Java EE 运行jsp，可能遇到页面加载空白的情况，无日志。可以把网址复制粘贴到浏览器查询；
 	3.遇到报错：XML declaration allowed only at the start of the document
 		错误通常由<?xml version="1.0" encoding="UTF-8"?>引起，需要把该项和之前的换行全部撤销，全放在第一行。
-		
+
 	如何运行jsp？
 	1.创建Dynamic Web Project项目，编写jsp后在eclipse的tomcat运行；
 	2.直接启动tomcat，把jsp放在tomcat/webapps/下，直接http请求：http://localhost:8080/test.jsp
 
+	将jsp的web项目挂在在tomcat上：
+	1.web工程Export为Web —— WAR file;
+	2.将导出的web工程的war文件放入tomcat的webapps下面；
+	3.启动tomcat，会自动生成web项目。
+
+	在jsp中获取传递的数据并将结果返回：
+	1.获取请求传递过来的数据：
+	  a).对于get请求，比如发起的get请求为：http://10.20.72.80:8080/2.5_web_jsp/requestLogin.jsp?name=aaa&pwd=111
+	             在jsp中：name=request.getParameter("name");pwd=request.getParameter("pwd");
+	             这里可以结合查询数据库做校验。详情见MyAndroidTest的LoginActivity和Study_Java的2.5_web_jsp。
+	  b).对于post请求
+	  
+	2.返回数据：
+	  out.println(字符串); //注意别在jsp中加<body>...</body>等内容了，不然也会默认作为结果数据传递回去。
+	
 </body>
 </html>

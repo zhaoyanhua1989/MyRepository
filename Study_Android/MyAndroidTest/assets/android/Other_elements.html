@@ -3,12 +3,11 @@
 <head>其他要点</head>
 <body>
 一、发送消息：
-
-1、Hanlder
+   1、Hanlder
 	创建的过程中，在主线程中，可以不定义Looper，默认为主线程的Looper。工作线程中需要定义Looper。
 	处理机制：
-	 1、Handler h = new Handler(){重写handleMessage};  h.handleMessage(msg);
-	 2、final ProgressDialog dialog = new ProgressDialog(this);
+	 a).Handler h = new Handler(){重写handleMessage};  h.handleMessage(msg);
+	 b).final ProgressDialog dialog = new ProgressDialog(this);
 	    Handler h = new Handler();
 	    h.post(new Runnable() {
 			@Override
@@ -23,32 +22,56 @@
 				}
 			}
 		});
-	 3、Message.obtain(Handler h, int what, int arg1, int arg2, Object obj);
-	 
-2、循环发消息的实现：
-	1、线程、Hanlder
+	 c).Message.obtain(Handler h, int what, int arg1, int arg2, Object obj);
+   2、循环发消息的实现：
+	a).线程、Hanlder
 		线程runnable中套死循环while(true)，
 		循环中，不能用postDelayed实现，不然delayed的时间一到，会收到n条挤在一起的消息。
 		循环中，应该用Thread.sleep()来实现消息的暂停。然后借助Hanlder来传递消息和处理消息。
-	2、Hanlder
+	b).Hanlder
 		用Hanlder发送空消息sendEmptyMessageDelayed来实现，在handleMessage中处理msg.what，
 		收到对应消息，再发送同样msg.what的空消息sendEmptyMessageDelayed。
 
 
-
 二、性能优化
-1、BitMap：
-	1)、图片放置文件位置：res下，存放的分辨率目录了越高加载出来的BitMap越占内存；
-	2)、显示前压缩图片；
-	3)、使用后recycle。
-
+   1、BitMap：
+	a).图片放置文件位置：res下，存放的分辨率目录了越高加载出来的BitMap越占内存；
+	b).显示前压缩图片；
+	c).使用后recycle。
 
 
 三、keystore文件(签名文件)
-1、生成：
-2、查看keystore文件信息：
-	1).cmd，cd到java\jdk\bin目录下
-	2).输入：keytool -list -v -keystore "D:xgsdk.keystore"  // 假设这个keystore在D盘根目录
-	3).输入storepass(密钥库口令)，输入是看不到的，输入完点回车。
+   1、生成：
+   2、查看keystore文件信息：
+	a).cmd，cd到java\jdk\bin目录下
+	b).输入：keytool -list -v -keystore "D:xgsdk.keystore"  // 假设这个keystore在D盘根目录
+	c).输入storepass(密钥库口令)，输入是看不到的，输入完点回车。
+
+
+四、添加Library
+   1、添加support-v7：
+	使用supportV7主要用到ActionBarActivity等功能，该功能需要用到sdk的v7工程中相应的theme。
+	使用v7可能遇到的问题：
+	1).导入v7工程，报错：很多资源加载异常，类似于： No resource found that matches the given name 'android:Widget.Material.ActionButton'.
+	       解决：查看是res下吗那个版本的文件编译异常，然后从SDK Manager中查看，对应版本的SDK Platform有没有Installed
+	2).引用v7工程出错，一旦引用，R文件异常。
+	       原因：
+	     a). 使用工程的编译版本，试试调整到android5.0(API21)；
+	     b). v7工程和使用工程没有在同一个符盘下。
+	3).使用工程如果用到了v7的类，则不能直接使用v7的jar，如果要使用jar，则需要同时导入v7工程下的res资源，否则还是add library来添加。
+	        未正常加载v7包，则会出现RuntimeException而造成崩溃：
+	      java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
+
+
+五、eclipse出包，能直接run as android application，但是一旦用android tools构建包就出错，解决方法：
+   1、检查报错，针对改。可能是android tools的版本和Platform版本不一致；
+   2、Preferences —— Android —— Lint Error Checking —— Run full error check when......勾选框勾勾点掉。
+
+
+六、Android写get或者post请求，获取不到数据，原因可能为：
+   1、未在工作线程中进行请求；
+   2、没有加权限：<uses-permission android:name="android.permission.INTERNET"/>
+
+
 </body>
 </html>
