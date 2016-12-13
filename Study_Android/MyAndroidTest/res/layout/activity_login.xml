@@ -105,6 +105,39 @@
                 android:textSize="15dp"
                 android:textStyle="bold" />
         </LinearLayout>
+        
+        <!-- 注册按钮 -->
+        <LinearLayout
+            android:id="@+id/loginActivity_LinearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/loginActivity_LinearLayout2"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <Button
+                android:id="@+id/login_confirmBT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_weight="1"
+                android:text="@string/activity_login_regist_confirm"
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/login_cancelBT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_weight="1"
+                android:text="@string/activity_login_regist_cancel"
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

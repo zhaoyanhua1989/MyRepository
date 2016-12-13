@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.test.util.AppUtil;
 import com.example.test.util.MyLog;
 import com.example.test.util.PropertiesUtil;
 
@@ -18,14 +19,17 @@ public class MyApplication extends Application {
 	protected void attachBaseContext(Context base) {
 		super.attachBaseContext(base);
 		MyLog.d("MyApplication attachBaseContext...");
+		MyLog.openLog(true);
 	}
 
 	// 第二执行
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		if (AppUtil.isForegroundProcess(this)) {
+			return;
+		}
 		MyLog.d("MyApplication oncreate...");
-		MyLog.openLog(true);
 	}
 
 	// 当终止应用程序对象时调用，不保证一定被调用，当程序是被内核终止以便为其他应用程序释放资源，那

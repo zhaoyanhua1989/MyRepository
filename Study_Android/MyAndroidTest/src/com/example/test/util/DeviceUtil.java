@@ -1,13 +1,16 @@
 package com.example.test.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Configuration;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 
-public class ScreenUtil {
+public class DeviceUtil {
 
 	/**
 	 * 获取屏幕尺寸信息
+	 * 
 	 * @param activity
 	 * @return DisplayMetrics，可以metrics.widthPixels和metrics.heightPixels获取宽高
 	 */
@@ -16,7 +19,7 @@ public class ScreenUtil {
 		activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		return metrics;
 	}
-	
+
 	/**
 	 * 判断当前横竖屏
 	 * 
@@ -35,4 +38,22 @@ public class ScreenUtil {
 		return false;
 	}
 
+	/**
+	 * 测试获取设备号
+	 * 
+	 * @param activity
+	 * @return
+	 */
+	public static String getImei(Activity activity) {
+		try {
+			TelephonyManager tm = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
+			if (tm != null) {
+				String imei = tm.getDeviceId();
+				return imei;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

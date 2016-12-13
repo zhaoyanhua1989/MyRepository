@@ -15,8 +15,7 @@ import android.widget.TextView;
 import android.widget.ImageView.ScaleType;
 
 /**
- * ViewPager的Adapter，继承自PagerAdapter。
- * 如果ViewPager中需要自定义布局，则不建议使用这个Adapter，不方便。
+ * ViewPager的Adapter，继承自PagerAdapter。 如果ViewPager中需要自定义布局，则不建议使用这个Adapter，不方便。
  * 
  * @author HKW2962
  *
@@ -44,13 +43,13 @@ public class ViewPagerAdapter extends PagerAdapter {
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
 		MyLog.d("ViewPagerAdapter, position=" + position);
-		//当设置第5个位置时(viewPager从0开始数)，显示其他图片
+		// 当设置第5个位置时(viewPager从0开始数)，显示其他图片
 		if (position == 4) {
-			//由于container单独添加view会自动填满，所以需要一个父控件来控制自定义图片，防止拉伸。
+			// 由于container单独添加view会自动填满，所以需要一个父控件来控制自定义图片，防止拉伸。
 			LinearLayout ll = new LinearLayout(mActivity);
 			ll.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 			ll.setGravity(Gravity.CENTER);
-			//自定义图片
+			// 自定义图片
 			TextView textView = new TextView(mActivity);
 			textView.setLayoutParams(new LinearLayout.LayoutParams(250, 250));
 			textView.setText("7");

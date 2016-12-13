@@ -42,10 +42,12 @@
     <string name="activity_login_password">密码：</string>
     <string name="activity_login_login">登录</string>
     <string name="activity_login_regist">注册</string>
+    <string name="activity_login_regist_confirm">确定</string>
+    <string name="activity_login_regist_cancel">取消</string>
 
     <string-array name="notifycation_main">
-        <item>发送消息1</item>
-        <item>发送消息2</item>
+        <item>发送普通消息</item>
+        <item>发送自定义界面的常驻消息</item>
     </string-array>
     <string-array name="welcome_textContent">
         <item>读</item>
@@ -55,6 +57,13 @@
         <item>揽</item>
         <item>天</item>
         <item>下</item>
+    </string-array>
+    <string-array name="sideslipView_fragment2List">
+        <item>插入</item>
+        <item>查询</item>
+        <item>查询所有数据</item>
+        <item>修改</item>
+        <item>删除</item>
     </string-array>
 
     <string name="title_activity_camera">CameraActivity</string>

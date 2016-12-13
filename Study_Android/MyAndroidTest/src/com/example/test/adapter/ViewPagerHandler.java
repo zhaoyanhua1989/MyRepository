@@ -8,42 +8,42 @@ import com.example.test.util.MyLog;
 import android.os.Handler;
 import android.os.Message;
 
-public class ViewPagerHandler extends Handler{
+public class ViewPagerHandler extends Handler {
 
 	/**
 	 * 不推荐、不完善的padding方法的翻页消息
 	 */
 	public static final int MSG_OLD_PADDING = 0;
 	/**
-     * 请求更新显示的View
-     */
-    public static final int MSG_UPDATE_IMAGE = 1;
-    /**
-     * 翻页时间间隔
-     */
-    public static final long MSG_DELAY = 3000;
-    /**
-     * 当手动点击时的翻页时间间隔，会延长
-     */
-    public static final long MSG_DELAY_LONG = 5000;
-    /**
-     * 使用弱引用避免Handler泄露.这里的泛型参数可以不是Activity，也可以是Fragment等
-     */
-    private WeakReference<ViewPagerActivity> weakReference;
-	
-    public ViewPagerHandler(WeakReference<ViewPagerActivity> wk) {
-    	weakReference = wk;
-    }
-    
-    @Override
-    public void handleMessage(Message msg) {
-    	super.handleMessage(msg);
-    	ViewPagerActivity mActivity = weakReference.get();
-    	 if (mActivity==null){
-             //Activity已经回收，无需再处理UI了
-             return ;
-         }
-    	 switch (msg.what) {
+	 * 请求更新显示的View
+	 */
+	public static final int MSG_UPDATE_IMAGE = 1;
+	/**
+	 * 翻页时间间隔
+	 */
+	public static final long MSG_DELAY = 3000;
+	/**
+	 * 当手动点击时的翻页时间间隔，会延长
+	 */
+	public static final long MSG_DELAY_LONG = 5000;
+	/**
+	 * 使用弱引用避免Handler泄露.这里的泛型参数可以不是Activity，也可以是Fragment等
+	 */
+	private WeakReference<ViewPagerActivity> weakReference;
+
+	public ViewPagerHandler(WeakReference<ViewPagerActivity> wk) {
+		weakReference = wk;
+	}
+
+	@Override
+	public void handleMessage(Message msg) {
+		super.handleMessage(msg);
+		ViewPagerActivity mActivity = weakReference.get();
+		if (mActivity == null) {
+			// Activity已经回收，无需再处理UI了
+			return;
+		}
+		switch (msg.what) {
 		case MSG_OLD_PADDING:
 			MyLog.i("padding请求翻页");
 			mActivity.viewPager.setCurrentItem(msg.arg1);
@@ -64,6 +64,6 @@ public class ViewPagerHandler extends Handler{
 			// 准备下一次翻页
 			mActivity.h.sendEmptyMessageDelayed(MSG_UPDATE_IMAGE, MSG_DELAY);
 			break;
-    	 }
-    }
+		}
+	}
 }

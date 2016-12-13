@@ -49,7 +49,7 @@ public class PropertiesUtil {
 	}
 
 	public static void destroy(Context context) {
-		if(configProperties != null) {
+		if (configProperties != null) {
 			configProperties.clear();
 			context.getAssets().close();
 		}

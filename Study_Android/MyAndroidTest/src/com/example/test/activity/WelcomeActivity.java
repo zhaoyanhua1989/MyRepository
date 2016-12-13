@@ -21,8 +21,8 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
 /**
- * 欢迎页面，6秒后会加载到下一个页面
- * 当点击页面进入广告时，加载下一页面会暂停，不然下一页面创建出来会遮挡住广告
+ * 欢迎页面，6秒后会加载到下一个页面 当点击页面进入广告时，加载下一页面会暂停，不然下一页面创建出来会遮挡住广告
+ * 
  * @author HKW2962
  */
 public class WelcomeActivity extends Activity {
@@ -49,8 +49,8 @@ public class WelcomeActivity extends Activity {
 		mBitMap = CompressService.compressHalfSize(this, RUtil.getDrawable(this, "welcome"), 540, 960);
 		image.setImageBitmap(mBitMap);
 		MyTextView wcTextView = (MyTextView) findViewById(R.id.welcome_textView);
-		TextContentService textContent = new TextContentService(this, wcTextView, RUtil.getValuesStringArray(
-				WelcomeActivity.this, "welcome_textContent"));
+		TextContentService textContent = new TextContentService(this, wcTextView, RUtil.getValuesStringArray(WelcomeActivity.this,
+				"welcome_textContent"));
 		textContent.showContent();
 
 		// 点击进入广告页面
@@ -106,11 +106,10 @@ public class WelcomeActivity extends Activity {
 		finish();
 		startActivity(new Intent("android.intent.action.mytest.MAIN"));
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		finish();
 		System.exit(0);
 	}
-	
 }

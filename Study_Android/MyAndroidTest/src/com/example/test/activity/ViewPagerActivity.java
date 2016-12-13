@@ -23,7 +23,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.example.test.MyApplication;
 import com.example.test.adapter.ViewPagerFragment;
@@ -31,13 +30,13 @@ import com.example.test.adapter.ViewPagerAdapter;
 import com.example.test.adapter.ViewPagerHandler;
 import com.example.test.R;
 import com.example.test.util.MyLog;
+import com.example.test.util.ToastUtil;
 import com.example.test.view.MyCircle;
 
 public class ViewPagerActivity extends FragmentActivity implements TabListener, OnPageChangeListener {
 
 	private MyCircle myCircle;
-	public int[] mImages = new int[] { R.drawable.viewpager_1, R.drawable.viewpager_2, R.drawable.viewpager_3,
-			R.drawable.viewpager_4, -1 };
+	public int[] mImages = new int[] { R.drawable.viewpager_1, R.drawable.viewpager_2, R.drawable.viewpager_3, R.drawable.viewpager_4, -1 };
 	public ViewPager viewPager;
 	public int currentPage; // viewPager的当前页码
 	private Thread pagingThread; // 用于发送viewPager翻页的msg的线程
@@ -149,17 +148,17 @@ public class ViewPagerActivity extends FragmentActivity implements TabListener, 
 					 * 注意，这里不能直接把postDelayed放在while循环里，postDelayed不会让线程休眠，
 					 * 循环会一直执行postDelayed，2秒一到，会一直有handler陆续发送消息
 					 */
-					// h.postDelayed(new Runnable() {
-					// @Override
-					// public void run() {
-					// currentPage++;
-					// if (currentPage > mImages.length)
-					// currentPage = 0;
-					// Message msg = Message.obtain();
-					// msg.arg1 = currentPage;
-					// h.sendMessage(msg);
-					// }
-					// }, 2000);
+					/*h.postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							currentPage++;
+							if (currentPage > mImages.length)
+								currentPage = 0;
+							Message msg = Message.obtain();
+							msg.arg1 = currentPage;
+							h.sendMessage(msg);
+						}
+					}, 2000);*/
 
 					try {
 						Thread.sleep(2000);
@@ -315,14 +314,14 @@ public class ViewPagerActivity extends FragmentActivity implements TabListener, 
 			Intent upIntent = NavUtils.getParentActivityIntent(this);
 			// 如果需要创建task(不在同一个task中)，则创建task再跳转，否则直接通过navigateUpTo跳转
 			if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-	        	TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();  
-	        } else {
-	        	upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	            NavUtils.navigateUpTo(this, upIntent);
-	        }
+				TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
+			} else {
+				upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				NavUtils.navigateUpTo(this, upIntent);
+			}
 			return true;
 		default:
-			Toast.makeText(this, "分享-" + item.getTitle(), Toast.LENGTH_SHORT).show();
+			ToastUtil.showCustomToast(this, "点击-" + item.getTitle());
 			break;
 		}
 		return super.onOptionsItemSelected(item);

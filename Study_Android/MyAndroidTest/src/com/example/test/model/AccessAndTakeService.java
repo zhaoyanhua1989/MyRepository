@@ -13,6 +13,7 @@ import com.example.test.util.MyLog;
 
 /**
  * 储存和拿去对象业务处理类
+ * 
  * @author HKW2962
  *
  */
@@ -20,10 +21,14 @@ public class AccessAndTakeService {
 
 	/**
 	 * 将Bitmap对象储存到sdcard应用程序私有目录中的PICTURES目录下
+	 * 
 	 * @param activity
-	 * @param fileName 文件名
-	 * @param bm bitMap对象
-	 * @param quality 质量，0-100，储存时按质量储存
+	 * @param fileName
+	 *            文件名
+	 * @param bm
+	 *            bitMap对象
+	 * @param quality
+	 *            质量，0-100，储存时按质量储存
 	 * @return 储存的结果boolean
 	 */
 	public static boolean SaveBitmapToSDCARDPic(Activity activity, String fileName, Bitmap bm, int quality) {

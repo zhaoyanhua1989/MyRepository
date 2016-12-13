@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 /**
  * 重写的RelativeLayout，用来显示顶部弹窗
+ * 
  * @author HKW2962
  */
 public class MyTopRelativeLayout extends RelativeLayout {
@@ -40,8 +41,7 @@ public class MyTopRelativeLayout extends RelativeLayout {
 		// 创建弹窗小图片
 		ImageView localImageView = new ImageView(context);
 		localImageView.setImageResource(BaseMethod.getDrawable("icon_top"));
-		RelativeLayout.LayoutParams imageLayoutParams = new RelativeLayout.LayoutParams(BaseMethod.getScaleSize(20),
-				BaseMethod.getScaleSize(20));
+		RelativeLayout.LayoutParams imageLayoutParams = new RelativeLayout.LayoutParams(BaseMethod.getScaleSize(20), BaseMethod.getScaleSize(20));
 		localImageView.setLayoutParams(imageLayoutParams);
 		// this添加图片
 		addView(localImageView);
@@ -49,8 +49,8 @@ public class MyTopRelativeLayout extends RelativeLayout {
 		// 创建textView
 		textview = new TextView(context);
 		textview.setTextColor(-1);
-		RelativeLayout.LayoutParams textviewLayoutParams = new RelativeLayout.LayoutParams(BaseMethod.getScreenSize().x
-				- BaseMethod.getScaleSize(40), BaseMethod.getScaleSize(20));
+		RelativeLayout.LayoutParams textviewLayoutParams = new RelativeLayout.LayoutParams(
+				BaseMethod.getScreenSize().x - BaseMethod.getScaleSize(40), BaseMethod.getScaleSize(20));
 		textviewLayoutParams.leftMargin = BaseMethod.getScaleSize(40);
 		textview.setLayoutParams(textviewLayoutParams);
 		// this添加textView

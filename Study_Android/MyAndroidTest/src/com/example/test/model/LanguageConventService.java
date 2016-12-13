@@ -13,6 +13,7 @@ import com.example.test.util.HanziToPinyinUtil;
 
 /**
  * 汉语转拼音处理业务类
+ * 
  * @author HKW2962
  *
  */
@@ -36,7 +37,7 @@ public class LanguageConventService {
 		}
 		return sb.toString().toUpperCase();
 	}
-	
+
 	/********************** pinyin4j-2.5.0.jar获取拼音 ************************/
 	/**
 	 * 获取汉字串拼音首字母，英文及特殊字符字符不变

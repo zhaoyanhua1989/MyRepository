@@ -85,6 +85,7 @@ public class MyCircle extends View {
 
 	/**
 	 * 相当于没有任何控件的情况下，监听触摸事件(View类中的方法)
+	 * 
 	 * @return True if the event was handled, false otherwise.
 	 */
 	@SuppressLint("ClickableViewAccessibility")
@@ -96,13 +97,15 @@ public class MyCircle extends View {
 			setBollsOnClickListener(point);
 			break;
 		}
-		//这里如果返回的是super.onTouchEvent(event)或者false，将不能正确的监听点中小球切换view
+		// 这里如果返回的是super.onTouchEvent(event)或者false，将不能正确的监听点中小球切换view
 		return true;
 	}
 
 	/**
 	 * 判断小球的点击时间，如果点击的坐标点在任意一个小球(圆)的范围内，则该小球是选中的小球，并设置viewPager跳转到指定位置
-	 * @param point 点击的坐标点
+	 * 
+	 * @param point
+	 *            点击的坐标点
 	 */
 	private void setBollsOnClickListener(Point point) {
 		for (int i = 0; i < circleCenters.length; i++) {

@@ -27,7 +27,6 @@ import android.view.ViewConfiguration;
 import android.view.Window;
 import android.widget.SearchView;
 import android.widget.ShareActionProvider;
-import android.widget.Toast;
 
 import com.example.test.MyApplication;
 import com.example.test.R;
@@ -37,6 +36,7 @@ import com.example.test.model.DBContext;
 import com.example.test.util.MyLog;
 import com.example.test.util.OverallVariable;
 import com.example.test.util.RUtil;
+import com.example.test.util.ToastUtil;
 
 /**
  * 侧滑菜单类，结合了ActionBar相关功能 知识点：1.setOverflowShowingAlways方法，总是显示溢出菜单
@@ -218,7 +218,7 @@ public class SideslipActivity extends FragmentActivity implements TabListener {
 			}
 			return true;
 		default:
-			Toast.makeText(this, "分享-" + item.getTitle(), Toast.LENGTH_SHORT).show();
+			ToastUtil.showCustomToast(this, "点击-" + item.getTitle());
 			break;
 		}
 		return super.onOptionsItemSelected(item);

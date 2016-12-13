@@ -27,7 +27,7 @@ import android.widget.TextView;
 import com.example.test.MyApplication;
 import com.example.test.R;
 import com.example.test.util.MyLog;
-import com.example.test.util.ScreenUtil;
+import com.example.test.util.DeviceUtil;
 import com.example.test.util.ToastUtil;
 import com.example.test.view.MyCustomDialog;
 
@@ -41,6 +41,7 @@ public class AlertDialogService {
 
 	/**
 	 * 直接使用AlertDialog，有缺陷，设置background时，当设置圆角时有尖角
+	 * 
 	 * @param activity
 	 */
 	@SuppressLint({ "InflateParams", "NewApi" })
@@ -56,12 +57,11 @@ public class AlertDialogService {
 		/**
 		 * 在安卓4.4到5.0之间系统的手机上，AlertDialog的顶部可能被剪切掉，所以需要设置Flags
 		 */
-		dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		dialog.show();
 		dialog.setCancelable(false);
 		// 竖屏适配
-		if (!ScreenUtil.isLandscape(activity)) {
+		if (!DeviceUtil.isLandscape(activity)) {
 			// 竖屏时限制高度为屏幕高度的一半，需要判断
 			WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
 			lp.height = (int) Math.ceil((activity.getResources().getDisplayMetrics().heightPixels) / 2);
@@ -81,7 +81,7 @@ public class AlertDialogService {
 		view.findViewById(R.id.update_dialog_exit).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ToastUtil.showToast(activity, "退出游戏");
+				ToastUtil.showCustomToast(activity, "退出游戏");
 				dialog.dismiss();
 				activity.onBackPressed();
 			}
@@ -89,14 +89,14 @@ public class AlertDialogService {
 		view.findViewById(R.id.update_dialog_nextUpdate).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ToastUtil.showToast(activity, "下次更新");
+				ToastUtil.showCustomToast(activity, "下次更新");
 				dialog.dismiss();
 			}
 		});
 		view.findViewById(R.id.update_dialog_updateNow).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ToastUtil.showToast(activity, "立即更新");
+				ToastUtil.showCustomToast(activity, "立即更新");
 				dialog.dismiss();
 			}
 		});
@@ -115,23 +115,22 @@ public class AlertDialogService {
 	 * 显示系统退出弹窗，这里用AlertDialog
 	 */
 	public static void showSystemExitDialog(final Activity activity) {
-		AlertDialog dialog = new AlertDialog.Builder(activity).setTitle("确认退出吗")
-				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-						for (Activity activity : MyApplication.activitys) {
-							activity.finish();
-						}
-						MyApplication.destroy(activity);
-						System.exit(0);
-					}
-				}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				}).setMultiChoiceItems(new String[] { "清除记录", "其他" }, new boolean[] { true, false }, null).create();
+		AlertDialog dialog = new AlertDialog.Builder(activity).setTitle("确认退出吗").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				for (Activity activity : MyApplication.activitys) {
+					activity.finish();
+				}
+				MyApplication.destroy(activity);
+				System.exit(0);
+			}
+		}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		}).setMultiChoiceItems(new String[] { "清除记录", "其他" }, new boolean[] { true, false }, null).create();
 		dialog.show();
 	}
 
@@ -141,8 +140,8 @@ public class AlertDialogService {
 	@SuppressLint("NewApi")
 	public static void showSystemDialog(Activity activity) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.Dialog_MyTheme);
-		builder.setMessage("Hello World").setTitle("Alert Dialog").setIcon(android.R.drawable.ic_dialog_alert)
-				.setCancelable(false).setPositiveButton("Close", new DialogInterface.OnClickListener() {
+		builder.setMessage("Hello World").setTitle("Alert Dialog").setIcon(android.R.drawable.ic_dialog_alert).setCancelable(false)
+				.setPositiveButton("Close", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
 					}
@@ -173,8 +172,7 @@ public class AlertDialogService {
 		/**
 		 * 在安卓4.4到5.0之间系统的手机上，AlertDialog的顶部可能被剪切掉，所以需要设置Flags
 		 */
-		dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		dialog.show();
 		// 监听按钮
 		view.findViewById(R.id.exit_cancelButton).setOnClickListener(new OnClickListener() {
@@ -197,37 +195,38 @@ public class AlertDialogService {
 	}
 
 	/**
-	 * 自定义类MyCustomDialog，继承了Dialog
-	 * 这里用到了WebView显示动态图
+	 * 自定义类MyCustomDialog，继承了Dialog 这里用到了WebView显示动态图
+	 * 
 	 * @param activity
 	 */
 	public static void showCustemDialogForExit(final Activity activity) {
 		MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(activity);
-		customBuilder.setTitle("退出").setContentWebView("run.gif")
-				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-						for (Activity activity : MyApplication.activitys) {
-							activity.finish();
-						}
-						MyApplication.destroy(activity);
-						System.exit(0);
-					}
-				}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
+		customBuilder.setTitle("退出").setContentWebView("run.gif").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				for (Activity activity : MyApplication.activitys) {
+					activity.finish();
+				}
+				MyApplication.destroy(activity);
+				System.exit(0);
+			}
+		}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
 		MyCustomDialog dialog = customBuilder.create();
 		dialog.show();
 	}
-	
+
 	/**
 	 * 显示PopupMenu，优点：在不需要自定义background时使用方便简洁；缺点：不能自定义background
+	 * 
 	 * @param activity
-	 * @param v PopupMenu绑定的view
+	 * @param v
+	 *            PopupMenu绑定的view
 	 */
-	public static void showPopupMenu(final Activity activity, View v){
+	public static void showPopupMenu(final Activity activity, View v) {
 		PopupMenu pm = new PopupMenu(activity, v);
 		pm.getMenuInflater().inflate(R.menu.pop, pm.getMenu());
 		pm.setOnMenuItemClickListener(new OnMenuItemClickListener() {
@@ -260,11 +259,13 @@ public class AlertDialogService {
 		});
 		pm.show();
 	}
-	
+
 	/**
 	 * 显示PopupWindow，可以自定义background
+	 * 
 	 * @param activity
-	 * @param v PopupWindow绑定的view
+	 * @param v
+	 *            PopupWindow绑定的view
 	 */
 	@SuppressLint("InflateParams")
 	public static void showPopupWindow(final Activity activity, View v) {
@@ -273,14 +274,14 @@ public class AlertDialogService {
 		// 必须在代码中设置一下背景色，点击外面不会隐藏此弹窗
 		pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		// Focusable 为False时，不执行则点击外面不会隐藏此弹窗
-		pw.setOutsideTouchable(true); 
+		pw.setOutsideTouchable(true);
 		// 显示 默认显示View的正下方，xoff表示x轴的偏移，正值表示向左，负值表示向右；yoff表示相对y轴的偏移，正值是向下，负值是向上
 		// pw.showAsDropDown(v, 0, 0);
-		// 相对于父控件的位置（例如正中央Gravity.CENTER，下方Gravity.BOTTOM等），可以设置偏移或无偏移  
+		// 相对于父控件的位置（例如正中央Gravity.CENTER，下方Gravity.BOTTOM等），可以设置偏移或无偏移
 		pw.showAtLocation(v, Gravity.CENTER, 0, 0);
-		
+
 		// 设置点击监听
-		((Button)view.findViewById(R.id.popwindow_bt1)).setOnClickListener(new OnClickListener() {
+		((Button) view.findViewById(R.id.popwindow_bt1)).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// 自定义AlertDialog，更新弹窗
@@ -288,7 +289,7 @@ public class AlertDialogService {
 				pw.dismiss();
 			}
 		});
-		((Button)view.findViewById(R.id.popwindow_bt2)).setOnClickListener(new OnClickListener() {
+		((Button) view.findViewById(R.id.popwindow_bt2)).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// 系统退出弹窗
@@ -296,7 +297,7 @@ public class AlertDialogService {
 				pw.dismiss();
 			}
 		});
-		((Button)view.findViewById(R.id.popwindow_bt3)).setOnClickListener(new OnClickListener() {
+		((Button) view.findViewById(R.id.popwindow_bt3)).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// 测试style的系统退出窗口
@@ -304,7 +305,7 @@ public class AlertDialogService {
 				pw.dismiss();
 			}
 		});
-		((Button)view.findViewById(R.id.popwindow_bt4)).setOnClickListener(new OnClickListener() {
+		((Button) view.findViewById(R.id.popwindow_bt4)).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// 自定义退出弹窗1
@@ -312,7 +313,7 @@ public class AlertDialogService {
 				pw.dismiss();
 			}
 		});
-		((Button)view.findViewById(R.id.popwindow_bt5)).setOnClickListener(new OnClickListener() {
+		((Button) view.findViewById(R.id.popwindow_bt5)).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// 自定义退出弹窗2

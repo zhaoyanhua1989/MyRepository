@@ -69,8 +69,67 @@
 
 
 六、Android写get或者post请求，获取不到数据，原因可能为：
-   1、未在工作线程中进行请求；
+   1、空指针时，未在工作线程中进行请求；
    2、没有加权限：<uses-permission android:name="android.permission.INTERNET"/>
+
+
+七、线程池：
+   1、建议使用较为方便的Executors工厂方法：
+      a).Executors.newCachedThreadPool()（无界线程池，可以进行自动线程回收）
+      b).Executors.newFixedThreadPool(int)（固定大小线程池）
+      c).Executors.newSingleThreadExecutor()（单个后台线程），它们均为大多数使用场景预定义了设置
+   2、new ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, RejectedExecutionHandler handler)
+              参数说明：
+        corePoolSize： 线程池维护线程的最少数量
+        maximumPoolSize：线程池维护线程的最大数量
+        keepAliveTime： 线程池维护线程所允许的空闲时间
+        unit： 线程池维护线程所允许的空闲时间的单位
+        workQueue： 线程池所使用的缓冲队列
+        handler： 线程池对拒绝任务的处理策略
+              当新任务在方法 execute(java.lang.Runnable)中提交时，如果运行的线程少于 corePoolSize，则创建新线程来处理请求，
+              即使其他辅助线程是空闲的。如果运行的线程多于corePoolSize 而少于 maximumPoolSize，则仅当队列满时才创建新线程。
+              如果设置的 corePoolSize 和 maximumPoolSize相同，则创建了固定大小的线程池。如果将 maximumPoolSize 设置为基本
+              的无界值（如 Integer.MAX_VALUE），则允许池适应任意数量的并发任务。
+   3、任务通过execute(Runnable)方法欲添加到线程池。
+
+
+八、进程优先级：
+   1、前台进程；
+   2、可视进程；
+   3、服务进程；
+   4、后台进程；
+   5、空进程。系统经常杀死，不会造成任何影响。空进程存在的唯一理由是为了缓存一些启动数据，以便下次可以更快的启动。
+        耗时操作可以放在thread中，但是如果切换到后台，当内存不足时容易被系统杀掉，可以考虑放在service中。
+        但是service在数据交互方面会遇到困难，比如实时更新UI控件。
+   BroadcastReceiver也不应该存在耗时操作，而应该启动service来完成。BroadcastReceiver的生命周期过短，也决定了不能在其中执行耗时操作。
+
+
+九、notification
+   1、普通通知：
+	  NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+	  builder的setSmallIcon、setContentTitle、setContentText、setTicker设置通知内容;
+	     设置通知的点击跳转：builder.setContentIntent(PendingIntent);
+	  // 创建通知对象
+	  Notification mNotification = builder.build();
+	  // 设置消息点击后，自动消失
+	  mNotification.flags = Notification.FLAG_AUTO_CANCEL;
+	  // 添加声音效果
+	  mNotification.defaults = Notification.DEFAULT_SOUND;
+	  // 获得通知管理器
+	  mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+	  // 发送通知，第一个参数决定通知是并列显示还是覆盖显示
+	  mNotificationManager.notify(id, mNotification);
+   2、自定义UI的通知：
+               和上面相似，只是需要自定义RemoteViews做为通知的contentView(见NotificationActivity)：
+      // 创建通知对象
+	  Notification mNotification = builder.build();
+	  mNotification.contentView = contentViews;
+	  // 注：这里必须设置顶部菜单栏的通知显示的图标，不然不会显示通知
+	  mNotification.icon = RUtil.getDrawable(this, "custom_notification_icon");
+	  // 设置为常驻消息
+	  mNotification.flags = Notification.FLAG_NO_CLEAR;
+        如何修改通知内容：再发一次id相同的通知即可。
+   
 
 
 </body>

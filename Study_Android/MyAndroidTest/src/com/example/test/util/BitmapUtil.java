@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 
-public class BitmapBiz {
+public class BitmapUtil {
 
 	public static Bitmap compress(byte[] bytes, int width, int height) {
 		MyLog.d("compress, decodeByteArray...");
@@ -21,10 +21,9 @@ public class BitmapBiz {
 		opts.inPurgeable = true;
 		// 设置为false,表示不仅Bitmap的属性，也要加载bitmap
 		opts.inJustDecodeBounds = false;
-		Bitmap map = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, opts);
-		return map;
+		return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, opts);
 	}
-	
+
 	/**
 	 * @param ctx
 	 *            为Context对象

@@ -100,7 +100,7 @@ public class MyCustomDialog extends Dialog {
 			this.title = title;
 			return this;
 		}
-		
+
 		/**
 		 * set the contentImageView from resource
 		 * 
@@ -111,7 +111,7 @@ public class MyCustomDialog extends Dialog {
 			contentImageId = imgId;
 			return this;
 		}
-		
+
 		/**
 		 * set the contentWebView from name
 		 * 
@@ -202,10 +202,10 @@ public class MyCustomDialog extends Dialog {
 			// get views
 			Button positiveButton = (Button) layout.findViewById(R.id.customDialog_positiveButton);
 			Button negativeButton = (Button) layout.findViewById(R.id.customDialog_negativeButton);
-			
+
 			// set the dialog title
 			((TextView) layout.findViewById(R.id.customDialog_title)).setText(title);
-			
+
 			// set the confirm button
 			if (positiveButtonText != null) {
 				positiveButton.setText(positiveButtonText);
@@ -241,7 +241,7 @@ public class MyCustomDialog extends Dialog {
 				TextView contentTextView = (TextView) layout.findViewById(R.id.customDialog_content_message);
 				contentTextView.setVisibility(View.VISIBLE);
 				contentTextView.setText(contentMessage);
-			} 
+			}
 			if (contentImageId != 0) {
 				ImageView contentTextView = (ImageView) layout.findViewById(R.id.customDialog_content_imageView);
 				contentTextView.setVisibility(View.VISIBLE);
@@ -254,14 +254,14 @@ public class MyCustomDialog extends Dialog {
 				sb.append("<HTML><body bgcolor='#f3f3f3'><div align=center><IMG src='file:///android_asset/");
 				sb.append(contentGifName);
 				sb.append("'/></div></body></HTML>");
-				contentTextView.loadDataWithBaseURL(null, sb.toString(), "text/html", "UTF-8",null);
+				contentTextView.loadDataWithBaseURL(null, sb.toString(), "text/html", "UTF-8", null);
 			}
 			if (contentView != null) {
 				// if no message set
 				// add the contentView to the dialog body
 				((LinearLayout) layout.findViewById(R.id.customDialog_content)).removeAllViews();
-				((LinearLayout) layout.findViewById(R.id.customDialog_content)).addView(contentView, new LayoutParams(
-						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+				((LinearLayout) layout.findViewById(R.id.customDialog_content)).addView(contentView, new LayoutParams(LayoutParams.WRAP_CONTENT,
+						LayoutParams.WRAP_CONTENT));
 			}
 			dialog.setContentView(layout);
 			return dialog;

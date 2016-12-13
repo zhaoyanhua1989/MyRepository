@@ -14,7 +14,7 @@ import android.widget.TextView;
 public class MyTextView extends TextView {
 
 	private Paint paintA = new Paint(); // 写字
-	private String[] texts = new String[] {" "}; // 一调用WcTextView就会onDraw，texts不能为空
+	private String[] texts = new String[] { " " }; // 一调用WcTextView就会onDraw，texts不能为空
 	private int textWidth; // 文字的宽度
 	private int textMargin = 50; // 文字间的间隙
 	private int w; // 屏幕宽度
@@ -49,13 +49,13 @@ public class MyTextView extends TextView {
 		paint.setColor(getResources().getColor(R.color.light_font));
 		// 设置字体宽度
 		textWidth = (int) paintA.measureText(texts.toString(), 0, 1);
-		MyLog.d("textWidth="+textWidth);
+		MyLog.d("textWidth=" + textWidth);
 	}
 
 	// 起始位置是本控件的宽和高
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		MyLog.d("onSizeChanged, w="+w+",h="+h+",oldw="+oldw+",oldh="+oldh);
+		MyLog.d("onSizeChanged, w=" + w + ",h=" + h + ",oldw=" + oldw + ",oldh=" + oldh);
 		super.onSizeChanged(w, h, oldw, oldh);
 		this.w = w;
 		this.h = h;

@@ -23,7 +23,8 @@ public class DBContext {
 	/**
 	 * 执行查询返回Cursor，可有占位符
 	 * 
-	 * @param params中的数据为sql中?的值，假如没有?就为null
+	 * @param params中的数据为sql中
+	 *            ?的值，假如没有?就为null
 	 */
 	public Cursor execQuery(String sql, String[] params) {
 		// 1.打开数据库(不存在则创建)
@@ -35,7 +36,7 @@ public class DBContext {
 		} catch (Exception e) {
 			MyLog.e("execQuery error, exception is：" + e.getMessage());
 		}
-//		sdb.close();
+		// sdb.close();
 		return c;
 	}
 
@@ -45,6 +46,7 @@ public class DBContext {
 
 	/**
 	 * 执行插入操作
+	 * 
 	 * @param values
 	 * @return 当前写入的行数，如果是-1，则写入失败
 	 */
@@ -81,8 +83,7 @@ public class DBContext {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			MyLog.d("DBContext create database...");
-			String sql = "create table if not exists " + mTableName + "(id integer primary key autoincrement," + "name varchar(100) not null,"
-					+ "gender varchar(50) not null," + "addTime datetime not null)";
+			String sql = "create table if not exists " + mTableName + "(id integer primary key autoincrement,name varchar(100) not null," + "gender varchar(50) not null,addTime datetime not null)";
 			db.execSQL(sql);
 		}
 

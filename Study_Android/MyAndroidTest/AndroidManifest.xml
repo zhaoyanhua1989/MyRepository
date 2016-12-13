@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="20" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -20,6 +20,8 @@
     
     <!-- 发送网络请求用 -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 广播权限 -->
+    <uses-permission android:name="com.example.test.ACTIONNOTIFICATION"/>
 
     <application
         android:name=".MyApplication"
@@ -73,12 +75,16 @@
         </activity>
         <activity
             android:name=".activity.NotificationActivity"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:configChanges="keyboard|orientation|navigation|screenSize"
             android:label="@string/title_activity_notifycation"
             android:screenOrientation="sensor"
             android:theme="@style/AppTheme" >
         </activity>
         <activity
-            android:name=".activity.NotificationCameraActivity"
+            android:name=".activity.NotificationActivity$NotificationCameraActivity"
+            android:exported="true"
             android:configChanges="keyboard|orientation|navigation|screenSize"
             android:label="@string/title_activity_camera"
             android:screenOrientation="sensor"
@@ -98,6 +104,10 @@
             android:label="@string/title_activity_login"
             android:theme="@style/center_float_dialog" >
         </activity>
+        <provider android:name="com.example.test.model.CustomContentProvider"
+            android:exported="true"
+            android:authorities="hb.android.contentProvider"
+            android:multiprocess="false"></provider>
     </application>
 
 </manifest>

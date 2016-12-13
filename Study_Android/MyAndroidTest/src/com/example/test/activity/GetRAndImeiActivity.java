@@ -1,26 +1,25 @@
 package com.example.test.activity;
 
-import com.example.test.MyApplication;
-import com.example.test.R;
-import com.example.test.util.FileUtil;
-import com.example.test.util.HelpUtil;
-import com.example.test.util.MyLog;
-
 import android.app.Activity;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.test.MyApplication;
+import com.example.test.R;
+import com.example.test.util.DeviceUtil;
+import com.example.test.util.FileUtil;
+import com.example.test.util.MyLog;
+import com.example.test.util.ToastUtil;
 
 public class GetRAndImeiActivity extends Activity {
 
 	private TextView dirText;
 	private TextView nText;
 	private TextView imeiText;
-	
-	
+
 	/************************** 测试安卓Data的缓存文件 ***************************/
 	// TODO
 	@Override
@@ -45,7 +44,7 @@ public class GetRAndImeiActivity extends Activity {
 		dirText.setText(this.getPackageName());
 		switch (v.getId()) {
 		case R.id.imei_button1:
-			Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+			ToastUtil.showCustomToast(this, "登录成功");
 			if (getAccountN(this) == 0) {
 				modifyAccountN(this, 1);
 				nText.setText("" + getAccountN(this));
@@ -53,13 +52,13 @@ public class GetRAndImeiActivity extends Activity {
 			}
 			break;
 		case R.id.imei_button2:
-			Toast.makeText(this, "绑定成功", Toast.LENGTH_SHORT).show();
+			ToastUtil.showCustomToast(this, "绑定成功");
 			modifyAccountN(this, 0);
 			nText.setText("" + getAccountN(this));
 			MyLog.i("bind end, AccountN=" + getAccountN(this));
 			break;
 		case R.id.imei_button3:
-			String imei = HelpUtil.getImei(this);
+			String imei = DeviceUtil.getImei(this);
 			imeiText.setText(imei);
 			break;
 		default:
@@ -79,8 +78,6 @@ public class GetRAndImeiActivity extends Activity {
 		editor.commit();
 	}
 
-	
-	
 	/************************** 测试获取R ***************************/
 	// TODO
 	private void Rinit() {

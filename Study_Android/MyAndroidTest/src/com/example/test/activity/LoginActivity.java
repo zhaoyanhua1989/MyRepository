@@ -4,15 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -21,8 +15,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.example.test.R;
+import com.example.test.util.HttpUtils;
 import com.example.test.util.MyLog;
 import com.example.test.util.RUtil;
 import com.example.test.util.StringUtil;
@@ -30,11 +26,16 @@ import com.example.test.util.ToastUtil;
 
 public class LoginActivity extends Activity {
 
-	private EditText nameEt;
-	private EditText pwdEt;
-	private Button loginBt;
-	@SuppressWarnings("unused")
-	private Button registerBt;
+	private EditText nameEt; // 账号输入EditText
+	private EditText pwdEt; // 密码输入EditText
+	private Button loginBt; // 登录按钮
+	private Button registerBt; // 注册按钮
+	private Button r_confirmBt; // 注册的确定按钮
+	private Button r_cancelBt; // 注册的取消按钮
+	private LinearLayout loginLl; // 登录块
+	private LinearLayout registerLl; // 注册块
+	private String name;
+	private String pwd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,84 +49,248 @@ public class LoginActivity extends Activity {
 		pwdEt = (EditText) findViewById(RUtil.getId(this, "login_pwdEdittext"));
 		loginBt = (Button) findViewById(RUtil.getId(this, "login_logintBT"));
 		registerBt = (Button) findViewById(RUtil.getId(this, "login_registerBT"));
+		r_confirmBt = (Button) findViewById(RUtil.getId(this, "login_confirmBT"));
+		r_cancelBt = (Button) findViewById(RUtil.getId(this, "login_cancelBT"));
+		loginLl = (LinearLayout) findViewById(RUtil.getId(this, "loginActivity_LinearLayout3"));
+		registerLl = (LinearLayout) findViewById(RUtil.getId(this, "loginActivity_LinearLayout4"));
 		loginBt.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				MyLog.d("点我....");
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
-						requestGet();
-						// requestPost();
+						// requestLoginGet();
+						requestLoginPost();
 					}
 				}).start();
 			}
 		});
+		registerBt.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showRegisterZone();
+			}
+		});
+		r_confirmBt.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						// requestRegisterGet();
+						requestRegisterPost();
+					}
+				}).start();
+			}
+		});
+		r_cancelBt.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showLoginZone();
+			}
+		});
 	}
 
-	private void requestGet() {
-		String name = nameEt.getText().toString().trim();
-		String pwd = pwdEt.getText().toString().trim();
+	@SuppressWarnings("unused")
+	private void requestLoginGet() {
 		// 验证非空
-		if(!checkNotNull(name, pwd))
+		if (!checkNotNull())
 			return;
-		HttpClient client = new DefaultHttpClient();
-		String uri = "http://10.20.72.80:8080/2.5_web_jsp/requestLogin.jsp?name=" + name + "&pwd=" + pwd;
-		MyLog.i("uri= " + uri);
-		HttpGet get = new HttpGet(uri);
-		HttpResponse resp;
-		boolean reslut = false;
+		String uri = "http://10.20.72.80:8080/2.5_web_jsp/requestLogin.jsp?request=login&name=" + name + "&pwd=" + pwd;
 		try {
-			resp = client.execute(get);
+			HttpEntity entity = HttpUtils.get(HttpUtils.GET, uri, null);
 			// 获取响应文本 json字符串
-			String json = EntityUtils.toString(resp.getEntity());
-			MyLog.i("json: " + json);
-			JSONObject obj = new JSONObject(json);
-			reslut = obj.getBoolean("result");
+			if (entity != null) {
+				dealLoginResult(EntityUtils.toString(entity));
+			} else {
+				ToastUtil.showCustomToast(this, "服务端未启动...");
+			}
+		} catch (Exception e) {
+			MyLog.e("requestLoginGet exception, exception=" + e.getMessage());
+			ToastUtil.showCustomToast(this, "服务端未启动或存在异常...");
+		}
+	}
+
+	private void requestLoginPost() {
+		// 验证非空
+		if (!checkNotNull())
+			return;
+		// HttpPost连接对象
+		String uri = "http://10.20.72.80:8080/2.5_web_jsp/requestLogin.jsp?";
+		List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+		params.add(new BasicNameValuePair("name", name));
+		params.add(new BasicNameValuePair("pwd", pwd));
+		params.add(new BasicNameValuePair("request", "login"));
+		try {
+			HttpEntity entity = HttpUtils.get(HttpUtils.POST, uri, params);
+			if (entity != null) {
+				// 取得返回的字符串
+				dealLoginResult(EntityUtils.toString(entity));
+			} else {
+				ToastUtil.showCustomToast(this, "服务端未启动...");
+			}
+		} catch (Exception e) {
+			MyLog.e("requestLoginPost exception, exception=" + e.getMessage());
+			ToastUtil.showCustomToast(this, "服务端未启动或存在异常...");
+		}
+	}
+
+	// 处理登录结果
+	private void dealLoginResult(String resutlJson) {
+		boolean result = false;
+		try {
+			MyLog.i("json:" + resutlJson);
+			JSONObject obj = new JSONObject(resutlJson);
+			result = obj.getBoolean("result");
 		} catch (Exception e) {
 			MyLog.e(e.getMessage());
 		}
-		if(reslut) {
-			finish();
+		if (result) {
+			ToastUtil.showCustomToast(this, "登录成功");
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					finish();
+				}
+			});
 		} else {
-			ToastUtil.showToast(this, "账号或密码错误");
+			ToastUtil.showCustomToast(this, "账号或密码错误");
 		}
 	}
 
-	private boolean checkNotNull(String name, String pwd) {
-		if(StringUtil.isEmpty(name)) {
-			nameEt.setError("请输入账号");
+	@SuppressWarnings("unused")
+	private void requestRegisterGet() {
+		// 验证非空
+		if (!checkNotNull())
+			return;
+		String uri = "http://10.20.72.80:8080/2.5_web_jsp/requestLogin.jsp?request=register&name=" + name + "&pwd=" + pwd;
+		try {
+			HttpEntity entity = HttpUtils.get(HttpUtils.GET, uri, null);
+			if (entity != null) {
+				dealRegisterResult(EntityUtils.toString(entity));
+			} else {
+				ToastUtil.showCustomToast(this, "服务端未启动...");
+			}
+		} catch (Exception e) {
+			MyLog.e("requestRegisterGet exception, exception=" + e.getMessage());
+			ToastUtil.showCustomToast(this, "服务端未启动或存在异常...");
+		}
+
+	}
+
+	private void requestRegisterPost() {
+		// 验证非空
+		if (!checkNotNull())
+			return;
+		// HttpPost连接对象
+		String uri = "http://10.20.72.80:8080/2.5_web_jsp/requestLogin.jsp?";
+		List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+		params.add(new BasicNameValuePair("name", name));
+		params.add(new BasicNameValuePair("pwd", pwd));
+		params.add(new BasicNameValuePair("request", "register"));
+		try {
+			HttpEntity entity = HttpUtils.get(HttpUtils.POST, uri, params);
+			if (entity != null) {
+				dealRegisterResult(EntityUtils.toString(entity));
+			} else {
+				ToastUtil.showCustomToast(this, "服务端未启动...");
+			}
+		} catch (Exception e) {
+			MyLog.e("requestRegisterPost exception, exception=" + e.getMessage());
+			ToastUtil.showCustomToast(this, "服务端未启动或存在异常...");
+		}
+	}
+
+	// 处理注册的结果
+	private void dealRegisterResult(String resutlJson) {
+		int result = -1;
+		JSONObject obj = null;
+		try {
+			MyLog.i("json:" + resutlJson);
+			obj = new JSONObject(resutlJson);
+			result = obj.getInt("result");
+		} catch (Exception e) {
+			MyLog.e(e.getMessage());
+		}
+		if (result == -1) {
+			try {
+				String insertException = obj.getString("exception");
+				if (insertException.startsWith("Duplicate entry")) {
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							nameEt.requestFocus(); // 使获取焦点
+							nameEt.setError("该账号已被注册");
+						}
+					});
+				}
+			} catch (JSONException e) {
+				MyLog.e(e.getMessage());
+			}
+		} else if (result == 0) {
+			ToastUtil.showCustomToast(this, "未知错误，请重试");
+		} else {
+			ToastUtil.showCustomToast(this, "注册成功");
+			// 返回登录
+			showLoginZone();
+			// 直接登录
+			requestLoginPost();
+		}
+	}
+
+	// 显示登录界面
+	private void showLoginZone() {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				registerLl.setVisibility(View.GONE);
+				loginLl.setVisibility(View.VISIBLE);
+			}
+		});
+	}
+
+	// 显示注册界面
+	private void showRegisterZone() {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				registerLl.setVisibility(View.VISIBLE);
+				loginLl.setVisibility(View.GONE);
+			}
+		});
+	}
+
+	private boolean checkNotNull() {
+		name = nameEt.getText().toString().trim();
+		pwd = pwdEt.getText().toString().trim();
+		if (StringUtil.isEmpty(name)) {
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					nameEt.setError("请输入账号");
+				}
+			});
 			return false;
 		}
-		if(StringUtil.isEmpty(pwd)) {
-			pwdEt.setError("请输入密码");
+		if (StringUtil.isEmpty(pwd)) {
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					pwdEt.setError("请输入密码");
+				}
+			});
 			return false;
 		}
 		return true;
 	}
 
-	@SuppressWarnings("unused")
-	private void requestPost() {
-		// HttpPost连接对象
-		HttpPost httpRequest = new HttpPost("http://localhost:8080/2.5_web_jsp/requestLogin.jsp?");
-		List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-		params.add(new BasicNameValuePair("name", "aaa"));
-		params.add(new BasicNameValuePair("pwd", "111"));
-		HttpEntity httpentity = null;
-		try {
-			httpentity = new UrlEncodedFormEntity(params, "UTF-8");
-			// 请求httpRequest的实体
-			httpRequest.setEntity(httpentity);
-			// 取得默认的HttpClient
-			HttpClient httpclient = new DefaultHttpClient();
-			// 取得HttpResponse
-			HttpResponse httpResponse = httpclient.execute(httpRequest);
-			// HttpStatus.SC_OK表示连接成功
-			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				// 取得返回的字符串
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	@Override
+	public void onBackPressed() {
+		if (registerLl.isShown()) {
+			showLoginZone();
+		} else {
+			ToastUtil.showCustomToast(this, "登录取消");
+			finish();
 		}
 	}
 }

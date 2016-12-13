@@ -8,13 +8,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.example.test.MyApplication;
 import com.example.test.R;
 import com.example.test.model.AlertDialogService;
 import com.example.test.model.LanguageConventService;
 import com.example.test.util.MessageUtil;
+import com.example.test.util.ToastUtil;
 
 public class MainActivity extends Activity {
 
@@ -96,7 +96,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.delete) {
-			Toast.makeText(this, "menu点击事件", Toast.LENGTH_SHORT).show();
+			ToastUtil.showCustomToast(this, "menu点击事件");
 		}
 		return super.onOptionsItemSelected(item);
 	}
