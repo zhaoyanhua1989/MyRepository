@@ -1,7 +1,6 @@
 package com.example.test.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,14 +8,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
-import com.example.test.MyApplication;
 import com.example.test.R;
+import com.example.test.base.BaseActivity;
 import com.example.test.model.AlertDialogService;
 import com.example.test.model.LanguageConventService;
 import com.example.test.util.MessageUtil;
 import com.example.test.util.ToastUtil;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +23,6 @@ public class MainActivity extends Activity {
 		/* 隐藏标题栏，隐藏后看不到右上角的menu */
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-		MyApplication.activitys.add(this);
 	}
 
 	@SuppressLint("NewApi")
@@ -67,6 +65,10 @@ public class MainActivity extends Activity {
 			// 测试登录
 			startActivity(new Intent(this, LoginActivity.class));
 			break;
+		case R.id.main_button10:
+			// 测试webView
+			startActivity(new Intent(this, WebViewActivity.class));
+			break;
 		}
 	}
 
@@ -101,4 +103,18 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	protected void initVariables() {
+		
+	}
+
+	@Override
+	protected void initViews(Bundle savedInstanceState) {
+		
+	}
+
+	@Override
+	protected void loadData() {
+		
+	}
 }

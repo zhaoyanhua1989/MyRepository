@@ -49,7 +49,6 @@ public class NotificationActivity extends ListActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		MyLog.d("创建了NotificationActivity实例");
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		MyApplication.activitys.add(this);
@@ -59,7 +58,6 @@ public class NotificationActivity extends ListActivity {
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		MyLog.d("选中了item，position=" + position);
 		switch (position) {
 		case 0:
 			// 普通类型通知

@@ -17,6 +17,10 @@ public class RUtil {
 		return getResIdentifier(context, name, "drawable");
 	}
 
+	public static int getAnim(Context context, String name) {
+		return getResIdentifier(context, name, "anim");
+	}
+
 	public static int getString(Context context, String name) {
 		return getResIdentifier(context, name, "string");
 	}
@@ -39,6 +43,18 @@ public class RUtil {
 
 	public static String[] getValuesStringArray(Activity activity, String name) {
 		return activity.getResources().getStringArray(getStringArray(activity, name));
+	}
+
+	/**
+	 * 通过资源id获取name
+	 * 
+	 * @param context
+	 * @param id
+	 *            资源id
+	 * @return
+	 */
+	public static String getIdName(Context context, int id) {
+		return context.getResources().getResourceEntryName(id);
 	}
 
 	/**

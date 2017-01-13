@@ -20,6 +20,7 @@ public class MyApplication extends Application {
 		super.attachBaseContext(base);
 		MyLog.d("MyApplication attachBaseContext...");
 		MyLog.openLog(true);
+		PropertiesUtil.loadFromAssetConfig(this);
 	}
 
 	// 第二执行

@@ -4,10 +4,16 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:layout_above="@+id/loginActivity_loginDialog" />
+
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/loginActivity_loginDialog"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
         android:background="@drawable/activity_login_bg"
         android:paddingBottom="15dp"
         android:paddingLeft="10dp"
@@ -21,6 +27,7 @@
             android:orientation="horizontal" >
 
             <TextView
+                android:id="@+id/login_nameTileName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -45,14 +52,51 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/loginActivity_LinearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/loginActivity_LinearLayout1"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <Button
+                android:id="@+id/login_getVerificationCodeBT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:text="@string/activity_login_getverificationCode"
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/login_verificationCodeEdittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/activity_login_edittext_bg"
+                android:hint="@string/activity_login_verificationCodeHint"
+                android:minHeight="35dp"
+                android:padding="2dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="5dp"
+                android:password="true"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/loginActivity_LinearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/loginActivity_LinearLayout1"
+            android:layout_below="@id/loginActivity_LinearLayout3"
             android:layout_marginTop="10dp"
             android:orientation="horizontal" >
 
             <TextView
+                android:id="@+id/login_pwdTileName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -66,29 +110,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:password="true"
                 android:background="@drawable/activity_login_edittext_bg"
                 android:minHeight="35dp"
                 android:padding="2dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="5dp"
+                android:password="true"
                 android:textSize="16dp" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/loginActivity_LinearLayout3"
+            android:id="@+id/loginActivity_LinearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/loginActivity_LinearLayout2"
             android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:minHeight="30dp"
             android:orientation="horizontal" >
 
             <Button
                 android:id="@+id/login_logintBT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:layout_weight="1"
+                android:background="@null"
                 android:text="@string/activity_login_login"
                 android:textColor="@android:color/white"
                 android:textSize="15dp"
@@ -98,21 +144,24 @@
                 android:id="@+id/login_registerBT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:layout_weight="1"
+                android:background="@null"
                 android:text="@string/activity_login_regist"
                 android:textColor="@android:color/white"
                 android:textSize="15dp"
                 android:textStyle="bold" />
         </LinearLayout>
-        
+
         <!-- 注册按钮 -->
+
         <LinearLayout
-            android:id="@+id/loginActivity_LinearLayout4"
+            android:id="@+id/loginActivity_LinearLayout5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/loginActivity_LinearLayout2"
             android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:minHeight="30dp"
             android:orientation="horizontal"
             android:visibility="gone" >
 
@@ -120,8 +169,8 @@
                 android:id="@+id/login_confirmBT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:layout_weight="1"
+                android:background="@null"
                 android:text="@string/activity_login_regist_confirm"
                 android:textColor="@android:color/white"
                 android:textSize="15dp"
@@ -131,13 +180,18 @@
                 android:id="@+id/login_cancelBT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:layout_weight="1"
+                android:background="@null"
                 android:text="@string/activity_login_regist_cancel"
                 android:textColor="@android:color/white"
                 android:textSize="15dp"
                 android:textStyle="bold" />
         </LinearLayout>
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/loginActivity_loginDialog" />
 
 </RelativeLayout>

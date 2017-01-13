@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>贪吃蛇</title>
+		<style type="text/css">
+			canvas{
+				border: 1px solid black;
+			}
+			#consoleBT{
+				width: 200px;
+				height: 200px;
+				float: left;
+				font-size: 20px;
+			}
+		</style>
+		<script src="../js/Node.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/Worm.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/Stage.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			function load () {
+				//满屏显示canvas
+				var canvas=document.getElementById("canvas");
+				canvas.setAttribute('width', screen.width - 20);
+				canvas.setAttribute('height', screen.height - 50);
+				var consoleBT=document.getElementById("consoleBT");
+				//创建舞台 并且绘制
+				var stage=new Stage();
+				var ctx=canvas.getContext("2d");
+				//100毫秒绘制一次
+				window.setInterval(function () {
+					stage.worm.step();
+					stage.print(ctx);
+				}, 100);
+			}
+			function changeDir (newdir) {
+				dir=newdir;
+			}
+			function showOrHideConsole () {
+				window.androidFunction.showOrHideConsole();
+			}
+		</script>
+	</head>
+	<body onload="load()">
+		<canvas id="canvas" style="height: 100%; width: 98%;"></canvas>		
+		<input id="consoleBT" type="button" onclick="showOrHideConsole()" value="显示/隐藏控制杆"/>
+	</body>
+</html>

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.test.MyApplication;
 import com.example.test.R;
-import com.example.test.util.DeviceUtil;
+import com.example.test.util.AppUtil;
 import com.example.test.util.FileUtil;
 import com.example.test.util.MyLog;
 import com.example.test.util.ToastUtil;
@@ -58,7 +58,7 @@ public class GetRAndImeiActivity extends Activity {
 			MyLog.i("bind end, AccountN=" + getAccountN(this));
 			break;
 		case R.id.imei_button3:
-			String imei = DeviceUtil.getImei(this);
+			String imei = AppUtil.getImei(this);
 			imeiText.setText(imei);
 			break;
 		default:

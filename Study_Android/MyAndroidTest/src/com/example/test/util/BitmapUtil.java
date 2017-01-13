@@ -1,5 +1,8 @@
 package com.example.test.util;
 
+import java.io.InputStream;
+
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -53,6 +56,34 @@ public class BitmapUtil {
 	}
 
 	/**
+	 * 以最省内存的方式读取本地资源的图片
+	 * 
+	 * @param context
+	 * @param resId
+	 * @return
+	 */
+	public static Bitmap readBitMap(Activity context, int resId) {
+		BitmapFactory.Options opt = new BitmapFactory.Options();
+		opt.inPreferredConfig = Bitmap.Config.RGB_565;
+		opt.inPurgeable = true;
+		opt.inInputShareable = true;
+		opt.inJustDecodeBounds = true;
+		BitmapFactory.decodeResource(context.getResources(), resId, opt);
+		float scaleWidth = opt.outWidth / AppUtil.getScreenWidth(context);
+		float scaleHeight = opt.outHeight / AppUtil.getScreenHeight(context);
+		float imageScale = 1;
+		if (scaleWidth > scaleHeight && scaleHeight > 1)
+			imageScale = scaleWidth + 0.5f;
+		if (scaleHeight > scaleWidth && scaleWidth > 1)
+			imageScale = scaleHeight + 0.5f;
+		opt.inJustDecodeBounds = false;
+		opt.inSampleSize = (int) imageScale;
+		// 获取资源图片
+		InputStream is = context.getResources().openRawResource(resId);
+		return BitmapFactory.decodeStream(is, null, opt);
+	}
+
+	/**
 	 * 大牛写，根据路径获得突破并压缩返回bitmap用于显示
 	 *
 	 * @param filePath
@@ -97,5 +128,4 @@ public class BitmapUtil {
 		}
 		return inSampleSize;
 	}
-
 }

@@ -59,7 +59,7 @@ public class WelcomeActivity extends Activity {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				Intent intent = new Intent();
-				intent.setAction("android.intent.action.VIEW");
+				intent.setAction(Intent.ACTION_VIEW);
 				Uri content_url = Uri.parse(RUtil.getValuesString(WelcomeActivity.this, "welcome_advertisement"));
 				intent.setData(content_url);
 				startActivity(intent);

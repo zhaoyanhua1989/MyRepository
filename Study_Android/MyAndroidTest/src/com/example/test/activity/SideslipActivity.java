@@ -23,6 +23,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.view.Window;
 import android.widget.SearchView;
@@ -37,6 +38,8 @@ import com.example.test.util.MyLog;
 import com.example.test.util.OverallVariable;
 import com.example.test.util.RUtil;
 import com.example.test.util.ToastUtil;
+import com.example.test.view.SideslipMenu;
+import com.example.test.view.SideslipMenu.SideslipMenuListener;
 
 /**
  * 侧滑菜单类，结合了ActionBar相关功能 知识点：1.setOverflowShowingAlways方法，总是显示溢出菜单
@@ -50,6 +53,7 @@ public class SideslipActivity extends FragmentActivity implements TabListener {
 	private ActionBar mActionBar;
 	private ViewPager mViewPager;
 	private List<FriendEntity> friends = new ArrayList<FriendEntity>();
+	private SideslipMenu mSlidingMenu; // 侧滑菜单
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +127,52 @@ public class SideslipActivity extends FragmentActivity implements TabListener {
 		mViewPager = (ViewPager) findViewById(RUtil.getId(this, "sideslip_viewPager"));
 		SideslipViewPagerAdapter mAdapter = new SideslipViewPagerAdapter(2, getSupportFragmentManager(), friends);
 		mViewPager.setAdapter(mAdapter);
+		try {
+			mSlidingMenu = new SideslipMenu(this, 2, new SideslipMenuListener() {
+
+				@Override
+				protected void onSideslipMenuClicked(int index) {
+					// TODO
+					MyLog.d("点击侧滑菜单按钮，下标为：" + index);
+				}
+			});
+		} catch (Exception e) {
+			MyLog.e("set SideslipMenu error, exception is：" + e.getMessage());
+		}
+	}
+
+	/************************ 侧滑菜单弹出事件 ************************/
+	// 手指按下的点为(x1, y1)手指离开屏幕的点为(x2, y2)
+	private float x1 = 0;
+	private float x2 = 0;
+	private float y1 = 0;
+	private float y2 = 0;
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// 继承了Activity的onTouchEvent方法，直接监听点击事件
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			// 当手指按下的时候
+			x1 = event.getX();
+			y1 = event.getY();
+		}
+		if (event.getAction() == MotionEvent.ACTION_UP) {
+			// 当手指离开的时候
+			x2 = event.getX();
+			y2 = event.getY();
+			if (y1 - y2 > 50 && ((y1 - y2) > Math.abs(x1 - x2))) {
+				MyLog.d("SideslipActivity 向上滑动");
+			} else if (y2 - y1 > 50 && ((y2 - y1) > Math.abs(x1 - x2))) {
+				MyLog.d("SideslipActivity 向下滑动");
+			} else if (x1 - x2 > 50 && ((x1 - x2) > Math.abs(y1 - y2))) {
+				MyLog.d("SideslipActivity 向左滑动");
+				// TODO 隐藏
+			} else if (x2 - x1 > 50 && ((x2 - x1) > Math.abs(y1 - y2))) {
+				MyLog.d("SideslipActivity 向右滑动");
+				mSlidingMenu.showMenu();
+			}
+		}
+		return true;
 	}
 
 	/************************ 创建ActionBar和Tab ************************/

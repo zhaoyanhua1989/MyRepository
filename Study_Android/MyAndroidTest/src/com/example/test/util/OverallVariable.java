@@ -13,9 +13,15 @@ import android.provider.BaseColumns;
 public class OverallVariable {
 
 	// assets目录下面的应用信息文件名
-	public static String INFOMSGFILE = "myInfo.properties";
+	public static final String INFOMSGFILE = "myInfo.properties";
 	// 私有数据库
-	public static String CUSTOMDATABASE = "customPrivateDatabase";
+	public static final String CUSTOMDATABASE = "custompublicDatabase";
+	// 短信验证码相关
+	public static final String SENDMSGTOREGISTER = "【测试】尊敬的玩家，感谢注册测试账号，您的账号通行证验证码为：{0}，该验证码5分钟内有效。";
+	// 验证码发送的Intent的action
+	public static final String SEND_OK_OR_NOT = "SEND_OK_OR_NOT";
+	// 验证码接收的Intent的action
+	public static final String RECEIVE_OK_OR_NOT = "RECEIVE_OK_OR_NOT";
 
 	/************************* ContentProvider 相关 ************************/
 	public static final String AUTHORITY = "hb.android.contentProvider";
@@ -54,6 +60,37 @@ public class OverallVariable {
 			uriMatcher.addURI(OverallVariable.AUTHORITY, "teacher/#", TEACHER);
 		}
 	}
+
 	/************************* ContentProvider 相关 ************************/
+
+	public static final class Color {
+		public static String DIALOG_TRANSPARENT_BLACK = "#99000000";
+		public static String UI_TYPE_BASIC_WHITE = "#F3F4F6";
+		public static String UI_TYPE_BASIC_BLACK = "#31313c";
+		public static String UI_TYPE_BASIC_RED = "#f75b49";
+		public static String UI_TYPE_BASIC_BLUE = "#058794";
+	}
+
+	public static final class WebView {
+		public static final String WEB_PAGE_URL_HEADER = "file:///android_asset";
+		public static final String WEB_PAGE_URL_ASSETS_HTML = "file:///android_asset/assets/html";
+
+		// 自己定义的urL的header，看用于校验前部分操作是否成功，并以此来判断用不用加载后面的操作
+		public static final String WEB_INTERFACE_HEADER = "";
+		public static final String WEB_GLOBAL_INTERFACE_RELOAD = "reload";
+		public static final String WEB_HEADER_INTERFACE_CLOSES = "closesPage";
+		public static final String WEB_HEADER_INTERFACE_BACK = "backPage";
+		// UI样式(颜色)
+		public static final String UI_TYPE_CSS_WHITE = "white";
+		public static final String UI_TYPE_CSS_BLACK = "black";
+		public static final String UI_TYPE_CSS_BLUE = "blue";
+		public static final String UI_TYPE_CSS_RED = "red";
+		public static final int UI_TYPE_CSS_WHITE_CODE = 1;
+		public static final int UI_TYPE_CSS_BLACK_CODE = 2;
+		public static final int UI_TYPE_CSS_BLUE_CODE = 3;
+		public static final int UI_TYPE_CSS_RED_CODE = 4;
+		public static final int MAX_RETRY_LOAD_WEB = 5; // 最大重刷次數
+		public static final String CALL_JS_HEAD = "javascript:";
+	}
 
 }

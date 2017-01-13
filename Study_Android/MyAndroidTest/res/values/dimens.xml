@@ -5,5 +5,6 @@
     <dimen name="popwindow_button_textsize">9sp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_webview_controller_margin">5dp</dimen>
 
 </resources>

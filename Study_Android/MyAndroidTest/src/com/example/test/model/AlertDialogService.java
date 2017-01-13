@@ -11,23 +11,28 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.PopupMenu;
-import android.widget.PopupWindow;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
+import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.test.MyApplication;
 import com.example.test.R;
+import com.example.test.util.AppUtil;
 import com.example.test.util.MyLog;
-import com.example.test.util.DeviceUtil;
+import com.example.test.util.OverallVariable;
 import com.example.test.util.ToastUtil;
 import com.example.test.view.MyCustomDialog;
 
@@ -38,6 +43,9 @@ import com.example.test.view.MyCustomDialog;
  *
  */
 public class AlertDialogService {
+
+	private final static String TAG = AlertDialogService.class.getSimpleName();
+	private static Dialog loadingBar;
 
 	/**
 	 * 直接使用AlertDialog，有缺陷，设置background时，当设置圆角时有尖角
@@ -61,7 +69,7 @@ public class AlertDialogService {
 		dialog.show();
 		dialog.setCancelable(false);
 		// 竖屏适配
-		if (!DeviceUtil.isLandscape(activity)) {
+		if (!AppUtil.isLandscape(activity)) {
 			// 竖屏时限制高度为屏幕高度的一半，需要判断
 			WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
 			lp.height = (int) Math.ceil((activity.getResources().getDisplayMetrics().heightPixels) / 2);
@@ -140,12 +148,11 @@ public class AlertDialogService {
 	@SuppressLint("NewApi")
 	public static void showSystemDialog(Activity activity) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.Dialog_MyTheme);
-		builder.setMessage("Hello World").setTitle("Alert Dialog").setIcon(android.R.drawable.ic_dialog_alert).setCancelable(false)
-				.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
+		builder.setMessage("Hello World").setTitle("Alert Dialog").setIcon(android.R.drawable.ic_dialog_alert).setCancelable(false).setPositiveButton("Close", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
 		builder.create().show();
 	}
 
@@ -323,4 +330,86 @@ public class AlertDialogService {
 		});
 	}
 
+	/**
+	 * 显示Loading UI
+	 * 
+	 * @param _activity
+	 *            显示于哪个activity
+	 * @param title
+	 *            显示文字
+	 * @param cancelable
+	 *            是否能被触摸外边取消
+	 * */
+	static public void showLoading(final Activity _activity, final String title, final boolean cancelable) {
+		_activity.runOnUiThread(new Runnable() {
+			@SuppressWarnings("deprecation")
+			@Override
+			public void run() {
+				if (null != loadingBar && loadingBar.isShowing()) {
+					return;
+				}
+				loadingBar = new Dialog(_activity);
+				loadingBar.requestWindowFeature(Window.FEATURE_NO_TITLE);
+				loadingBar.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+				int height = AppUtil.dp2px(_activity, 120);
+				int width = AppUtil.dp2px(_activity, 100);
+
+				LinearLayout mLinearLayout = new LinearLayout(_activity);
+				LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(width, height);
+				mLayoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+
+				GradientDrawable shape = new GradientDrawable();
+				shape.setCornerRadius(AppUtil.dp2px(_activity, 5));
+				shape.setColor(Color.parseColor(OverallVariable.Color.DIALOG_TRANSPARENT_BLACK));
+
+				mLinearLayout.setBackgroundDrawable(shape);
+				mLinearLayout.setLayoutParams(mLayoutParams);
+				mLinearLayout.setOrientation(LinearLayout.VERTICAL);
+
+				ProgressBar progressBar = new ProgressBar(_activity);
+				int top = AppUtil.dp2px(_activity, 10);
+				int pbWH = AppUtil.dp2px(_activity, 60);
+				LinearLayout.LayoutParams mgParams = new LinearLayout.LayoutParams(pbWH, pbWH);
+				mgParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+				mgParams.setMargins(0, top, 0, 0);
+				progressBar.setLayoutParams(mgParams);
+
+				TextView textView = new TextView(_activity);
+				textView.setText(title);
+				textView.setTextSize(16);
+				textView.setTextColor(Color.WHITE);
+				textView.setGravity(Gravity.CENTER);
+
+				mLinearLayout.addView(progressBar);
+				mLinearLayout.addView(textView);
+
+				loadingBar.setContentView(mLinearLayout, mLayoutParams);
+				loadingBar.setCancelable(cancelable);
+				try {
+					loadingBar.show();
+				} catch (Exception e) {
+					MyLog.error(TAG, "showLoading", "showLoading error", e);
+				}
+			}
+		});
+	}
+
+	static public void hideLoading(final Activity _activity) {
+		_activity.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				if (null != loadingBar && loadingBar.isShowing()) {
+					try {
+						loadingBar.dismiss();
+						loadingBar = null;
+					} catch (IllegalArgumentException e) {
+						MyLog.error(TAG, "hideLoading", "hideLoading error", e);
+					} catch (Exception e) {
+						MyLog.error(TAG, "hideLoading", "hideLoading error", e);
+					}
+				}
+			}
+		});
+	}
 }

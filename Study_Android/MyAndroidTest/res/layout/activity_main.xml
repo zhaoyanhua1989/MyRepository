@@ -109,8 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_linearLayout3"
-        android:orientation="horizontal"
-        android:visibility="gone" >
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/main_button10"
@@ -136,6 +135,40 @@
             android:layout_weight="1"
             android:onClick="doClick"
             android:text="@string/MainActivity_button12" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/main_linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_linearLayout4"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <Button
+            android:id="@+id/main_button13"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button13"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/main_button14"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button14" />
+
+        <Button
+            android:id="@+id/main_button15"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button15" />
     </LinearLayout>
 
 </RelativeLayout>

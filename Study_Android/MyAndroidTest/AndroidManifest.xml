@@ -22,6 +22,9 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- 广播权限 -->
     <uses-permission android:name="com.example.test.ACTIONNOTIFICATION"/>
+    <!-- 短信权限 -->
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
 
     <application
         android:name=".MyApplication"
@@ -92,6 +95,7 @@
         </activity>
         <activity
             android:name=".activity.SideslipActivity"
+            android:configChanges="keyboard|orientation|navigation|screenSize"
             android:label="@string/title_activity_sideslip"
             android:logo="@drawable/apps_nest"
             android:theme="@style/ActionBarCustomStyle" >
@@ -101,13 +105,22 @@
         </activity>
         <activity
             android:name="com.example.test.activity.LoginActivity"
+            android:configChanges="keyboard|orientation|navigation|screenSize"
             android:label="@string/title_activity_login"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/center_float_dialog" >
         </activity>
         <provider android:name="com.example.test.model.CustomContentProvider"
             android:exported="true"
             android:authorities="hb.android.contentProvider"
             android:multiprocess="false"></provider>
+        <activity
+            android:name="com.example.test.activity.WebViewActivity"
+            android:configChanges="keyboard|orientation|navigation|screenSize"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_webView"
+            android:theme="@style/center_float_dialog" >
+        </activity>
     </application>
 
 </manifest>

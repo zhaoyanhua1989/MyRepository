@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C0C0C0"
+    android:orientation="vertical"
+    android:padding="0dp" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+
+            <Button
+                android:id="@+id/sideslip_leftmenu_bt19"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_webview_controller_margin"
+                android:layout_marginTop="@dimen/activity_webview_controller_margin"
+                android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:minHeight="50dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

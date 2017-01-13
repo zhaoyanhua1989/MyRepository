@@ -25,6 +25,19 @@
 		LocalBroadcastManager.getInstance(context).sendBroadcast(loginSucessIntent);
 		
 		※※LocalBroadcastManager是单例的，使用方式很简单，它还可以解决Service和Activity的交互问题。
+	3、有序广播：
+		发送有序广播：
+    		context.sendOrderedBroadcast();
+		如何接受有序广播：
+    		接受方式与普通广播一致。 但是需要配置优先级。
+		intentfilter.setPriority(number);
+		number  [-1000~1000]
+		number越大优先级越高，越先执行。
+		在广播的过程中可以终止广播的继续传播：
+			this.abortBroadcast();
+	4、驻留广播
+		context.sendStickyBroadcast();
+		发送驻留广播需要在清单文件中声明权限。
 	
 	<title>二、service</title>
 	service本质上是后台运行的程序，没有activity那样的用户界面，是Context的子类。
@@ -66,6 +79,16 @@
 	Android的五种数据储存方式：Shared Preference、网络储存、文件储存、外储储存、SQLite。
 	当app需要把私有数据的访问开放给外部应用时，需要编写ContentProvider。
 	当需要访问外部应用的私有数据时，需要访问外部应用程序开放出来的ContentProvider。
+	ContentProvider为存储和获取数据提供了统一的接口，采用表的形式来组织数据。
+	Android为常见的一些数据提供了默认的ContentProvider（包括音频、视频、图片和通讯录等）。
+	使用ContentProvider需要实现的接口：
+		onCreate()，用来执行一些初始化的工作。
+		query(Uri, String[], String, String[], String)，用来返回数据给调用者。
+		insert(Uri, ContentValues)，用来插入新的数据。
+		update(Uri, ContentValues, String, String[])，用来更新已有的数据。
+		delete(Uri, String, String[])，用来删除数据。
+		getType(Uri)，用来返回数据的MIME类型。
+	Uri是使用ContentProvider必用到的对象，由固定协议前缀 + ContentProvider唯一标示 + 表名 + 指定条件(如指定id=1) 四部分构成。
 
 
 </body>

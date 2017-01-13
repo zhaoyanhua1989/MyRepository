@@ -31,6 +31,8 @@
 	b).Hanlder
 		用Hanlder发送空消息sendEmptyMessageDelayed来实现，在handleMessage中处理msg.what，
 		收到对应消息，再发送同样msg.what的空消息sendEmptyMessageDelayed。
+	c).Timer
+		Timer.schedule(new TimerTask() {循环执行逻辑...}, long 延迟时间, long 每隔多少秒循环一次)
 
 
 二、性能优化
@@ -129,7 +131,128 @@
 	  // 设置为常驻消息
 	  mNotification.flags = Notification.FLAG_NO_CLEAR;
         如何修改通知内容：再发一次id相同的通知即可。
-   
+   3、通知的点击跳转和按键监听：
+   		a).直接点击跳转：
+			Intent activityIntent = new Intent(this, NotificationCameraActivity.class);
+			PendingIntent pIntent = PendingIntent.getActivity...
+			builder.setContentIntent(pIntent);
+		b).监听：
+			获取自定义的RemoteViews对象contentViews
+			Intent intent1 = new Intent(ACTION_NOTIFICATION);
+			intent1.putExtra(BUTTON_TAG, MUSIC_GOPRE);
+			contentViews.setOnClickPendingIntent(按钮id, PendingIntent.getBroadcast(this, MUSIC_GOPRE, intent1, 0));
+			需要用广播来实现监听。
+			class MyMusicBroadcastReceiver extends BroadcastReceiver {
+				@Override
+				public void onReceive(Context context, Intent intent) {
+					if (ACTION_NOTIFICATION.equals(intent.getAction())) {
+						MyLog.d("BUTTON_TAG=" + intent.getIntExtra(BUTTON_TAG, -1));
+						switch (intent.getIntExtra(BUTTON_TAG, -1)) {
+						case MUSIC_GOPRE:
+							if (mActivity != null)
+							ToastUtil.showCustomToast(mActivity, "上一首");
+						break;
+						}
+					}
+				}
+			}
+
+
+十、Intent
+   1、Intent对象的6大属性：ComponentName、Bundle、flags、action、category、data
+		action 用于描述目标组件可以执行的动作
+		category  用于描述目标组件所属分类
+		data   用于描述目标组件处理的数据类型
+   2、Intent对象对action的规则：
+		1). Intent对象中只能含有1个action
+		2). intent-filter中可以配置多个action
+		3). 如果intent对象中的action在intent-filter的action列表范围内，那么action匹配成功。
+		4). 如果intent-filter中没有声明action，拒绝所有的action的测试。
+		5). 如果intent对象中未包含action，则默认通过所有的action测试。
+   3、Intent对象对category的规则：
+		1). intent对象中可以包含多个category
+		2). intent-filter中可以声明多个category
+		3). 如果intent对象中的category是intent-filter中声明category集合的子集，那么category匹配成功。
+		4). 如果intent对象中不包含任何category，则默认可以通过所有的category的测试。
+		5). 所有被传入startActivity方法的intent对象都会被添加一个默认的category：android.intent.category.DEFAULT
+   4、Intent对象对data的规则：
+		1). intent对象中包含一个具体的Data(Uri对象)
+		2). intent-filter中声明当前组件支持的uri的数据格式。scheme/host/port/path
+		3). 如果intent中的data的格式符合intent-filter声明的格式的要求，则data匹配成功。
+		4). 如果intent-filter中有data的声明，则intent对象中必须包含一个具体的Data才可以执行。
+		5). intent-filter中可以声明data的mimetype，如果声明可具体的mimetype，则intent对象中必须含有mimetype属性：
+    		intent.setType("type");
+    		intent.setDataAndType(uri, "type");
+
+
+十一、桌面小部件APPWidget
+   1、如何实现AppWidget：
+		1).设计桌面小部件的布局界面。
+		2).定义AppWidget的元数据文件。  (meta-data)
+			xml：AppWidget的初始化布局的xml，定义AppWidget的宽度，定义AppWidget的高度
+			比如：appwidget_meta.xml：
+			<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android" 
+    			android:initialLayout="@layout/appwidget_main"
+    			android:minWidth="250dp"
+    			android:minHeight="40dp" >
+			</appwidget-provider>
+		3).创建AppWidget控制器类，要求必须继承
+			AppWidgetProvider. 重写相关生命周期方法。
+		4).在清单文件中注册该AppWidget。
+			类似broadcastReceiver的注册方式，不过需要注册在Application下面，和Activity同级：
+			<Application>
+				<receiver android:name="包名.Widget名" >
+            	<intent-filter>
+                	<!-- 只接收指定action的Intent，写自己定义的 -->
+                	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                	<action android:name="CHANGE_COLOR" />
+            	</intent-filter>
+            	<!-- 固定name，resource主要指定widget的大小，xml文件 -->
+            	<meta-data
+                	android:name="android.appwidget.provider"
+                	android:resource="@xml/appwidget_meta" />
+        		</receiver>
+        	</Application>
+   2、AppWidget的生命周期：
+		1).onEnabled 
+			当第一个AppWidget实例被创建时执行。
+		2).onUpdate
+			每当AppWidget实例被创建时执行。
+		3).onDeleted
+			每当把AppWidget实例移出时执行。
+		4).onDisabled
+			当把最后一个AppWidget实例移出时执行。
+   3、如何修改AppWidget上的UI：
+		在onReceive方法中：
+		AppWidgetManager manager = AppWidgetManager.getInstance(context);
+		ComponentName provider = new ComponentName(context, MyAppWidgetProvider.class);
+		//创建Views并且更新界面
+		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.appwidget_main);
+		int[] colors = { Color.RED, Color.BLACK, Color.BLUE, Color.GREEN, Color.GRAY };
+		int color = colors[new Random().nextInt(colors.length)];
+		views.setTextColor(R.id.textView1, color);
+		//通知更新UI
+		manager.updateAppWidget(provider, views);
+   4、监听AppWidget的控件：
+   		需要在onUpdate生命周期中，获取RemoteViews对象，setOnClickPendingIntent实现按钮监听(PendingIntent.getBroadcast...)
+   		或点击跳转(PendingIntent.getActivity...)，设置后manager.updateAppWidget(ids, RemoteViews);
+   5、AppWidget的名字，就是Applicaiton所用的label的定义的名。
+
+
+十二、随机数
+   1、new Random().nextInt(int int); //在传入int值以内的随机数
+
+
+十三、发送短信
+   1、获取系统服务 SmsManager
+		SmsManager manager = SmsManager.getDefault();
+   2、调用manager的相关方法发送短信
+		ArrayList<String> bodies = manager.divideMessage(String content);
+		for (int i = 0; i < bodies.size(); i++) {
+			manager.sendTextMessage(phoneNum, null, bodies.get(i), pi1, pi2);
+		}
+		注：pi1为监听发送成功与否的PendingIntent，pi2为对方是否接收成功的PendingIntent。
+		       如果要拿到回调，需要注册广播，见LoginActivity的获取验证码实现。
 
 
 </body>

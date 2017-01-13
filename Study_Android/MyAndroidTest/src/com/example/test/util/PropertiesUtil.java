@@ -14,7 +14,8 @@ public class PropertiesUtil {
 	private static String screenSize = "undefined";
 	private static Properties configProperties;
 
-	public static void loadFromAssertConfig(Context context) {
+	public static void loadFromAssetConfig(Context context) {
+		MyLog.d("load config from assets...");
 		try {
 			configProperties = new Properties();
 			configProperties.clear();

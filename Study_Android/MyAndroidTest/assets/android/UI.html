@@ -109,7 +109,7 @@
 
 19、Activity:
 	finish后，Activity不会马上被销毁，打印this不为空，对象还存在。
-	
+
 20、ViewPager设置Adapter有三种：
 	1、Adapter继承自PagerAdapter，适合viewPager页面布局单一时用。
 	2、Adapter继承自FragmentPagerAdapter，适合viewPager页面布局复杂(需自定义),且页面不多时用。
@@ -117,7 +117,7 @@
 		需要：主Activity继承自FragmentActivity。
 	3、Adapter继承自FragmentStatePagerAdapter，适合viewPager页面布局复杂(需自定义)时用。
 		需要：主Activity继承自FragmentActivity。
-		
+
 21、ActionBar，导航条，包含两部分：左上角的logo图标、Label标签和logo下面的Tab标签
 	具体实现参考ViewPagerActivity中的initActionBar();
 	设置ActionBar漂浮于Activity之上：requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
@@ -144,6 +144,21 @@
 	        	}
 				return true;
 
+22、动画：
+	activity.overridePendingTransition(anim1, anim2); //从一个activity跳转到另外一个activity时的动画
+		anim1：第一个activity退出时的动画
+		anim2：第二个activity进入时的动画
+	注意：
+	1.何时被调用：紧挨着startActivity()或者finish()函数之后被调用
+	2.它只在android2.0以及以上版本上适用
+	3.动画可以使用Android自身的，比如android.R.anim.slide_in_left, android.R.anim.slide_out_right
+	  android.R.anim.fade_in, android.R.anim.fade_out
+
+23、更新UI操作：
+	1.Activity.runOnUiThread(Runnable)
+	2.View.post(Runnable) //如果需要在onCreate中获取空间高度之类的属性，可以用view.post来获取
+	3.View.postDelayed(Runnable, long)
+	4.主线程的Handler
 
 </body>
 </html>
