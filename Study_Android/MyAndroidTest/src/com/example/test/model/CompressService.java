@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
-import com.example.test.util.BitmapBiz;
-import com.example.test.util.ScreenUtil;
+
+import com.example.test.util.AppUtil;
+import com.example.test.util.BitmapUtil;
 
 /**
  * 压缩业务类
@@ -17,22 +18,23 @@ public class CompressService {
 
 	// 按屏幕尺寸压缩图片，慎用！
 	public static Bitmap compressNormalScreenSize(Activity activity, int resourceId) {
-		return BitmapBiz.compress(activity, resourceId, ScreenUtil.getMetrics(activity).widthPixels, ScreenUtil.getMetrics(activity).heightPixels);
+		return BitmapUtil.compress(activity, resourceId, AppUtil.getMetrics(activity).widthPixels, AppUtil.getMetrics(activity).heightPixels);
 	}
 
 	// 按屏幕尺寸的一半压缩图片
 	public static Bitmap compressHalfScreenSize(Activity activity, int resourceId) {
-		return BitmapBiz.compress(activity, resourceId, (ScreenUtil.getMetrics(activity).widthPixels) / 4, (ScreenUtil.getMetrics(activity).heightPixels) / 4);
+		return BitmapUtil.compress(activity, resourceId, (AppUtil.getMetrics(activity).widthPixels) / 4,
+				(AppUtil.getMetrics(activity).heightPixels) / 4);
 	}
 
 	// 按指定大小一半压缩图片
 	public static Bitmap compressHalfSize(Activity activity, int resourceId, int width, int height) {
-		return BitmapBiz.compress(activity, resourceId, width/2, height/2);
+		return BitmapUtil.compress(activity, resourceId, width / 2, height / 2);
 	}
 
 	// 按指定大小压缩图片
 	public static Bitmap compressAssign(Activity activity, int resourceId, int width, int height) {
-		return BitmapBiz.compress(activity, resourceId, width, height);
+		return BitmapUtil.compress(activity, resourceId, width, height);
 	}
 
 	// 释放背景图片BitMap资源

@@ -20,6 +20,11 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+/**
+ * 欢迎页面，6秒后会加载到下一个页面 当点击页面进入广告时，加载下一页面会暂停，不然下一页面创建出来会遮挡住广告
+ * 
+ * @author HKW2962
+ */
 public class WelcomeActivity extends Activity {
 
 	private boolean isHangUp; // 加载广告页面，判断此Activity是否被挂起
@@ -30,7 +35,7 @@ public class WelcomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_welcome);
+		setContentView(R.layout.my_activity_welcome);
 		// 显示图片
 		showContent();
 		// 延迟进入下一个页面
@@ -44,8 +49,8 @@ public class WelcomeActivity extends Activity {
 		mBitMap = CompressService.compressHalfSize(this, RUtil.getDrawable(this, "welcome"), 540, 960);
 		image.setImageBitmap(mBitMap);
 		MyTextView wcTextView = (MyTextView) findViewById(R.id.welcome_textView);
-		TextContentService textContent = new TextContentService(this, wcTextView, RUtil.getValuesStringArray(
-				WelcomeActivity.this, "welcome_textContent"));
+		TextContentService textContent = new TextContentService(this, wcTextView, RUtil.getValuesStringArray(WelcomeActivity.this,
+				"welcome_textContent"));
 		textContent.showContent();
 
 		// 点击进入广告页面
@@ -54,7 +59,7 @@ public class WelcomeActivity extends Activity {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				Intent intent = new Intent();
-				intent.setAction("android.intent.action.VIEW");
+				intent.setAction(Intent.ACTION_VIEW);
 				Uri content_url = Uri.parse(RUtil.getValuesString(WelcomeActivity.this, "welcome_advertisement"));
 				intent.setData(content_url);
 				startActivity(intent);
@@ -101,11 +106,10 @@ public class WelcomeActivity extends Activity {
 		finish();
 		startActivity(new Intent("android.intent.action.mytest.MAIN"));
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		finish();
 		System.exit(0);
 	}
-	
 }

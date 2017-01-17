@@ -4,18 +4,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-import com.example.test.MyApplication;
-import com.example.test.R;
-import com.example.test.util.HelpUtil;
-import com.example.test.util.MyLog;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.test.MyApplication;
+import com.example.test.R;
+import com.example.test.util.AppUtil;
+import com.example.test.util.MyLog;
+import com.example.test.util.ToastUtil;
 
 public class DirTestActivity extends Activity {
 
@@ -23,7 +23,7 @@ public class DirTestActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(com.example.test.R.layout.activity_dir_test);
+		setContentView(com.example.test.R.layout.my_activity_dir_test);
 		TextView tv = (TextView) findViewById(R.id.dir_textView1);
 		MyApplication.activitys.add(this);
 
@@ -83,19 +83,21 @@ public class DirTestActivity extends Activity {
 			}
 
 		} catch (Exception e) {
-			Toast.makeText(this, "出错，请查看 logcat 日志异常信息", Toast.LENGTH_SHORT).show();
+			ToastUtil.showCustomToast(this, "出错，请查看 logcat 日志异常信息");
 			e.printStackTrace();
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void doClick(View v) {
-		switch(v.getId()){
-			case R.id.dir_button1:
-				TextView tv = (TextView) findViewById(R.id.dir_textView2);
-				MyLog.i("MyApplication.activitys.get(0)="+MyApplication.activitys.get(0));
-				tv.append("MainActivity是否被挂起(isBackground)：" + HelpUtil.isBackground(MyApplication.activitys.get(0)));
-				tv.append("\nMainActivity是否被挂起(isApplicationBroughtToBackground)：" + HelpUtil.isApplicationBroughtToBackground(MyApplication.activitys.get(0)));
-				break;
+		switch (v.getId()) {
+		case R.id.dir_button1:
+			TextView tv = (TextView) findViewById(R.id.dir_textView2);
+			MyLog.i("MyApplication.activitys.get(0)=" + MyApplication.activitys.get(0));
+			tv.append("MainActivity是否被挂起(isBackground)：" + AppUtil.isBackground(MyApplication.activitys.get(0)));
+			tv.append("\nMainActivity是否被挂起(isApplicationBroughtToBackground)："
+					+ AppUtil.isApplicationBroughtToBackground(MyApplication.activitys.get(0)));
+			break;
 		}
 	}
 

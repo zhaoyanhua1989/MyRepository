@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager_viewPager"
+        android:layout_marginTop="100dp"
+        android:layout_width="240dp"
+        android:layout_height="400dp"
+        />
+    <LinearLayout 
+        android:id="@+id/viewPager_linearLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@id/viewPager_viewPager"
+        android:layout_alignRight="@id/viewPager_viewPager"
+        android:layout_alignBottom="@id/viewPager_viewPager"
+        android:gravity="right" >
+
+        <com.example.test.view.MyCircle
+            android:id="@+id/viewPager_myCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:id="@+id/viewPager_FragmentLL_left"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignTop="@id/viewPager_viewPager"
+        android:layout_toRightOf="@id/viewPager_viewPager"
+        android:layout_marginLeft="2dp"
+        android:gravity="center"
+        >
+        <TextView 
+            android:id="@+id/viewPager_FragmentLL_left_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:id="@+id/viewPager_FragmentLL_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_toLeftOf="@id/viewPager_FragmentLL_left"
+        android:layout_below="@id/viewPager_viewPager"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        >
+        <TextView 
+            android:id="@+id/viewPager_FragmentLL_bottom_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

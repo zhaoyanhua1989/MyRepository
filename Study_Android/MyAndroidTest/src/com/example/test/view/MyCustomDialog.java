@@ -100,7 +100,7 @@ public class MyCustomDialog extends Dialog {
 			this.title = title;
 			return this;
 		}
-		
+
 		/**
 		 * set the contentImageView from resource
 		 * 
@@ -111,7 +111,7 @@ public class MyCustomDialog extends Dialog {
 			contentImageId = imgId;
 			return this;
 		}
-		
+
 		/**
 		 * set the contentWebView from name
 		 * 
@@ -190,21 +190,22 @@ public class MyCustomDialog extends Dialog {
 		/**
 		 * Create the custom dialog
 		 */
+		@SuppressWarnings("deprecation")
 		@SuppressLint("InflateParams")
 		public MyCustomDialog create() {
 			LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			// instantiate the dialog with the custom Theme
 			final MyCustomDialog dialog = new MyCustomDialog(activity, R.style.center_float_dialog);
 			dialog.setCanceledOnTouchOutside(false);
-			View layout = inflater.inflate(R.layout.dialog_custom_layout, null);
+			View layout = inflater.inflate(R.layout.my_dialog_custom_layout, null);
 			dialog.addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 			// get views
 			Button positiveButton = (Button) layout.findViewById(R.id.customDialog_positiveButton);
 			Button negativeButton = (Button) layout.findViewById(R.id.customDialog_negativeButton);
-			
+
 			// set the dialog title
 			((TextView) layout.findViewById(R.id.customDialog_title)).setText(title);
-			
+
 			// set the confirm button
 			if (positiveButtonText != null) {
 				positiveButton.setText(positiveButtonText);
@@ -217,7 +218,7 @@ public class MyCustomDialog extends Dialog {
 				}
 			} else {
 				// if no confirm button just set the visibility to GONE
-				layout.findViewById(R.id.customDialog_positiveButton).setVisibility(View.GONE);
+				positiveButton.setVisibility(View.GONE);
 			}
 
 			// set the cancel button
@@ -232,7 +233,7 @@ public class MyCustomDialog extends Dialog {
 				}
 			} else {
 				// if no confirm button just set the visibility to GONE
-				layout.findViewById(R.id.customDialog_negativeButton).setVisibility(View.GONE);
+				negativeButton.setVisibility(View.GONE);
 			}
 
 			// set the content message
@@ -240,7 +241,7 @@ public class MyCustomDialog extends Dialog {
 				TextView contentTextView = (TextView) layout.findViewById(R.id.customDialog_content_message);
 				contentTextView.setVisibility(View.VISIBLE);
 				contentTextView.setText(contentMessage);
-			} 
+			}
 			if (contentImageId != 0) {
 				ImageView contentTextView = (ImageView) layout.findViewById(R.id.customDialog_content_imageView);
 				contentTextView.setVisibility(View.VISIBLE);
@@ -253,14 +254,14 @@ public class MyCustomDialog extends Dialog {
 				sb.append("<HTML><body bgcolor='#f3f3f3'><div align=center><IMG src='file:///android_asset/");
 				sb.append(contentGifName);
 				sb.append("'/></div></body></HTML>");
-				contentTextView.loadDataWithBaseURL(null, sb.toString(), "text/html", "UTF-8",null);
+				contentTextView.loadDataWithBaseURL(null, sb.toString(), "text/html", "UTF-8", null);
 			}
 			if (contentView != null) {
 				// if no message set
 				// add the contentView to the dialog body
 				((LinearLayout) layout.findViewById(R.id.customDialog_content)).removeAllViews();
-				((LinearLayout) layout.findViewById(R.id.customDialog_content)).addView(contentView, new LayoutParams(
-						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+				((LinearLayout) layout.findViewById(R.id.customDialog_content)).addView(contentView, new LayoutParams(LayoutParams.WRAP_CONTENT,
+						LayoutParams.WRAP_CONTENT));
 			}
 			dialog.setContentView(layout);
 			return dialog;

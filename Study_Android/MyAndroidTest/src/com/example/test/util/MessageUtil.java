@@ -7,8 +7,8 @@ import android.widget.RelativeLayout;
 import com.example.test.view.MyTopRelativeLayout;
 
 /**
- * 动画效果显示顶部消息，自动退出
- * 要求：minSdkVersion大于3(屏幕密度算法不一样)
+ * 动画效果显示顶部消息，自动退出 要求：minSdkVersion大于3(屏幕密度算法不一样)
+ * 
  * @author HKW2962
  */
 public class MessageUtil {

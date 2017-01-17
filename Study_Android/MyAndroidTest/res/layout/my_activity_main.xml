@@ -1,0 +1,174 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/activity_main_bg"
+    android:paddingTop="10dp"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <LinearLayout
+        android:id="@+id/main_linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/main_button1"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button1" />
+
+        <Button
+            android:id="@+id/main_button2"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button2" />
+
+        <Button
+            android:id="@+id/main_button3"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button3" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_linearLayout1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/main_button4"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button4" />
+
+        <Button
+            android:id="@+id/main_button5"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button5" />
+
+        <Button
+            android:id="@+id/main_button6"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button6"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_linearLayout2"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/main_button7"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button7"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/main_button8"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button8" />
+
+        <Button
+            android:id="@+id/main_button9"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button9" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_linearLayout3"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/main_button10"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button10"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/main_button11"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button11" />
+
+        <Button
+            android:id="@+id/main_button12"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button12" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/main_linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_linearLayout4"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <Button
+            android:id="@+id/main_button13"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button13"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/main_button14"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button14" />
+
+        <Button
+            android:id="@+id/main_button15"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="doClick"
+            android:text="@string/MainActivity_button15" />
+    </LinearLayout>
+
+</RelativeLayout>

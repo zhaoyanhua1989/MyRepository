@@ -1,0 +1,4 @@
+org.gjt.mm.mysql.Driver
+jdbc:mysql://localhost:3306/mytest
+zhaoyh
+123456

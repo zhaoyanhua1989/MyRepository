@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="20" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -17,17 +17,26 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
+    <!-- 发送网络请求用 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 广播权限 -->
+    <uses-permission android:name="com.example.test.ACTIONNOTIFICATION"/>
+    <!-- 短信权限 -->
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
 
     <application
-        android:name="com.example.test.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="false"
-        android:icon="@drawable/ic_launcher"
-        android:label="goodLuck"
+        android:icon="@drawable/my_ic_launcher"
+        android:label="@string/app_name"
         android:theme="@style/MyAppThemeWithBackground" >
         <activity
-            android:name="com.example.test.activity.WelcomeActivity"
+            android:name=".activity.WelcomeActivity"
             android:configChanges="keyboard|orientation|navigation|screenSize"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,11 +44,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.test.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:configChanges="keyboard|orientation|navigation|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="sensor"
-            android:theme="@style/AppTheme" >
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.mytest.MAIN" />
 
@@ -47,32 +56,69 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.test.activity.GetRAndImeiActivity"
+            android:name=".activity.GetRAndImeiActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme" >
         </activity>
         <activity
-            android:name="com.example.test.activity.DirTestActivity"
+            android:name=".activity.DirTestActivity"
             android:label="@string/title_activity_dir_test"
             android:theme="@style/AppTheme" >
         </activity>
+        <!-- 下面的label和logo，单独设置Activity的title和图标(左上角) -->
         <activity
-            android:name="com.example.test.activity.ViewPagerActivity"
+            android:name=".activity.ViewPagerActivity"
             android:label="@string/title_activity_view_pager"
+            android:logo="@drawable/apps_nest"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.test.activity.MainActivity" />
         </activity>
         <activity
-            android:name="com.example.test.activity.NotificationActivity"
+            android:name=".activity.NotificationActivity"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:configChanges="keyboard|orientation|navigation|screenSize"
             android:label="@string/title_activity_notifycation"
             android:screenOrientation="sensor"
             android:theme="@style/AppTheme" >
         </activity>
         <activity
-            android:name="com.example.test.activity.NotificationCameraActivity"
+            android:name=".activity.NotificationActivity$NotificationCameraActivity"
+            android:exported="true"
             android:configChanges="keyboard|orientation|navigation|screenSize"
             android:label="@string/title_activity_camera"
             android:screenOrientation="sensor"
+            android:theme="@style/center_float_dialog" >
+        </activity>
+        <activity
+            android:name=".activity.SideslipActivity"
+            android:configChanges="keyboard|orientation|navigation|screenSize"
+            android:label="@string/title_activity_sideslip"
+            android:logo="@drawable/apps_nest"
+            android:theme="@style/ActionBarCustomStyle" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.test.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.test.activity.LoginActivity"
+            android:configChanges="keyboard|orientation|navigation|screenSize"
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            android:theme="@style/center_float_dialog" >
+        </activity>
+        <provider android:name="com.example.test.model.CustomContentProvider"
+            android:exported="true"
+            android:authorities="hb.android.contentProvider"
+            android:multiprocess="false"></provider>
+        <activity
+            android:name="com.example.test.activity.WebViewActivity"
+            android:configChanges="keyboard|orientation|navigation|screenSize"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_webView"
             android:theme="@style/center_float_dialog" >
         </activity>
     </application>

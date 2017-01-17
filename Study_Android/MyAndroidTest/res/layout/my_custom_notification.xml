@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notification_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/holo_green_light"
+    android:minHeight="64dp" >
+
+    <ImageView
+        android:id="@+id/notification_artist_image"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/custom_notification_icon" />
+
+    <TextView
+        android:id="@+id/notification_music_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5.0dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/notification_artist_image"
+        android:layout_toRightOf="@id/notification_artist_image"
+        android:focusable="true"
+        android:textColor="#FFADABFF"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/notification_music_Artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/notification_music_title"
+        android:layout_alignStart="@id/notification_music_title"
+        android:layout_below="@id/notification_music_title"
+        android:layout_marginTop="5.0dip"
+        android:textColor="#FFADABFF" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_toRightOf="@id/notification_music_title"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/notification_pre_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/pre" />
+
+        <ImageButton
+            android:id="@+id/notification_play_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/play" />
+
+        <ImageButton
+            android:id="@+id/notification_next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/next" />
+    </LinearLayout>
+
+</RelativeLayout>

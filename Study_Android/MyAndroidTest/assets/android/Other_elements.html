@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>其他要点</head>
+<body>
+一、发送消息：
+   1、Hanlder
+	创建的过程中，在主线程中，可以不定义Looper，默认为主线程的Looper。工作线程中需要定义Looper。
+	处理机制：
+	 a).Handler h = new Handler(){重写handleMessage};  h.handleMessage(msg);
+	 b).final ProgressDialog dialog = new ProgressDialog(this);
+	    Handler h = new Handler();
+	    h.post(new Runnable() {
+			@Override
+			public void run() {
+				num++;
+				if (num <= 10) {
+					dialog.setProgress(num);
+					h.postDelayed(this, 1000);
+				} else {
+					dialog.cancel();
+					num = 0;
+				}
+			}
+		});
+	 c).Message.obtain(Handler h, int what, int arg1, int arg2, Object obj);
+   2、循环发消息的实现：
+	a).线程、Hanlder
+		线程runnable中套死循环while(true)，
+		循环中，不能用postDelayed实现，不然delayed的时间一到，会收到n条挤在一起的消息。
+		循环中，应该用Thread.sleep()来实现消息的暂停。然后借助Hanlder来传递消息和处理消息。
+	b).Hanlder
+		用Hanlder发送空消息sendEmptyMessageDelayed来实现，在handleMessage中处理msg.what，
+		收到对应消息，再发送同样msg.what的空消息sendEmptyMessageDelayed。
+	c).Timer
+		Timer.schedule(new TimerTask() {循环执行逻辑...}, long 延迟时间, long 每隔多少秒循环一次)
+
+
+二、性能优化
+   1、BitMap：
+	a).图片放置文件位置：res下，存放的分辨率目录了越高加载出来的BitMap越占内存；
+	b).显示前压缩图片；
+	c).使用后recycle。
+
+
+三、keystore文件(签名文件)
+   1、生成：
+   2、查看keystore文件信息：
+	a).cmd，cd到java\jdk\bin目录下
+	b).输入：keytool -list -v -keystore "D:xgsdk.keystore"  // 假设这个keystore在D盘根目录
+	c).输入storepass(密钥库口令)，输入是看不到的，输入完点回车。
+
+
+四、添加Library
+   1、添加support-v7：
+	使用supportV7主要用到ActionBarActivity等功能，该功能需要用到sdk的v7工程中相应的theme。
+	使用v7可能遇到的问题：
+	1).导入v7工程，报错：很多资源加载异常，类似于： No resource found that matches the given name 'android:Widget.Material.ActionButton'.
+	       解决：查看是res下吗那个版本的文件编译异常，然后从SDK Manager中查看，对应版本的SDK Platform有没有Installed
+	2).引用v7工程出错，一旦引用，R文件异常。
+	       原因：
+	     a). 使用工程的编译版本，试试调整到android5.0(API21)；
+	     b). v7工程和使用工程没有在同一个符盘下。
+	3).使用工程如果用到了v7的类，则不能直接使用v7的jar，如果要使用jar，则需要同时导入v7工程下的res资源，否则还是add library来添加。
+	        未正常加载v7包，则会出现RuntimeException而造成崩溃：
+	      java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
+
+
+五、eclipse出包，能直接run as android application，但是一旦用android tools构建包就出错，解决方法：
+   1、检查报错，针对改。可能是android tools的版本和Platform版本不一致；
+   2、Preferences —— Android —— Lint Error Checking —— Run full error check when......勾选框勾勾点掉。
+
+
+六、Android写get或者post请求，获取不到数据，原因可能为：
+   1、空指针时，未在工作线程中进行请求；
+   2、没有加权限：<uses-permission android:name="android.permission.INTERNET"/>
+
+
+七、线程池：
+   1、建议使用较为方便的Executors工厂方法：
+      a).Executors.newCachedThreadPool()（无界线程池，可以进行自动线程回收）
+      b).Executors.newFixedThreadPool(int)（固定大小线程池）
+      c).Executors.newSingleThreadExecutor()（单个后台线程），它们均为大多数使用场景预定义了设置
+   2、new ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, RejectedExecutionHandler handler)
+              参数说明：
+        corePoolSize： 线程池维护线程的最少数量
+        maximumPoolSize：线程池维护线程的最大数量
+        keepAliveTime： 线程池维护线程所允许的空闲时间
+        unit： 线程池维护线程所允许的空闲时间的单位
+        workQueue： 线程池所使用的缓冲队列
+        handler： 线程池对拒绝任务的处理策略
+              当新任务在方法 execute(java.lang.Runnable)中提交时，如果运行的线程少于 corePoolSize，则创建新线程来处理请求，
+              即使其他辅助线程是空闲的。如果运行的线程多于corePoolSize 而少于 maximumPoolSize，则仅当队列满时才创建新线程。
+              如果设置的 corePoolSize 和 maximumPoolSize相同，则创建了固定大小的线程池。如果将 maximumPoolSize 设置为基本
+              的无界值（如 Integer.MAX_VALUE），则允许池适应任意数量的并发任务。
+   3、任务通过execute(Runnable)方法欲添加到线程池。
+
+
+八、进程优先级：
+   1、前台进程；
+   2、可视进程；
+   3、服务进程；
+   4、后台进程；
+   5、空进程。系统经常杀死，不会造成任何影响。空进程存在的唯一理由是为了缓存一些启动数据，以便下次可以更快的启动。
+        耗时操作可以放在thread中，但是如果切换到后台，当内存不足时容易被系统杀掉，可以考虑放在service中。
+        但是service在数据交互方面会遇到困难，比如实时更新UI控件。
+   BroadcastReceiver也不应该存在耗时操作，而应该启动service来完成。BroadcastReceiver的生命周期过短，也决定了不能在其中执行耗时操作。
+
+
+九、notification
+   1、普通通知：
+	  NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+	  builder的setSmallIcon、setContentTitle、setContentText、setTicker设置通知内容;
+	     设置通知的点击跳转：builder.setContentIntent(PendingIntent);
+	  // 创建通知对象
+	  Notification mNotification = builder.build();
+	  // 设置消息点击后，自动消失
+	  mNotification.flags = Notification.FLAG_AUTO_CANCEL;
+	  // 添加声音效果
+	  mNotification.defaults = Notification.DEFAULT_SOUND;
+	  // 获得通知管理器
+	  mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+	  // 发送通知，第一个参数决定通知是并列显示还是覆盖显示
+	  mNotificationManager.notify(id, mNotification);
+   2、自定义UI的通知：
+               和上面相似，只是需要自定义RemoteViews做为通知的contentView(见NotificationActivity)：
+      // 创建通知对象
+	  Notification mNotification = builder.build();
+	  mNotification.contentView = contentViews;
+	  // 注：这里必须设置顶部菜单栏的通知显示的图标，不然不会显示通知
+	  mNotification.icon = RUtil.getDrawable(this, "custom_notification_icon");
+	  // 设置为常驻消息
+	  mNotification.flags = Notification.FLAG_NO_CLEAR;
+        如何修改通知内容：再发一次id相同的通知即可。
+   3、通知的点击跳转和按键监听：
+   		a).直接点击跳转：
+			Intent activityIntent = new Intent(this, NotificationCameraActivity.class);
+			PendingIntent pIntent = PendingIntent.getActivity...
+			builder.setContentIntent(pIntent);
+		b).监听：
+			获取自定义的RemoteViews对象contentViews
+			Intent intent1 = new Intent(ACTION_NOTIFICATION);
+			intent1.putExtra(BUTTON_TAG, MUSIC_GOPRE);
+			contentViews.setOnClickPendingIntent(按钮id, PendingIntent.getBroadcast(this, MUSIC_GOPRE, intent1, 0));
+			需要用广播来实现监听。
+			class MyMusicBroadcastReceiver extends BroadcastReceiver {
+				@Override
+				public void onReceive(Context context, Intent intent) {
+					if (ACTION_NOTIFICATION.equals(intent.getAction())) {
+						MyLog.d("BUTTON_TAG=" + intent.getIntExtra(BUTTON_TAG, -1));
+						switch (intent.getIntExtra(BUTTON_TAG, -1)) {
+						case MUSIC_GOPRE:
+							if (mActivity != null)
+							ToastUtil.showCustomToast(mActivity, "上一首");
+						break;
+						}
+					}
+				}
+			}
+
+
+十、Intent
+   1、Intent对象的6大属性：ComponentName、Bundle、flags、action、category、data
+		action 用于描述目标组件可以执行的动作
+		category  用于描述目标组件所属分类
+		data   用于描述目标组件处理的数据类型
+   2、Intent对象对action的规则：
+		1). Intent对象中只能含有1个action
+		2). intent-filter中可以配置多个action
+		3). 如果intent对象中的action在intent-filter的action列表范围内，那么action匹配成功。
+		4). 如果intent-filter中没有声明action，拒绝所有的action的测试。
+		5). 如果intent对象中未包含action，则默认通过所有的action测试。
+   3、Intent对象对category的规则：
+		1). intent对象中可以包含多个category
+		2). intent-filter中可以声明多个category
+		3). 如果intent对象中的category是intent-filter中声明category集合的子集，那么category匹配成功。
+		4). 如果intent对象中不包含任何category，则默认可以通过所有的category的测试。
+		5). 所有被传入startActivity方法的intent对象都会被添加一个默认的category：android.intent.category.DEFAULT
+   4、Intent对象对data的规则：
+		1). intent对象中包含一个具体的Data(Uri对象)
+		2). intent-filter中声明当前组件支持的uri的数据格式。scheme/host/port/path
+		3). 如果intent中的data的格式符合intent-filter声明的格式的要求，则data匹配成功。
+		4). 如果intent-filter中有data的声明，则intent对象中必须包含一个具体的Data才可以执行。
+		5). intent-filter中可以声明data的mimetype，如果声明可具体的mimetype，则intent对象中必须含有mimetype属性：
+    		intent.setType("type");
+    		intent.setDataAndType(uri, "type");
+
+
+十一、桌面小部件APPWidget
+   1、如何实现AppWidget：
+		1).设计桌面小部件的布局界面。
+		2).定义AppWidget的元数据文件。  (meta-data)
+			xml：AppWidget的初始化布局的xml，定义AppWidget的宽度，定义AppWidget的高度
+			比如：appwidget_meta.xml：
+			<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android" 
+    			android:initialLayout="@layout/appwidget_main"
+    			android:minWidth="250dp"
+    			android:minHeight="40dp" >
+			</appwidget-provider>
+		3).创建AppWidget控制器类，要求必须继承
+			AppWidgetProvider. 重写相关生命周期方法。
+		4).在清单文件中注册该AppWidget。
+			类似broadcastReceiver的注册方式，不过需要注册在Application下面，和Activity同级：
+			<Application>
+				<receiver android:name="包名.Widget名" >
+            	<intent-filter>
+                	<!-- 只接收指定action的Intent，写自己定义的 -->
+                	<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                	<action android:name="CHANGE_COLOR" />
+            	</intent-filter>
+            	<!-- 固定name，resource主要指定widget的大小，xml文件 -->
+            	<meta-data
+                	android:name="android.appwidget.provider"
+                	android:resource="@xml/appwidget_meta" />
+        		</receiver>
+        	</Application>
+   2、AppWidget的生命周期：
+		1).onEnabled 
+			当第一个AppWidget实例被创建时执行。
+		2).onUpdate
+			每当AppWidget实例被创建时执行。
+		3).onDeleted
+			每当把AppWidget实例移出时执行。
+		4).onDisabled
+			当把最后一个AppWidget实例移出时执行。
+   3、如何修改AppWidget上的UI：
+		在onReceive方法中：
+		AppWidgetManager manager = AppWidgetManager.getInstance(context);
+		ComponentName provider = new ComponentName(context, MyAppWidgetProvider.class);
+		//创建Views并且更新界面
+		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.appwidget_main);
+		int[] colors = { Color.RED, Color.BLACK, Color.BLUE, Color.GREEN, Color.GRAY };
+		int color = colors[new Random().nextInt(colors.length)];
+		views.setTextColor(R.id.textView1, color);
+		//通知更新UI
+		manager.updateAppWidget(provider, views);
+   4、监听AppWidget的控件：
+   		需要在onUpdate生命周期中，获取RemoteViews对象，setOnClickPendingIntent实现按钮监听(PendingIntent.getBroadcast...)
+   		或点击跳转(PendingIntent.getActivity...)，设置后manager.updateAppWidget(ids, RemoteViews);
+   5、AppWidget的名字，就是Applicaiton所用的label的定义的名。
+
+
+十二、随机数
+   1、new Random().nextInt(int int); //在传入int值以内的随机数
+
+
+十三、发送短信
+   1、获取系统服务 SmsManager
+		SmsManager manager = SmsManager.getDefault();
+   2、调用manager的相关方法发送短信
+		ArrayList<String> bodies = manager.divideMessage(String content);
+		for (int i = 0; i < bodies.size(); i++) {
+			manager.sendTextMessage(phoneNum, null, bodies.get(i), pi1, pi2);
+		}
+		注：pi1为监听发送成功与否的PendingIntent，pi2为对方是否接收成功的PendingIntent。
+		       如果要拿到回调，需要注册广播，见LoginActivity的获取验证码实现。
+
+
+</body>
+</html>

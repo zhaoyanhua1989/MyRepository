@@ -6,20 +6,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ToastUtil {
-	
+
 	private static Toast sToastInstance;
 
-	public static void showToast(Activity activity, String message) {
-		showToast(activity, message, Toast.LENGTH_SHORT);
+	public static void showCustomToast(Activity activity, String message) {
+		showCustomToast(activity, message, Toast.LENGTH_SHORT);
 	}
 
-	public static void showToastLong(Activity activity, String message) {
-		showToast(activity, message, Toast.LENGTH_LONG);
+	public static void showCustomToastLong(Activity activity, String message) {
+		showCustomToast(activity, message, Toast.LENGTH_LONG);
 	}
 
-	public static void showToast(final Activity activity, final String message, final int duration) {
+	public static void showCustomToast(final Activity activity, final String message, final int duration) {
 		activity.runOnUiThread(new Runnable() {
-
 			@Override
 			public void run() {
 				makeText(activity, message, duration).show();
@@ -27,12 +26,17 @@ public class ToastUtil {
 		});
 	}
 
-	public static void showToast(Activity activity, int resId, int duration) {
-		showToast(activity, activity.getString(resId), duration);
+	public static void showCustomToast(Activity activity, int resId, int duration) {
+		showCustomToast(activity, activity.getString(resId), duration);
 	}
 
-	public static void showToast(Activity activity, int resId) {
-		showToast(activity, activity.getString(resId));
+	/**
+	 * @param activity
+	 * @param resId
+	 *            在String.xml中定义的 字符串的资源id
+	 */
+	public static void showCustomToast(Activity activity, int resId) {
+		showCustomToast(activity, activity.getString(resId));
 	}
 
 	private static Toast makeText(Activity activity, String message, int duration) {
@@ -50,11 +54,17 @@ public class ToastUtil {
 	private static TextView getTextView(Activity activity) {
 		TextView tv = new TextView(activity);
 		tv.setTextColor(Color.WHITE);
-		tv.setBackgroundColor(Color.BLACK);
-		tv.setPadding(32, 24, 32, 24);
+		// 自定义toast背景样式
+		tv.setBackgroundResource(RUtil.getDrawable(activity, "toastutil_toast_bg"));
+		tv.setPadding(50, 30, 50, 30);
 		return tv;
 	}
 
+	/**
+	 * @param activity
+	 * @param resId
+	 *            在String.xml中定义的 字符串的资源id
+	 */
 	public static void showNormalToast(Activity activity, int resId) {
 		showNormalToast(activity, activity.getString(resId), Toast.LENGTH_SHORT);
 	}
@@ -69,7 +79,6 @@ public class ToastUtil {
 
 	public static void showNormalToast(final Activity activity, final String message, final int duration) {
 		activity.runOnUiThread(new Runnable() {
-
 			@Override
 			public void run() {
 				Toast t = Toast.makeText(activity, message, duration);
@@ -79,7 +88,5 @@ public class ToastUtil {
 				t.show();
 			}
 		});
-
 	}
-
 }

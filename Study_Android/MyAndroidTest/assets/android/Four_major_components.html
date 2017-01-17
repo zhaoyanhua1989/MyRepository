@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>四大组件</head>
+<body>
+	<title>一、广播(BroadcastReceiver)：</title>
+	1、广播的两种实现方式：动态和静态
+	2、广播的安全级：跨应用调用与本本应用内部使用 限制本应用内部使用方法： 
+		1. 静态广播，AndroidManifest中注册，添加android:exported="false"即可
+		2. 动态广播，利用LocalBroadcastManager与广播结合
+		如： BroadcastReceiver cameraPicBroadcastReceiver = new BroadcastReceiver() { 
+		@Override 
+		public void onReceive(Contextcontext, Intent intent) { 
+	​ ​ ​ ​ ​.......//更新状态 } }; 
+	
+		IntentFilter intentFilter = new IntentFilter(MConstants.KEY_INTENT_LOGIN_RESULT);
+		
+		final LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(ctx);
+		localBroadcastManager.registerReceiver(cameraPicBroadcastReceiver, intentFilter);
+		
+		广播的发送方的写法如下：
+		Intent loginSucessIntent = new Intent();
+		loginSucessIntent.setAction(MConstants.KEY_INTENT_LOGIN_RESULT);
+		loginSucessIntent.putExtra(MConstants.KEY_LOGIN_SUCESS, false);
+		
+		LocalBroadcastManager.getInstance(context).sendBroadcast(loginSucessIntent);
+		
+		※※LocalBroadcastManager是单例的，使用方式很简单，它还可以解决Service和Activity的交互问题。
+	3、有序广播：
+		发送有序广播：
+    		context.sendOrderedBroadcast();
+		如何接受有序广播：
+    		接受方式与普通广播一致。 但是需要配置优先级。
+		intentfilter.setPriority(number);
+		number  [-1000~1000]
+		number越大优先级越高，越先执行。
+		在广播的过程中可以终止广播的继续传播：
+			this.abortBroadcast();
+	4、驻留广播
+		context.sendStickyBroadcast();
+		发送驻留广播需要在清单文件中声明权限。
+	
+	<title>二、service</title>
+	service本质上是后台运行的程序，没有activity那样的用户界面，是Context的子类。
+	service适合用于长时间后台运行的场合，具有较高的进程优先级 -- 服务进程，运行时全局单例。
+	1、Service的实现：
+		a). 启动：
+			1). startService(intnet) // 会启动Service的耗时操作。
+			2). bindService(intent, new ServiceConnection() {...}, Service.BIND_AUTO_CREATE);
+				//bindService 只是会拿到service的binder对象，不会启动service的耗时操作，用于Service内部方法在Activity中调用。
+			由于Service运行时单例，可以在bindService后再对同一Service对象调用startService，仍是同一个Service。
+		b). 如何在Activity中调用Service中的方法：
+			1). 自定义Service和需要调用的方法，在自定义Service的onBind方法中，return new MyBinder()。
+				自定义Service定义内部类MyBinder，MyBinder类中写方法，调用Service的方法。
+			2). 在Activity中绑定Service和启动：
+				Intent intent = new Intent(this, MusicService.class);
+				ServiceConnection conn = new ServiceConnection() {
+					//当与service连接断开时执行
+					public void onServiceDisconnected(ComponentName name) {
+					}
+					//当与service连接成功后执行
+					public void onServiceConnected(ComponentName name, IBinder iBinder) {
+						binder = (MyBinder) iBinder; //此处拿到的是Service的onBind方法返回的对象
+					}
+				};
+				this.bindService(intent, conn, Service.BIND_AUTO_CREATE);
+			3). 在Activity中调用Service的方法：
+				binder.play(); //此处举例，binder是ServiceConnection中拿到的binder
+			4). 在Activity的onDestroy中，取消绑定的ServiceConnection：unbindService(conn)。
+		c). 自定义Service，继承Service还是IntentService，编写耗时任务：
+			1). 继承Service，需要在onStartCommand方法中编写耗时任务，而且需要自己定义工作线程中调用，需要通过startService来启动任务；
+			2). 继承IntentService，需要在onHandleIntent方法中编写耗时任务，方法内部封装了线程，不需要考虑线程问题，需要通过startService来启动任务。
+		d). 销毁Service实例：
+			1). context.stopService(intent);
+			2). 在service中执行：
+     			stopSelf()
+     			stopSelf(int startId)
+
+	<title>三、ContentProvider</title>
+	Android的五种数据储存方式：Shared Preference、网络储存、文件储存、外储储存、SQLite。
+	当app需要把私有数据的访问开放给外部应用时，需要编写ContentProvider。
+	当需要访问外部应用的私有数据时，需要访问外部应用程序开放出来的ContentProvider。
+	ContentProvider为存储和获取数据提供了统一的接口，采用表的形式来组织数据。
+	Android为常见的一些数据提供了默认的ContentProvider（包括音频、视频、图片和通讯录等）。
+	使用ContentProvider需要实现的接口：
+		onCreate()，用来执行一些初始化的工作。
+		query(Uri, String[], String, String[], String)，用来返回数据给调用者。
+		insert(Uri, ContentValues)，用来插入新的数据。
+		update(Uri, ContentValues, String, String[])，用来更新已有的数据。
+		delete(Uri, String, String[])，用来删除数据。
+		getType(Uri)，用来返回数据的MIME类型。
+	Uri是使用ContentProvider必用到的对象，由固定协议前缀 + ContentProvider唯一标示 + 表名 + 指定条件(如指定id=1) 四部分构成。
+
+
+</body>
+</html>
