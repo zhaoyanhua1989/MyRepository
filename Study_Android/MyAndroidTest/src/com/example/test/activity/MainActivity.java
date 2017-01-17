@@ -3,6 +3,7 @@ package com.example.test.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,12 +18,19 @@ import com.example.test.util.ToastUtil;
 
 public class MainActivity extends BaseActivity {
 
+	private Handler handler = new Handler() {
+		
+		public void handleMessage(android.os.Message msg) {
+			
+		};
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		/* 隐藏标题栏，隐藏后看不到右上角的menu */
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.my_activity_main);
 	}
 
 	@SuppressLint("NewApi")
@@ -90,7 +98,7 @@ public class MainActivity extends BaseActivity {
 	// 重写菜单，显示menu
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+		getMenuInflater().inflate(R.menu.my_main_activity_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -105,16 +113,16 @@ public class MainActivity extends BaseActivity {
 
 	@Override
 	protected void initVariables() {
-		
+
 	}
 
 	@Override
 	protected void initViews(Bundle savedInstanceState) {
-		
+
 	}
 
 	@Override
 	protected void loadData() {
-		
+
 	}
 }

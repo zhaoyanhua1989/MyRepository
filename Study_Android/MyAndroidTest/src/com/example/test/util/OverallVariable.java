@@ -2,6 +2,7 @@ package com.example.test.util;
 
 import android.content.UriMatcher;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.BaseColumns;
 
 /**
@@ -23,13 +24,18 @@ public class OverallVariable {
 	// 验证码接收的Intent的action
 	public static final String RECEIVE_OK_OR_NOT = "RECEIVE_OK_OR_NOT";
 
-	/************************* ContentProvider 相关 ************************/
 	public static final String AUTHORITY = "hb.android.contentProvider";
 	public static final String DATABASE_NAME = "teacher.db";
 	// 创建 数据库的时候，都必须加上版本信息；并且必须大于4
 	public static final int DATABASE_VERSION = 4;
 	public static final String USERS_TABLE_NAME = "teacher";
 
+	/**
+	 * SideslipActivity 用于测试contentProvider的常量类
+	 * 
+	 * @author HKW2962
+	 *
+	 */
 	public static final class ContentProviderTestTableData implements BaseColumns {
 		public static final String TABLE_NAME = "teacher";
 		// Uri，外部程序需要访问就是通过这个Uri访问的，这个Uri必须的唯一的。
@@ -48,7 +54,6 @@ public class OverallVariable {
 		public static final String DATE_ADDED = "date_added";
 		public static final String SEX = "SEX";
 		public static final String DEFAULT_SORT_ORDER = "_id desc";
-
 		// 管理Uri的对象
 		public static final UriMatcher uriMatcher;
 		static {
@@ -61,8 +66,12 @@ public class OverallVariable {
 		}
 	}
 
-	/************************* ContentProvider 相关 ************************/
-
+	/**
+	 * 颜色相关的常量类
+	 * 
+	 * @author HKW2962
+	 *
+	 */
 	public static final class Color {
 		public static String DIALOG_TRANSPARENT_BLACK = "#99000000";
 		public static String UI_TYPE_BASIC_WHITE = "#F3F4F6";
@@ -71,10 +80,15 @@ public class OverallVariable {
 		public static String UI_TYPE_BASIC_BLUE = "#058794";
 	}
 
+	/**
+	 * WebViewActivity 用于测试h5的常量类
+	 * 
+	 * @author HKW2962
+	 *
+	 */
 	public static final class WebView {
 		public static final String WEB_PAGE_URL_HEADER = "file:///android_asset";
 		public static final String WEB_PAGE_URL_ASSETS_HTML = "file:///android_asset/assets/html";
-
 		// 自己定义的urL的header，看用于校验前部分操作是否成功，并以此来判断用不用加载后面的操作
 		public static final String WEB_INTERFACE_HEADER = "";
 		public static final String WEB_GLOBAL_INTERFACE_RELOAD = "reload";
@@ -93,4 +107,20 @@ public class OverallVariable {
 		public static final String CALL_JS_HEAD = "javascript:";
 	}
 
+	/**
+	 * 更新功能用于测试的常量类
+	 * 
+	 * @author HKW2962
+	 *
+	 */
+	public static final class Update {
+		// SD卡根目录
+		public static final String SDCARD_ROOT = Environment.getExternalStorageDirectory().getAbsolutePath();
+		// 更新下载的apk的储存路径
+		public static final String APK_PATH = SDCARD_ROOT + "/temp/goodLuck";
+		// Handler的处理事件，更新
+		public static final int DO_UPDATE = 2;
+		// Handler的处理事件，不更新
+		public static final int UNDO_UPDATE = 3;
+	}
 }

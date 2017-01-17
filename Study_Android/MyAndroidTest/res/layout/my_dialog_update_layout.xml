@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
         <TextView 
+            android:id="@+id/update_dialog_currentVersion"
             android:layout_gravity="left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -69,7 +69,7 @@ public class ViewPagerAdapter2 extends FragmentPagerAdapter {
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.fragment_viewpager_activity_item, container, false);
+			FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.my_fragment_viewpager_activity_item, container, false);
 			// 当设置第5个位置时(viewPager从0开始数)，显示其他图片
 			if (mImage == -1) {
 				// 由于container单独添加view会自动填满，所以需要一个父控件来控制自定义图片，防止拉伸。

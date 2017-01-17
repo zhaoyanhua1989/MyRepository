@@ -33,6 +33,7 @@ import com.example.test.R;
 import com.example.test.util.AppUtil;
 import com.example.test.util.MyLog;
 import com.example.test.util.OverallVariable;
+import com.example.test.util.PropertiesUtil;
 import com.example.test.util.ToastUtil;
 import com.example.test.view.MyCustomDialog;
 
@@ -48,13 +49,13 @@ public class AlertDialogService {
 	private static Dialog loadingBar;
 
 	/**
-	 * 直接使用AlertDialog，有缺陷，设置background时，当设置圆角时有尖角
+	 * 直接使用AlertDialog，有缺陷，设置background时，当设置圆角时有尖角，显示更新版本的信息
 	 * 
 	 * @param activity
 	 */
 	@SuppressLint({ "InflateParams", "NewApi" })
-	public static void showUpdateDialog(final Activity activity) {
-		View view = activity.getLayoutInflater().inflate(R.layout.dialog_update_layout, null);
+	public static void showUpdateVersionDialog(final Activity activity) {
+		View view = activity.getLayoutInflater().inflate(R.layout.my_dialog_update_layout, null);
 		// 创建builder，传参Context，theme(style)的id
 		// 创建自定义样式的Dialog，背景设置了透明，不然有黑色框框。设置了windowIsTranslucent，不然某些机型上UI会别截掉一部分
 		// AlertDialog.Builder builder = new AlertDialog.Builder(this,
@@ -75,15 +76,12 @@ public class AlertDialogService {
 			lp.height = (int) Math.ceil((activity.getResources().getDisplayMetrics().heightPixels) / 2);
 			dialog.getWindow().setAttributes(lp);
 			// 该表UI字体适配布局
-			((Button) (view.findViewById(R.id.update_dialog_exit))).setTextSize(12);
-			;
-			((Button) (view.findViewById(R.id.update_dialog_nextUpdate))).setTextSize(12);
-			;
-			((Button) (view.findViewById(R.id.update_dialog_updateNow))).setTextSize(12);
-			;
-			((TextView) (view.findViewById(R.id.update_dialog_explain1))).setTextSize(9);
-			((TextView) (view.findViewById(R.id.update_dialog_explain2))).setTextSize(9);
-			((TextView) (view.findViewById(R.id.update_dialog_explain3))).setTextSize(9);
+			((Button) view.findViewById(R.id.update_dialog_exit)).setTextSize(12);
+			((Button) view.findViewById(R.id.update_dialog_nextUpdate)).setTextSize(12);
+			((Button) view.findViewById(R.id.update_dialog_updateNow)).setTextSize(12);
+			((TextView) view.findViewById(R.id.update_dialog_explain1)).setTextSize(9);
+			((TextView) view.findViewById(R.id.update_dialog_explain2)).setTextSize(9);
+			((TextView) view.findViewById(R.id.update_dialog_explain3)).setTextSize(9);
 		}
 		// 监听按钮
 		view.findViewById(R.id.update_dialog_exit).setOnClickListener(new OnClickListener() {
@@ -108,15 +106,26 @@ public class AlertDialogService {
 				dialog.dismiss();
 			}
 		});
-		// 设置内容
-		// TextView textView = (TextView)
-		// view.findViewById(R.id.update_dialog_textView);
-		// textView.setText("");
 		/** 如和让ScrollView的ScrollBar恒显示？ fadeScrollbars设置为false，见xml */
 		/**
 		 * AlertDialog的自定义view设置background后，AlertDialog会有黑色边框。
 		 * 需要设置AlertDialog的theme才能去掉。
 		 */
+		// TODO
+		// 读取更新内容并展示
+		String currentVersion = "当前版本：" + PropertiesUtil.getVersion();
+		((TextView) view.findViewById(R.id.update_dialog_currentVersion)).setText(currentVersion);
+		// 设置内容
+		((TextView) view.findViewById(R.id.update_dialog_textView)).setText(PropertiesUtil.getValue("updateContent"));
+	}
+
+	/**
+	 * 直接使用AlertDialog，有缺陷，设置background时，当设置圆角时有尖角，显示当前版本的信息
+	 * 
+	 * @param activity
+	 */
+	public static void showCurrentVersionDialog(final Activity activity) {
+
 	}
 
 	/**
@@ -163,7 +172,7 @@ public class AlertDialogService {
 	@SuppressWarnings("deprecation")
 	@SuppressLint("InflateParams")
 	public static void showSimpleCustomExitDialog(final Activity activity) {
-		View view = activity.getLayoutInflater().inflate(R.layout.dialog_exit_layout, null);
+		View view = activity.getLayoutInflater().inflate(R.layout.my_dialog_exit_layout, null);
 		final Dialog dialog = new Dialog(activity, R.style.exitDialogStyle);
 		// 显示动态图片
 		GifImageView gifIV = (GifImageView) view.findViewById(R.id.exit_GifImageView);
@@ -227,7 +236,7 @@ public class AlertDialogService {
 	}
 
 	/**
-	 * 显示PopupMenu，优点：在不需要自定义background时使用方便简洁；缺点：不能自定义background
+	 * 显示PopupMenu，优点：在不需要自定义background时使用方便简洁；缺点：不能自定义background，这里未使用
 	 * 
 	 * @param activity
 	 * @param v
@@ -235,14 +244,14 @@ public class AlertDialogService {
 	 */
 	public static void showPopupMenu(final Activity activity, View v) {
 		PopupMenu pm = new PopupMenu(activity, v);
-		pm.getMenuInflater().inflate(R.menu.pop, pm.getMenu());
+		pm.getMenuInflater().inflate(R.menu.my_pop, pm.getMenu());
 		pm.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
 				switch (item.getItemId()) {
 				case R.id.main_pop1:
 					// 自定义AlertDialog，更新弹窗
-					AlertDialogService.showUpdateDialog(activity);
+					AlertDialogService.showUpdateVersionDialog(activity);
 					break;
 				case R.id.main_pop2:
 					// 系统退出弹窗
@@ -272,11 +281,11 @@ public class AlertDialogService {
 	 * 
 	 * @param activity
 	 * @param v
-	 *            PopupWindow绑定的view
+	 *            承载的父控件 PopupWindow绑定的view
 	 */
 	@SuppressLint("InflateParams")
 	public static void showPopupWindow(final Activity activity, View v) {
-		View view = activity.getLayoutInflater().inflate(R.layout.dialog_popwindow_layout, null);
+		View view = activity.getLayoutInflater().inflate(R.layout.my_dialog_popwindow_layout, null);
 		final PopupWindow pw = new PopupWindow(view, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
 		// 必须在代码中设置一下背景色，点击外面不会隐藏此弹窗
 		pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -292,7 +301,7 @@ public class AlertDialogService {
 			@Override
 			public void onClick(View v) {
 				// 自定义AlertDialog，更新弹窗
-				AlertDialogService.showUpdateDialog(activity);
+				AlertDialogService.showUpdateVersionDialog(activity);
 				pw.dismiss();
 			}
 		});

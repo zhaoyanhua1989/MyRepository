@@ -67,7 +67,7 @@ public class LoginActivity extends Activity implements OnLayoutChangeListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+		setContentView(R.layout.my_activity_login);
 		// 阀值设置为屏幕高度的1/3
 		keyHeight = getWindowManager().getDefaultDisplay().getHeight() / 3;
 		initView();
@@ -133,7 +133,7 @@ public class LoginActivity extends Activity implements OnLayoutChangeListener {
 			}
 		});
 		// 设置登录框内容的动画效果，xml设置动画
-		Animation anim = AnimationUtils.loadAnimation(this, RUtil.getAnim(this, "login_activity_anim2"));
+		Animation anim = AnimationUtils.loadAnimation(this, RUtil.getAnim(this, "my_login_activity_anim2"));
 		nameTitleTv.setAnimation(anim);
 		pwdTitleTv.setAnimation(anim);
 		// 设置登录框动画效果，代码设置动画
@@ -427,7 +427,7 @@ public class LoginActivity extends Activity implements OnLayoutChangeListener {
 	 * @param textView
 	 */
 	private void setAnim1(TextView textView) {
-		Animation anim = AnimationUtils.loadAnimation(LoginActivity.this, RUtil.getAnim(LoginActivity.this, "login_activity_anim1"));
+		Animation anim = AnimationUtils.loadAnimation(LoginActivity.this, RUtil.getAnim(LoginActivity.this, "my_login_activity_anim1"));
 		textView.setAnimation(anim);
 	}
 
@@ -437,7 +437,7 @@ public class LoginActivity extends Activity implements OnLayoutChangeListener {
 			showLoginZone();
 		} else {
 			// 设置退出时，登录框加载的动画。动画加载完成后才执行finish
-			Animation anim = AnimationUtils.loadAnimation(this, RUtil.getAnim(this, "login_activity_anim3"));
+			Animation anim = AnimationUtils.loadAnimation(this, RUtil.getAnim(this, "my_login_activity_anim3"));
 			loginDialog.startAnimation(anim);
 			anim.setAnimationListener(new AnimationListener() {
 				@Override

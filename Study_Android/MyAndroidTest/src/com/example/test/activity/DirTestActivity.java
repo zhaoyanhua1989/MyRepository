@@ -23,7 +23,7 @@ public class DirTestActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(com.example.test.R.layout.activity_dir_test);
+		setContentView(com.example.test.R.layout.my_activity_dir_test);
 		TextView tv = (TextView) findViewById(R.id.dir_textView1);
 		MyApplication.activitys.add(this);
 

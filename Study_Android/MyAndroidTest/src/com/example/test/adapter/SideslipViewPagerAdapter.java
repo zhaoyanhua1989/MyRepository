@@ -71,7 +71,7 @@ class SideslipFragment1 extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		MyLog.d("SideslipFragment1 onCreateView...");
-		FrameLayout layout = (FrameLayout) inflater.inflate(RUtil.getLayout(getActivity(), "sideslip_viewpager_fragmentlayout"), container, false);
+		FrameLayout layout = (FrameLayout) inflater.inflate(RUtil.getLayout(getActivity(), "my_sideslip_viewpager_fragmentlayout"), container, false);
 		ListView mListView = (ListView) layout.findViewById(RUtil.getId(getActivity(), "sideslip_viewpager_fragment_listview"));
 		SideslipListViewAdapter mAdapter = new SideslipListViewAdapter(getActivity(), mFriends);
 		mListView.setAdapter(mAdapter);
@@ -116,7 +116,7 @@ class SideslipFragment1 extends Fragment {
 			ViewHolder holder = null;
 			if (convertView == null) {
 				holder = new ViewHolder();
-				convertView = LayoutInflater.from(mActivity).inflate(RUtil.getLayout(mActivity, "sideslip_viewpager_fragmentl_listview_item"), null);
+				convertView = LayoutInflater.from(mActivity).inflate(RUtil.getLayout(mActivity, "my_sideslip_viewpager_fragmentl_listview_item"), null);
 				holder.idTV = (TextView) convertView.findViewById(RUtil.getId(mActivity, "sideslip_viewpager_fragment_listview_id"));
 				holder.nameTV = (TextView) convertView.findViewById(RUtil.getId(mActivity, "sideslip_viewpager_fragment_listview_name"));
 				holder.genderTV = (TextView) convertView.findViewById(RUtil.getId(mActivity, "sideslip_viewpager_fragment_listview_gender"));
@@ -146,7 +146,7 @@ class SideslipFragment2 extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		MyLog.d("SideslipFragment2 onCreateView...");
-		FrameLayout layout = (FrameLayout) inflater.inflate(RUtil.getLayout(getActivity(), "sideslip_viewpager_fragmentlayout"), container, false);
+		FrameLayout layout = (FrameLayout) inflater.inflate(RUtil.getLayout(getActivity(), "my_sideslip_viewpager_fragmentlayout"), container, false);
 		ListView mListView = (ListView) layout.findViewById(RUtil.getId(getActivity(), "sideslip_viewpager_fragment_listview"));
 		mListView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, RUtil.getValuesStringArray(getActivity(), "sideslipView_fragment2List")));
 		mListView.setOnItemClickListener(new OnItemClickListener() {
@@ -155,7 +155,7 @@ class SideslipFragment2 extends Fragment {
 				dealWithProviderOperation(position);
 			}
 		});
-		layout.setBackgroundColor(Color.BLUE);
+		layout.setBackgroundColor(Color.parseColor("#288028"));
 		return layout;
 	}
 

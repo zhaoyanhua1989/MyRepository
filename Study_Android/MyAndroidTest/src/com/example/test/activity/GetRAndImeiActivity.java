@@ -26,7 +26,7 @@ public class GetRAndImeiActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_getrandimei);
+		setContentView(R.layout.my_activity_getrandimei);
 		MyApplication.activitys.add(this);
 		Rinit();
 		if (getAccountN(this) == -1) {

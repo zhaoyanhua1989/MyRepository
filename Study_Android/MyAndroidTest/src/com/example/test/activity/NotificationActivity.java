@@ -108,7 +108,7 @@ public class NotificationActivity extends ListActivity {
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
 		// 自定义的通知界面，仿音乐播放器
-		RemoteViews contentViews = new RemoteViews(getPackageName(), RUtil.getLayout(this, "custom_notification"));
+		RemoteViews contentViews = new RemoteViews(getPackageName(), RUtil.getLayout(this, "my_custom_notification"));
 		contentViews.setImageViewResource(RUtil.getId(this, "notification_artist_image"), RUtil.getDrawable(this, "custom_notification_icon"));
 		contentViews.setTextViewText(RUtil.getId(this, "notification_music_title"), "浮夸");
 		contentViews.setTextViewText(RUtil.getId(this, "notification_music_Artist"), "陈奕迅");
@@ -230,7 +230,7 @@ public class NotificationActivity extends ListActivity {
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			requestWindowFeature(Window.FEATURE_NO_TITLE);
-			setContentView(R.layout.activity_notification_camera);
+			setContentView(R.layout.my_activity_notification_camera);
 		}
 
 		public void doClick(View v) {

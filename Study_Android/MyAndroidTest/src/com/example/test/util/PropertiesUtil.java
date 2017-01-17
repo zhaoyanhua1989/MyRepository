@@ -25,8 +25,12 @@ public class PropertiesUtil {
 		}
 	}
 
-	private static String getValue(String str) {
+	public static String getValue(String str) {
 		return configProperties.getProperty(str);
+	}
+
+	public static String getValue(String str, String defaultValue) {
+		return StringUtil.isEmpty(configProperties.getProperty(str)) ? defaultValue : configProperties.getProperty(str);
 	}
 
 	public static String getVersion() {

@@ -48,7 +48,7 @@ public class ViewPagerActivity extends FragmentActivity implements TabListener, 
 		super.onCreate(savedInstanceState);
 		// 设置actionBar成为覆盖模式，相当于漂浮在activity之上，不干预activity的布局
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-		setContentView(R.layout.activity_view_pager);
+		setContentView(R.layout.my_activity_view_pager);
 		MyApplication.activitys.add(this);
 		// 初始化viewPager
 		showViewPager();

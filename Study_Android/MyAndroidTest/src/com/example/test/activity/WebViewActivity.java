@@ -58,7 +58,7 @@ public class WebViewActivity extends BaseActivity {
 
 	@Override
 	protected void initViews(Bundle savedInstanceState) {
-		setContentView(R.layout.activity_webview);
+		setContentView(R.layout.my_activity_webview);
 		mWebView = (WebView) findViewById(RUtil.getId(this, "webview_webview"));
 		console = (RelativeLayout) findViewById(RUtil.getId(this, "webview_console"));
 		touchZone = (RelativeLayout) findViewById(RUtil.getId(this, "webview_touchZone"));

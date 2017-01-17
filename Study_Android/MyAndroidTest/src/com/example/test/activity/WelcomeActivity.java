@@ -35,7 +35,7 @@ public class WelcomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_welcome);
+		setContentView(R.layout.my_activity_welcome);
 		// 显示图片
 		showContent();
 		// 延迟进入下一个页面

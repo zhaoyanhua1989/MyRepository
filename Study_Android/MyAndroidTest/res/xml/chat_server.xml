@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<chatServer>
-    <host>10.20.72.80</host>
-    <port>5222</port>
-    <serviceName>tarena.com</serviceName>
-</chatServer>

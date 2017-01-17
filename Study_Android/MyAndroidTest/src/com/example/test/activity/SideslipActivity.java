@@ -14,6 +14,7 @@ import android.app.ActionBar.TabListener;
 import android.app.FragmentTransaction;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.XmlResourceParser;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -42,8 +44,9 @@ import com.example.test.view.SideslipMenu;
 import com.example.test.view.SideslipMenu.SideslipMenuListener;
 
 /**
- * 侧滑菜单类，结合了ActionBar相关功能 知识点：1.setOverflowShowingAlways方法，总是显示溢出菜单
+ * 侧滑菜单类，结合了ActionBar相关功能 知识点： 1.setOverflowShowingAlways方法，总是显示溢出菜单
  * 2.重写onMenuOpened方法，让溢出菜单中总是显示图标 3.ActionBar的导航功能，返回主Activity
+ * 4.侧滑菜单，控制fragment显示
  * 
  * @author HKW2962
  *
@@ -58,12 +61,14 @@ public class SideslipActivity extends FragmentActivity implements TabListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_sideslip);
+		setContentView(R.layout.my_activity_sideslip);
 		MyApplication.activitys.add(this);
 		// 初始化数据
 		initData();
 		// 设置viewPager
 		initViewPager();
+		// 设置侧滑菜单
+		initSideslipMenu();
 		// 创建ActionBar
 		initActionBar();
 		// 设置右上角溢出菜单总是显示
@@ -127,21 +132,63 @@ public class SideslipActivity extends FragmentActivity implements TabListener {
 		mViewPager = (ViewPager) findViewById(RUtil.getId(this, "sideslip_viewPager"));
 		SideslipViewPagerAdapter mAdapter = new SideslipViewPagerAdapter(2, getSupportFragmentManager(), friends);
 		mViewPager.setAdapter(mAdapter);
+		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
+
+			@Override
+			public void onPageSelected(int index) {
+				mActionBar.setSelectedNavigationItem(index);
+			}
+
+			@Override
+			public void onPageScrolled(int index, float positionOffset, int positionOffsetPixels) {
+
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int index) {
+
+			}
+		});
+	}
+
+	/************************ 侧滑菜单弹 ************************/
+
+	private void initSideslipMenu() {
 		try {
-			mSlidingMenu = new SideslipMenu(this, 2, new SideslipMenuListener() {
+			mSlidingMenu = new SideslipMenu(this, 20, new SideslipMenuListener() {
 
 				@Override
 				protected void onSideslipMenuClicked(int index) {
-					// TODO
-					MyLog.d("点击侧滑菜单按钮，下标为：" + index);
+					if (index < mViewPager.getChildCount()) {
+						mViewPager.setCurrentItem(index);
+					}
 				}
 			});
+			mSlidingMenu.setSideslipMenuBtName(readSideslipMenuBtName(20));
 		} catch (Exception e) {
 			MyLog.e("set SideslipMenu error, exception is：" + e.getMessage());
 		}
 	}
 
-	/************************ 侧滑菜单弹出事件 ************************/
+	private String[] readSideslipMenuBtName(int amount) throws Exception {
+		XmlResourceParser xmlResourceParser = getResources().getXml(R.xml.slideslip_button_name);
+		int eventType = xmlResourceParser.getEventType();
+		String[] names = new String[amount];
+		while (eventType != XmlResourceParser.END_DOCUMENT) {
+			if (eventType == XmlResourceParser.START_TAG) {
+				for (int i = 0; i < amount; i++) {
+					String tagName = xmlResourceParser.getName();
+					if (("name" + i).equals(tagName)) {
+						names[i] = xmlResourceParser.nextText();
+						break;
+					}
+				}
+			}
+			eventType = xmlResourceParser.next();
+		}
+		return names;
+	}
+
 	// 手指按下的点为(x1, y1)手指离开屏幕的点为(x2, y2)
 	private float x1 = 0;
 	private float x2 = 0;
@@ -165,10 +212,10 @@ public class SideslipActivity extends FragmentActivity implements TabListener {
 			} else if (y2 - y1 > 50 && ((y2 - y1) > Math.abs(x1 - x2))) {
 				MyLog.d("SideslipActivity 向下滑动");
 			} else if (x1 - x2 > 50 && ((x1 - x2) > Math.abs(y1 - y2))) {
-				MyLog.d("SideslipActivity 向左滑动");
-				// TODO 隐藏
+				// 第三方侧滑菜单已提供显示和隐藏监听，只是手指要按到左边最边上滑动，不方便
+				mSlidingMenu.closeMenu();
 			} else if (x2 - x1 > 50 && ((x2 - x1) > Math.abs(y1 - y2))) {
-				MyLog.d("SideslipActivity 向右滑动");
+				// 第三方侧滑菜单已提供显示和隐藏监听，只是手指要按到左边最边上滑动，不方便
 				mSlidingMenu.showMenu();
 			}
 		}
@@ -207,7 +254,7 @@ public class SideslipActivity extends FragmentActivity implements TabListener {
 	/******************** 创建ActionBar的功能按钮(右上角) ********************/
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.viewpager_activity_menu, menu);
+		getMenuInflater().inflate(R.menu.my_viewpager_activity_menu, menu);
 		// 设置searchView展开和合并的不同界面
 		MenuItem searchItem = menu.findItem(R.id.viewPager_action_search);
 		SearchView searchView = (SearchView) searchItem.getActionView();

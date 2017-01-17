@@ -23,6 +23,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -32,6 +33,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -41,6 +43,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -50,6 +53,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -59,6 +63,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -68,6 +73,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -77,6 +83,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -86,6 +93,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -95,6 +103,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -104,6 +113,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -113,6 +123,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -122,6 +133,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -131,6 +143,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -140,6 +153,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -149,6 +163,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -158,6 +173,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -167,6 +183,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -176,6 +193,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -185,6 +203,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
 
             <Button
@@ -194,6 +213,7 @@
                 android:layout_marginRight="@dimen/activity_webview_controller_margin"
                 android:layout_marginTop="@dimen/activity_webview_controller_margin"
                 android:background="@drawable/custom_dialog_bbuton1_bg"
+                android:visibility="gone"
                 android:minHeight="50dp" />
         </LinearLayout>
     </ScrollView>
