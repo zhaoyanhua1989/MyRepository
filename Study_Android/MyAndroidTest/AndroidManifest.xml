@@ -17,14 +17,14 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    
+
     <!-- 发送网络请求用 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- 广播权限 -->
-    <uses-permission android:name="com.example.test.ACTIONNOTIFICATION"/>
+    <uses-permission android:name="com.example.test.ACTIONNOTIFICATION" />
     <!-- 短信权限 -->
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
         android:name=".MyApplication"
@@ -78,17 +78,17 @@
         </activity>
         <activity
             android:name=".activity.NotificationActivity"
-            android:exported="true"
-            android:launchMode="singleInstance"
             android:configChanges="keyboard|orientation|navigation|screenSize"
+            android:exported="true"
             android:label="@string/title_activity_notifycation"
+            android:launchMode="singleInstance"
             android:screenOrientation="sensor"
             android:theme="@style/AppTheme" >
         </activity>
         <activity
             android:name=".activity.NotificationActivity$NotificationCameraActivity"
-            android:exported="true"
             android:configChanges="keyboard|orientation|navigation|screenSize"
+            android:exported="true"
             android:label="@string/title_activity_camera"
             android:screenOrientation="sensor"
             android:theme="@style/center_float_dialog" >
@@ -107,20 +107,25 @@
             android:name="com.example.test.activity.LoginActivity"
             android:configChanges="keyboard|orientation|navigation|screenSize"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:theme="@style/center_float_dialog" >
+            android:theme="@style/center_float_dialog"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
         </activity>
-        <provider android:name="com.example.test.model.CustomContentProvider"
-            android:exported="true"
+
+        <provider
+            android:name="com.example.test.model.CustomContentProvider"
             android:authorities="hb.android.contentProvider"
-            android:multiprocess="false"></provider>
+            android:exported="true"
+            android:multiprocess="false" >
+        </provider>
+
         <activity
             android:name="com.example.test.activity.WebViewActivity"
             android:configChanges="keyboard|orientation|navigation|screenSize"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_webView"
+            android:screenOrientation="portrait"
             android:theme="@style/center_float_dialog" >
         </activity>
+
     </application>
 
 </manifest>

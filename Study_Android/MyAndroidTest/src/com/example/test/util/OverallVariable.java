@@ -1,5 +1,7 @@
 package com.example.test.util;
 
+import java.io.File;
+
 import android.content.UriMatcher;
 import android.net.Uri;
 import android.os.Environment;
@@ -23,6 +25,14 @@ public class OverallVariable {
 	public static final String SEND_OK_OR_NOT = "SEND_OK_OR_NOT";
 	// 验证码接收的Intent的action
 	public static final String RECEIVE_OK_OR_NOT = "RECEIVE_OK_OR_NOT";
+	// http请求的url
+	public static final String HTTP_REQUEST_HEAD = "http://10.20.72.80:8080/2.5_web_jsp";
+	// 请求登录和注册
+	public static final String HTTP_REQUEST_LOGINORREGISTER = HTTP_REQUEST_HEAD + File.separator + "requestLogin.jsp";
+	// 请求获取更新信息
+	public static final String HTTP_REQUEST_UPDATEINFORMATION = HTTP_REQUEST_HEAD + File.separator + "update.jsp";
+	// http请求拿到的结果，定义的成功码
+	public static final int HTTP_REQUEST_CUSTOMCODE_OK = 0;
 
 	public static final String AUTHORITY = "hb.android.contentProvider";
 	public static final String DATABASE_NAME = "teacher.db";
@@ -122,5 +132,7 @@ public class OverallVariable {
 		public static final int DO_UPDATE = 2;
 		// Handler的处理事件，不更新
 		public static final int UNDO_UPDATE = 3;
+		// Handler的处理事件，安装apk
+		public static final int INSTALLAPK = 4;
 	}
 }

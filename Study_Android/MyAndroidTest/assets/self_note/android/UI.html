@@ -160,5 +160,11 @@
 	3.View.postDelayed(Runnable, long)
 	4.主线程的Handler
 
+24、UI的组件，按键盘tab或者enter键切换焦点：
+	1.在xml中组件增加如下属性：
+		android:imeOptions="actionNext"
+		android:nextFocusForward="你要跳转的下个组件的id"
+	2.特别注意：EditText，如果不设置密码样式，Tab键默认为输入字符而不是跳转，需要自己重写EditText或者监听修改
+
 </body>
 </html>

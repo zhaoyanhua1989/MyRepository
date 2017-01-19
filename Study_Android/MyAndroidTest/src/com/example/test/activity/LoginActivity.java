@@ -216,7 +216,7 @@ public class LoginActivity extends Activity implements OnLayoutChangeListener {
 		// 验证非空
 		if (!checkNotNull())
 			return;
-		String uri = "http://10.20.72.80:8080/2.5_web_jsp/requestLogin.jsp?request=login&name=" + name + "&pwd=" + pwd;
+		String uri = OverallVariable.HTTP_REQUEST_LOGINORREGISTER + "?request=login&name=" + name + "&pwd=" + pwd;
 		try {
 			HttpEntity entity = HttpUtils.get(HttpUtils.GET, uri, null);
 			// 获取响应文本 json字符串
@@ -236,7 +236,7 @@ public class LoginActivity extends Activity implements OnLayoutChangeListener {
 		if (!checkNotNull())
 			return;
 		// HttpPost连接对象
-		String uri = "http://10.20.72.80:8080/2.5_web_jsp/requestLogin.jsp?";
+		String uri = OverallVariable.HTTP_REQUEST_LOGINORREGISTER;
 		List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
 		params.add(new BasicNameValuePair("name", name));
 		params.add(new BasicNameValuePair("pwd", pwd));
@@ -270,6 +270,7 @@ public class LoginActivity extends Activity implements OnLayoutChangeListener {
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
+					releaseResource();
 					finish();
 				}
 			});
@@ -283,7 +284,7 @@ public class LoginActivity extends Activity implements OnLayoutChangeListener {
 		// 验证非空
 		if (!checkNotNull())
 			return;
-		String uri = "http://10.20.72.80:8080/2.5_web_jsp/requestLogin.jsp?request=register&name=" + name + "&pwd=" + pwd;
+		String uri = OverallVariable.HTTP_REQUEST_LOGINORREGISTER + "request=register&name=" + name + "&pwd=" + pwd;
 		try {
 			HttpEntity entity = HttpUtils.get(HttpUtils.GET, uri, null);
 			if (entity != null) {
@@ -303,7 +304,7 @@ public class LoginActivity extends Activity implements OnLayoutChangeListener {
 		if (!checkNotNull())
 			return;
 		// HttpPost连接对象
-		String uri = "http://10.20.72.80:8080/2.5_web_jsp/requestLogin.jsp?";
+		String uri = OverallVariable.HTTP_REQUEST_LOGINORREGISTER;
 		List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
 		params.add(new BasicNameValuePair("name", name));
 		params.add(new BasicNameValuePair("pwd", pwd));

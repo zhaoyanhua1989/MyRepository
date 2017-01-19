@@ -12,6 +12,8 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,14 +49,20 @@ public class AlertDialogService {
 
 	private final static String TAG = AlertDialogService.class.getSimpleName();
 	private static Dialog loadingBar;
+	private static UpdateService mUpdateService;
 
 	/**
-	 * 直接使用AlertDialog，有缺陷，设置background时，当设置圆角时有尖角，显示更新版本的信息
+	 * 展示更新弹窗（直接使用AlertDialog，有缺陷，设置background时，当设置圆角时有尖角）
 	 * 
 	 * @param activity
+	 * @param needUpdate
+	 *            是否需要展示更新信息，传入值应为OverallVariable.Update.UNDO_UPDATE 或
+	 *            OverallVariable.Update.DO_UPDATE
+	 * @param bundle
+	 *            如果需要展示更新信息，则需要传递更新包的信息过来，Bundle对象；如果不需要展示更新信息，则可以传null
 	 */
 	@SuppressLint({ "InflateParams", "NewApi" })
-	public static void showUpdateVersionDialog(final Activity activity) {
+	public static void showUpdateVersionDialog(final Activity activity, int needUpdate, Bundle bundle) {
 		View view = activity.getLayoutInflater().inflate(R.layout.my_dialog_update_layout, null);
 		// 创建builder，传参Context，theme(style)的id
 		// 创建自定义样式的Dialog，背景设置了透明，不然有黑色框框。设置了windowIsTranslucent，不然某些机型上UI会别截掉一部分
@@ -63,6 +71,56 @@ public class AlertDialogService {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity, 0);
 		builder.setView(view);
 		final AlertDialog dialog = builder.create();
+
+		// 初始化更新窗UI和兼容性
+		initUpdateUI(activity, view, dialog);
+
+		// 显示更新窗的数据，并根据实际情况对UI微调
+		showUpdateInformation(needUpdate, bundle, view);
+
+		// 监听按钮
+		view.findViewById(R.id.update_dialog_nextUpdate).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ToastUtil.showCustomToast(activity, "下次更新");
+				dialog.dismiss();
+			}
+		});
+		if (needUpdate == OverallVariable.Update.DO_UPDATE) {
+			final String updateUrl = bundle.getString("updateUrl");
+			view.findViewById(R.id.update_dialog_exit).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					ToastUtil.showCustomToast(activity, "退出游戏");
+					dialog.dismiss();
+					activity.onBackPressed();
+				}
+			});
+			view.findViewById(R.id.update_dialog_updateNow).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mUpdateService.downloadUpdateApk(updateUrl);
+					dialog.dismiss();
+				}
+			});
+		}
+		/** 如和让ScrollView的ScrollBar恒显示？ fadeScrollbars设置为false，见xml */
+		/**
+		 * AlertDialog的自定义view设置background后，AlertDialog会有黑色边框。
+		 * 需要设置AlertDialog的theme才能去掉。
+		 */
+	}
+
+	/**
+	 * 设置更新弹窗的UI和兼容性
+	 * 
+	 * @param activity
+	 * @param view
+	 *            Layout对象
+	 * @param dialog
+	 *            创建的dialog
+	 */
+	private static void initUpdateUI(final Activity activity, View view, final AlertDialog dialog) {
 		/**
 		 * 在安卓4.4到5.0之间系统的手机上，AlertDialog的顶部可能被剪切掉，所以需要设置Flags
 		 */
@@ -83,49 +141,44 @@ public class AlertDialogService {
 			((TextView) view.findViewById(R.id.update_dialog_explain2)).setTextSize(9);
 			((TextView) view.findViewById(R.id.update_dialog_explain3)).setTextSize(9);
 		}
-		// 监听按钮
-		view.findViewById(R.id.update_dialog_exit).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ToastUtil.showCustomToast(activity, "退出游戏");
-				dialog.dismiss();
-				activity.onBackPressed();
-			}
-		});
-		view.findViewById(R.id.update_dialog_nextUpdate).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ToastUtil.showCustomToast(activity, "下次更新");
-				dialog.dismiss();
-			}
-		});
-		view.findViewById(R.id.update_dialog_updateNow).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ToastUtil.showCustomToast(activity, "立即更新");
-				dialog.dismiss();
-			}
-		});
-		/** 如和让ScrollView的ScrollBar恒显示？ fadeScrollbars设置为false，见xml */
-		/**
-		 * AlertDialog的自定义view设置background后，AlertDialog会有黑色边框。
-		 * 需要设置AlertDialog的theme才能去掉。
-		 */
-		// TODO
-		// 读取更新内容并展示
-		String currentVersion = "当前版本：" + PropertiesUtil.getVersion();
-		((TextView) view.findViewById(R.id.update_dialog_currentVersion)).setText(currentVersion);
-		// 设置内容
-		((TextView) view.findViewById(R.id.update_dialog_textView)).setText(PropertiesUtil.getValue("updateContent"));
 	}
 
 	/**
-	 * 直接使用AlertDialog，有缺陷，设置background时，当设置圆角时有尖角，显示当前版本的信息
+	 * 显示更新窗的数据，并根据实际情况对UI微调
 	 * 
-	 * @param activity
+	 * @param needUpdate
+	 * @param bundle
+	 * @param view
 	 */
-	public static void showCurrentVersionDialog(final Activity activity) {
-
+	private static void showUpdateInformation(int needUpdate, Bundle bundle, View view) {
+		// 版本展示textView
+		((TextView) view.findViewById(R.id.update_dialog_currentVersion)).setText("当前版本：" + PropertiesUtil.getVersion());
+		// 内容展示textView
+		TextView contentTv = (TextView) view.findViewById(R.id.update_dialog_textView);
+		if (needUpdate == OverallVariable.Update.DO_UPDATE) {
+			if (bundle == null) {
+				return;
+			}
+			String version = bundle.getString("version");
+			// 传过来的换行符转义了，需要还原
+			String content = bundle.getString("content").replace("\\n", "\n");
+			String apkSize = bundle.getString("apkSize");
+			String updateDate = bundle.getString("updateDate");
+			// 设置显示的UI内容
+			contentTv.setText(content);
+			((TextView) view.findViewById(R.id.update_dialog_explain1)).setText("更新日期：" + updateDate);
+			((TextView) view.findViewById(R.id.update_dialog_explain2)).setText("更新大小：" + apkSize);
+			((TextView) view.findViewById(R.id.update_dialog_explain3)).setText("版本号：" + version);
+		} else {
+			// 隐藏更新按钮和新版本信息栏
+			view.findViewById(R.id.update_dialog_relativelayout1).setVisibility(View.GONE);
+			view.findViewById(R.id.update_dialog_exit).setVisibility(View.GONE);
+			((Button) view.findViewById(R.id.update_dialog_nextUpdate)).setText("确定");
+			view.findViewById(R.id.update_dialog_updateNow).setVisibility(View.GONE);
+			// 设置显示的UI内容
+			((TextView) view.findViewById(R.id.update_dialog_title)).setText("已是最新版本");
+			contentTv.setText(PropertiesUtil.getValue("updateContent"));
+		}
 	}
 
 	/**
@@ -242,8 +295,8 @@ public class AlertDialogService {
 	 * @param v
 	 *            PopupMenu绑定的view
 	 */
-	public static void showPopupMenu(final Activity activity, View v) {
-		PopupMenu pm = new PopupMenu(activity, v);
+	public static void showPopupMenu(final Activity activity, final Handler handler, View v) {
+		final PopupMenu pm = new PopupMenu(activity, v);
 		pm.getMenuInflater().inflate(R.menu.my_pop, pm.getMenu());
 		pm.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
@@ -251,7 +304,11 @@ public class AlertDialogService {
 				switch (item.getItemId()) {
 				case R.id.main_pop1:
 					// 自定义AlertDialog，更新弹窗
-					AlertDialogService.showUpdateVersionDialog(activity);
+					if (mUpdateService == null) {
+						mUpdateService = new UpdateService(activity, handler);
+					}
+					mUpdateService.checkUpdateInformation();
+					pm.dismiss();
 					break;
 				case R.id.main_pop2:
 					// 系统退出弹窗
@@ -284,7 +341,7 @@ public class AlertDialogService {
 	 *            承载的父控件 PopupWindow绑定的view
 	 */
 	@SuppressLint("InflateParams")
-	public static void showPopupWindow(final Activity activity, View v) {
+	public static void showPopupWindow(final Activity activity, final Handler handler, View v) {
 		View view = activity.getLayoutInflater().inflate(R.layout.my_dialog_popwindow_layout, null);
 		final PopupWindow pw = new PopupWindow(view, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
 		// 必须在代码中设置一下背景色，点击外面不会隐藏此弹窗
@@ -301,7 +358,10 @@ public class AlertDialogService {
 			@Override
 			public void onClick(View v) {
 				// 自定义AlertDialog，更新弹窗
-				AlertDialogService.showUpdateVersionDialog(activity);
+				if (mUpdateService == null) {
+					mUpdateService = new UpdateService(activity, handler);
+				}
+				mUpdateService.checkUpdateInformation();
 				pw.dismiss();
 			}
 		});

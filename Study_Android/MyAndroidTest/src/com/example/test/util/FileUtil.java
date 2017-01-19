@@ -1,6 +1,8 @@
 package com.example.test.util;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -213,6 +215,83 @@ public class FileUtil {
 				} else {
 					item.delete();
 				}
+			}
+		}
+	}
+
+	/**
+	 * 读取指定文件
+	 * 
+	 * @param filePath
+	 *            文件目录
+	 * @return
+	 */
+	public static byte[] readFileFromSdcard(String filePath) {
+		byte[] data = null;
+		FileInputStream fileInputStream = null;
+		try {
+			fileInputStream = new FileInputStream(filePath);
+			int size = fileInputStream.available();
+			data = new byte[size];
+			fileInputStream.read(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (fileInputStream != null) {
+				try {
+					fileInputStream.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return data;
+	}
+
+	/**
+	 * 向sdcard写数据
+	 * 
+	 * @param context
+	 * @param path
+	 *            文件路径，文件夹
+	 * @param fileName
+	 *            文件名称
+	 * @param data
+	 *            原文件读取的或网络请求拿到的byte[]数据
+	 */
+	public synchronized static void writeToSdcard(Context context, String path, String fileName, byte[] data) {
+		FileOutputStream fileOutputStream = null;
+		try {
+			// 判断sdcard的状态
+			String sdcardState = Environment.getExternalStorageState();
+			if (Environment.MEDIA_MOUNTED.equals(sdcardState)) { // 有sdcard
+
+				// 判断path有没有
+				File filePath = new File(path);
+				if (!filePath.exists()) {
+					filePath.mkdirs();
+				}
+
+				// 判断file有没有
+				File file = new File(path, fileName);
+				MyLog.d("file的路径：" + file.getAbsolutePath());
+				if (file.exists()) {
+					file.delete();
+				}
+
+				// 写数据
+				fileOutputStream = new FileOutputStream(file);
+				fileOutputStream.write(data);
+				fileOutputStream.flush();
+			}
+		} catch (Exception e) {
+			MyLog.e("writeToSdcard error, exception is：" + e.getMessage());
+		} finally {
+			try {
+				if (fileOutputStream != null)
+					fileOutputStream.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
 			}
 		}
 	}

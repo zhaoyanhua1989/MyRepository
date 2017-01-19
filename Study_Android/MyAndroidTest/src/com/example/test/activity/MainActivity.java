@@ -1,7 +1,10 @@
 package com.example.test.activity;
 
+import java.io.File;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -14,14 +17,29 @@ import com.example.test.base.BaseActivity;
 import com.example.test.model.AlertDialogService;
 import com.example.test.model.LanguageConventService;
 import com.example.test.util.MessageUtil;
+import com.example.test.util.OverallVariable;
 import com.example.test.util.ToastUtil;
 
 public class MainActivity extends BaseActivity {
 
+	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler() {
-		
+
 		public void handleMessage(android.os.Message msg) {
-			
+			switch (msg.what) {
+			case OverallVariable.Update.DO_UPDATE:
+				Bundle bundle = msg.getData();
+				AlertDialogService.showUpdateVersionDialog(MainActivity.this, OverallVariable.Update.DO_UPDATE, bundle);
+				break;
+			case OverallVariable.Update.UNDO_UPDATE:
+				AlertDialogService.showUpdateVersionDialog(MainActivity.this, OverallVariable.Update.UNDO_UPDATE, null);
+				break;
+			case OverallVariable.Update.INSTALLAPK:
+				Bundle bundle2 = msg.getData();
+				String path = bundle2.getString("path");
+				installApk(path);
+				break;
+			}
 		};
 	};
 
@@ -85,7 +103,7 @@ public class MainActivity extends BaseActivity {
 		// 显示PopupMenu(不能设置background)
 		// AlertDialogService.showPopupMenu(this, v);
 		// 显示PopupWindow(可以设置background)
-		AlertDialogService.showPopupWindow(this, v);
+		AlertDialogService.showPopupWindow(this, handler, v);
 	}
 
 	@Override
@@ -109,6 +127,16 @@ public class MainActivity extends BaseActivity {
 			ToastUtil.showCustomToast(this, "menu点击事件");
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	protected void installApk(String path) {
+		// 用代码安装apk
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		Uri data = Uri.fromFile(new File(path));
+		// type:表示的是文件 类型, mime:定义文件类型 text/html ,text/xml
+		String type = "application/vnd.android.package-archive";
+		intent.setDataAndType(data, type);
+		startActivity(intent);
 	}
 
 	@Override

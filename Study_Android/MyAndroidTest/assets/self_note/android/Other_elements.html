@@ -255,5 +255,18 @@
 		       如果要拿到回调，需要注册广播，见LoginActivity的获取验证码实现。
 
 
+十四、监听app的卸载和安装(打开指定网页、删除指定文件夹操作)
+   1、广播：静态广播，cation和AndroidManifest注册信息如下
+	 <receiver android:name="com.example.test.MyApplication$AppReceiver" >
+         <intent-filter>
+             <action android:name="android.intent.action.PACKAGE_ADDED" />
+             <action android:name="android.intent.action.PACKAGE_REMOVED" />
+             <data android:scheme="package"/>
+         </intent-filter>
+     </receiver>
+	    注意：缺点：不能监听本身的卸载和安装。
+   2、C端进程轮询"/data/data/包名"目录是否存在
+               实际就是jni形式
+
 </body>
 </html>
