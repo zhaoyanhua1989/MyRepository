@@ -1,4 +1,4 @@
-<%@page import="java.text.SimpleDateFormat"%><%@page import="java.util.Date"%><%@page import="java.sql.ResultSet"%><%@page import="java.sql.Statement"%><%@page import="java.sql.Connection"%><%@page import="java.sql.DriverManager"%><%@ page language="java" contentType="text/xml; charset=utf-8" pageEncoding="utf-8"%><?xml version="1.0" encoding="UTF-8"?>
+<%@page import="java.text.SimpleDateFormat"%><%@page import="java.util.Date"%><%@page import="java.sql.ResultSet"%><%@page import="java.sql.Statement"%><%@page import="java.sql.Connection"%><%@page import="java.sql.DriverManager"%><%@ page language="java" contentType="text/text; charset=utf-8" pageEncoding="utf-8"%><?xml version="1.0" encoding="UTF-8"?>
 <students>
 //测试获取请求的数据
 <method><%=request.getMethod()%></method>

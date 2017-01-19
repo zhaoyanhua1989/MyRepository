@@ -36,6 +36,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
@@ -925,6 +926,20 @@ public class AppUtil {
 	public static boolean isNumeric(String str) {
 		Pattern pattern = Pattern.compile("[0-9]*");
 		return pattern.matcher(str).matches();
+	}
+
+	/**
+	 * 获取versionName
+	 * 
+	 * @param context
+	 * @return
+	 * @throws NameNotFoundException
+	 */
+	public static String getCurrentVersion(Context context) throws NameNotFoundException {
+		PackageManager manager = context.getPackageManager();
+		String packageName = context.getPackageName();
+		PackageInfo packageInfo = manager.getPackageInfo(packageName, 0);
+		return packageInfo.versionName;
 	}
 
 	/**

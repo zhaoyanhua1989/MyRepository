@@ -48,7 +48,11 @@
                 android:padding="2dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="5dp"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:nextFocusForward="@+id/login_pwdEdittext" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -83,8 +87,9 @@
                 android:padding="2dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="5dp"
-                android:password="true"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:singleLine="true" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -115,8 +120,12 @@
                 android:padding="2dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="5dp"
-                android:password="true"
-                android:textSize="16dp" />
+                android:inputType="textPassword"
+                android:textSize="16dp"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:nextFocusForward="@+id/login_logintBT" />
+
         </LinearLayout>
 
         <LinearLayout

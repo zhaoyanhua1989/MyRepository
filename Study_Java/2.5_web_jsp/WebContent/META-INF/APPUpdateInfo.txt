@@ -1,0 +1,3 @@
+version=1.5
+updateContent=1. 增加侧滑菜单的实现；\n2. 增加html5网页贪吃蛇实现；\n3. 增加更新功能；\n4. 优化代码；\n5. test；\n6. test；\n7. test；\n8. test；\n9. test；\n10.test。
+updateDate=2017-1-19

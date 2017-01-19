@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/xml; charset=utf-8" pageEncoding="UTF-8"
+<%@ page language="java" contentType="text/text; charset=utf-8" pageEncoding="UTF-8"
 	import="java.util.Date"
 	import="java.sql.ResultSet"
 	import="java.sql.Statement"

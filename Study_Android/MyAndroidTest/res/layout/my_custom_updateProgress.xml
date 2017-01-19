@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notification_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/holo_green_light"
+    android:minHeight="64dp" >
+
+    <RelativeLayout
+        android:id="@+id/updateProgress_Progress_rl1"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:gravity="center_vertical" >
+
+        <LinearLayout
+            android:id="@+id/updateProgress_Progress_iconZone"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/updateProgress_Progress_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@android:drawable/stat_sys_download" />
+
+            <TextView
+                android:id="@+id/updateProgress_Progress_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:text="0%" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/updateProgress_Done_icon"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/updateProgress_Progress_rl1" >
+
+        <LinearLayout
+            android:id="@+id/updateProgress_Done_InformationZone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/updateProgress_Done_AppName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="updateAppTest"
+                    android:layout_gravity="bottom"
+                    android:textSize="20sp" />
+				<TextView 
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="1"
+				    />
+                <TextView
+                    android:id="@+id/updateProgress_Done_Time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="下午17:05"
+                    android:layout_gravity="bottom|right"
+                    android:textSize="15sp" />
+            </LinearLayout>
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下载成功"
+                android:textSize="15sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+        <ProgressBar 
+            style="@android:attr/progressBarStyleHorizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+</RelativeLayout>
