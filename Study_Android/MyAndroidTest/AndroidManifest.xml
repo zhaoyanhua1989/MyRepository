@@ -31,6 +31,7 @@
         android:allowBackup="false"
         android:icon="@drawable/my_ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:theme="@style/MyAppThemeWithBackground" >
         <activity
             android:name=".activity.WelcomeActivity"
@@ -125,7 +126,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/center_float_dialog" >
         </activity>
-
     </application>
 
 </manifest>

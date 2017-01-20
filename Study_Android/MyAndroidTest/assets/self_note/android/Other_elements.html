@@ -268,5 +268,18 @@
    2、C端进程轮询"/data/data/包名"目录是否存在
                实际就是jni形式
 
+
+十五、findViewById出现null：
+   1、可能通过Activity的实例对象获取的，因为不是通过View来获取的view所以为空；
+   2、需要更换一种获取方式，用LayoutInflater来获取View对象：
+		//获取LayoutInflater对象
+		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		//拿到xml的layout对象
+		RelativeLayout layout = (RelativeLayout) inflater.inflate(RUtil.getLayout(mContext, "my_custom_updateprogress"), null);
+		//找到需要的view对象
+		ProgressBar pb = (ProgressBar) layout.findViewById(RUtil.getId(mContext, "updateProgress_ProgressBar"));
+
+
+
 </body>
 </html>
