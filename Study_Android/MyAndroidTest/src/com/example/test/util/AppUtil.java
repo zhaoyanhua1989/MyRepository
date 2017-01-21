@@ -892,6 +892,29 @@ public class AppUtil {
 	}
 
 	/**
+	 * 获取时间，返回例如：上午 9:50
+	 */
+	public static String getTimeFormatAm_Pm_HH_mm() {
+		Calendar cl = Calendar.getInstance();
+		cl.setTimeInMillis(System.currentTimeMillis());
+		int amPm = cl.get(Calendar.AM_PM);
+		int hour = cl.get(Calendar.HOUR);
+		if (hour >= 12) {
+			hour -= 12;
+		}
+		String time = null;
+		switch (amPm) {
+		case Calendar.AM:
+			time = "上午 " + hour + ":" + cl.get(Calendar.MINUTE);
+			break;
+		case Calendar.PM:
+			time = "下午 " + hour + ":" + cl.get(Calendar.MINUTE);
+			break;
+		}
+		return time;
+	}
+
+	/**
 	 * 获取时间戳
 	 * 
 	 * @return 类似20161221135359

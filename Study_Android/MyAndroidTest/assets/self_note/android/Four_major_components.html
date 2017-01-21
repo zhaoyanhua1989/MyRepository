@@ -38,7 +38,9 @@
 	4、驻留广播
 		context.sendStickyBroadcast();
 		发送驻留广播需要在清单文件中声明权限。
-	
+	5、广播更新UI
+		注意如果用广播更新RemoteViews来更新UI，则每次需要通过RemoteViews来修改内部组件的UI，然后通过广播发送同样的通知来更新。
+
 	<title>二、service</title>
 	service本质上是后台运行的程序，没有activity那样的用户界面，是Context的子类。
 	service适合用于长时间后台运行的场合，具有较高的进程优先级 -- 服务进程，运行时全局单例。

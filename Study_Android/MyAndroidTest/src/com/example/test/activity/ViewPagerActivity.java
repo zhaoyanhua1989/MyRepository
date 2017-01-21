@@ -97,10 +97,14 @@ public class ViewPagerActivity extends FragmentActivity implements TabListener, 
 		switch (state) {
 		case ViewPager.SCROLL_STATE_DRAGGING: // 当手指按下时，暂停翻页
 			// 将现有的翻页消息清除
-			h.removeMessages(ViewPagerHandler.MSG_UPDATE_IMAGE);
+			if (h != null) {
+				h.removeMessages(ViewPagerHandler.MSG_UPDATE_IMAGE);
+			}
 			break;
 		case ViewPager.SCROLL_STATE_IDLE: // 当手指松开时，恢复翻页，但是页面停留时间增加
-			h.sendEmptyMessageDelayed(ViewPagerHandler.MSG_UPDATE_IMAGE, ViewPagerHandler.MSG_DELAY_LONG);
+			if (h != null) {
+				h.sendEmptyMessageDelayed(ViewPagerHandler.MSG_UPDATE_IMAGE, ViewPagerHandler.MSG_DELAY_LONG);
+			}
 			break;
 		default:
 			break;

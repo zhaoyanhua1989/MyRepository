@@ -159,6 +159,7 @@
 	2.View.post(Runnable) //如果需要在onCreate中获取空间高度之类的属性，可以用view.post来获取
 	3.View.postDelayed(Runnable, long)
 	4.主线程的Handler
+	5.广播更新，每次需要通过RemoteViews来修改内部组件的UI，然后通过广播发送同样的通知来更新。
 
 24、UI的组件，按键盘tab或者enter键切换焦点：
 	1.在xml中组件增加如下属性：

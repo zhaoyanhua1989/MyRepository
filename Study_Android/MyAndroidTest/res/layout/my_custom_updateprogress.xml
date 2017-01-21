@@ -3,7 +3,6 @@
     android:id="@+id/notification_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/holo_green_light"
     android:minHeight="64dp" >
 
     <RelativeLayout
@@ -45,6 +44,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/my_ic_launcher"
             android:visibility="gone" />
     </RelativeLayout>
 
@@ -67,6 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -85,26 +86,27 @@
                     android:id="@+id/updateProgress_Done_Time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
                     android:text="下午17:05"
-                    android:layout_gravity="bottom|right"
-                    android:textSize="15sp" />
+                    android:layout_gravity="center_vertical|right"
+                    android:textSize="12sp" />
             </LinearLayout>
             <TextView 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="下载成功"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center_vertical" />
         </LinearLayout>
-        <ProgressBar 
-            style="@android:attr/progressBarStyleHorizontal"
+        <ProgressBar
+            android:id="@+id/updateProgress_ProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:max="100"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:layout_centerVertical="true" />
     </RelativeLayout>
 
