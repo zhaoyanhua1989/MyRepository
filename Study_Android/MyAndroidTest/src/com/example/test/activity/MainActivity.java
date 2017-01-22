@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity {
 				installApk(path);
 				break;
 			}
-		};
+		}
 	};
 
 	@Override

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -251,7 +253,6 @@ public class FileUtil {
 	/**
 	 * 向sdcard写数据
 	 * 
-	 * @param context
 	 * @param path
 	 *            文件路径，文件夹
 	 * @param fileName
@@ -259,25 +260,14 @@ public class FileUtil {
 	 * @param data
 	 *            原文件读取的或网络请求拿到的byte[]数据
 	 */
-	public synchronized static void writeToSdcard(Context context, String path, String fileName, byte[] data) {
+	public synchronized static void writeToSdcardFromBytes(String path, String fileName, byte[] data) {
 		FileOutputStream fileOutputStream = null;
 		try {
 			// 判断sdcard的状态
 			String sdcardState = Environment.getExternalStorageState();
 			if (Environment.MEDIA_MOUNTED.equals(sdcardState)) { // 有sdcard
 
-				// 判断path有没有
-				File filePath = new File(path);
-				if (!filePath.exists()) {
-					filePath.mkdirs();
-				}
-
-				// 判断file有没有
-				File file = new File(path, fileName);
-				MyLog.d("file的路径：" + file.getAbsolutePath());
-				if (file.exists()) {
-					file.delete();
-				}
+				File file = checkFile(path, fileName);
 
 				// 写数据
 				fileOutputStream = new FileOutputStream(file);
@@ -294,5 +284,66 @@ public class FileUtil {
 				e2.printStackTrace();
 			}
 		}
+	}
+
+	/**
+	 * 将一个inputstream里面的数据写入SD卡中
+	 * 
+	 * @param path
+	 *            目录名
+	 * @param fileName
+	 *            文件名
+	 * @param inputstream
+	 *            读取文件的InputStream
+	 * @return
+	 */
+	public static File writeToSdcardFromInputStream(String path, String fileName, InputStream inputstream) {
+		File file = null;
+		OutputStream output = null;
+		try {
+			file = checkFile(path, fileName);
+			output = new FileOutputStream(file);
+			// 4k为单位，每4K写一次
+			byte buffer[] = new byte[4 * 1024];
+			int temp = 0;
+			while ((temp = inputstream.read(buffer)) != -1) {
+				output.write(buffer, 0, temp);
+			}
+			output.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				output.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return file;
+	}
+
+	/**
+	 * 检查文件目录
+	 * 
+	 * @param path
+	 *            文件目录
+	 * @param fileName
+	 *            文件名
+	 * @return
+	 */
+	private static File checkFile(String path, String fileName) {
+		// 判断path目录是否存在，不存在则创建
+		File filePath = new File(path);
+		if (!filePath.exists()) {
+			filePath.mkdirs();
+		}
+
+		// 判断file是否存在，如果存在则将旧的删除
+		File file = new File(path, fileName);
+		MyLog.d("file的路径：" + file.getAbsolutePath());
+		if (file.exists()) {
+			file.delete();
+		}
+		return file;
 	}
 }

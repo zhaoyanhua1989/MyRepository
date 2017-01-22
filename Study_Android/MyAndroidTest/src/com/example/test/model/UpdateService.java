@@ -1,6 +1,7 @@
 package com.example.test.model;
 
 import java.io.File;
+import java.util.HashMap;
 
 import org.apache.http.Header;
 import org.apache.http.HttpStatus;
@@ -9,10 +10,13 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,12 +28,15 @@ import android.widget.RemoteViews;
 
 import com.example.test.util.AppUtil;
 import com.example.test.util.FileUtil;
+import com.example.test.util.MyLog;
 import com.example.test.util.OverallVariable;
 import com.example.test.util.PropertiesUtil;
 import com.example.test.util.RUtil;
 import com.example.test.util.ToastUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
+import com.loopj.android.http.RequestHandle;
 
 public class UpdateService {
 
@@ -42,11 +49,14 @@ public class UpdateService {
 	private int update_progressTVId; // 下载进度textView
 	private int update_done_AppnameTVId; // 下载完成后显示app名字的textView
 	private int update_done_timeTVId; // 下载完成后显示完成时间的textView
+	private final int RESPONDETIMEOUT = 5000; // 请求响应超时时间
+	private HashMap<String, RequestHandle> requestHandles = new HashMap<String, RequestHandle>();
 
 	public UpdateService(Activity context, Handler handler) {
 		mContext = context;
 		mHandler = handler;
 		asyncHttpClient = new AsyncHttpClient();
+		asyncHttpClient.setTimeout(RESPONDETIMEOUT);
 	}
 
 	public void checkUpdateInformation() {
@@ -127,7 +137,8 @@ public class UpdateService {
 		// 显示顶部通知栏UI
 		final RemoteViews contentView = new RemoteViews(mContext.getPackageName(), RUtil.getLayout(mContext, "my_custom_updateprogress"));
 		initUpdateProgressUI(contentView);
-		asyncHttpClient.get(url, new AsyncHttpResponseHandler() {
+		RequestHandle requestHandler = asyncHttpClient.get(url, new AsyncHttpResponseHandler() {
+
 			private int flagNum;
 			private final int flagNumStandard = 1;
 
@@ -137,18 +148,21 @@ public class UpdateService {
 				String fileName = null;
 				String filePath = null;
 				if (statusCode == HttpStatus.SC_OK) {
-					// 下载完成更新状态栏UI
 					try {
+						// 移除缓存检查重复下载的任务
+						requestHandles.remove(url);
 						// 文件名
 						fileName = url.substring(url.lastIndexOf("/") + 1);
 						// 将文件写入SD卡
-						FileUtil.writeToSdcard(mContext, OverallVariable.Update.APK_PATH, fileName, responseBody);
+						FileUtil.writeToSdcardFromBytes(OverallVariable.Update.APK_PATH, fileName, responseBody);
 						// 文件路径
 						filePath = OverallVariable.Update.APK_PATH + File.separator + fileName;
+						// 下载完成更新状态栏UI
 						dealWithUpdateDoneUI(contentView, filePath, fileName, AppUtil.getTimeFormatAm_Pm_HH_mm());
 					} catch (Exception e) {
 						e.printStackTrace();
 					} finally {
+						// 弹出安装界面
 						Message msg = new Message();
 						msg.what = OverallVariable.Update.INSTALLAPK;
 						Bundle bundle = new Bundle();
@@ -160,7 +174,7 @@ public class UpdateService {
 			}
 
 			@Override
-			public void onProgress(long bytesWritten, long totalSize) {
+			public void onProgress(int bytesWritten, int totalSize) {
 				super.onProgress(bytesWritten, totalSize);
 				// 实时更新ProgressBar的进度，这里每次增长1%
 				if (flagNum == 0 || (bytesWritten * 100 / totalSize - flagNumStandard) >= flagNum) {
@@ -174,37 +188,104 @@ public class UpdateService {
 				ToastUtil.showCustomToast(mContext, "下载apk失败，请检查网络...");
 			}
 		});
+		if (checkDownLoadTask(url)) {
+			requestHandles.get(url).cancel(true);
+		}
+		requestHandles.put(url, requestHandler);
+	}
 
-		/*new Thread(new Runnable() {
-			int n = 0;
+	/**
+	 * 下载大文件
+	 * 
+	 * @param url
+	 */
+	public void downloadBigUpdateApk(final String url) {
+		// 显示顶部通知栏UI
+		final RemoteViews contentView = new RemoteViews(mContext.getPackageName(), RUtil.getLayout(mContext, "my_custom_updateprogress"));
+		initUpdateProgressUI(contentView);
+		// 文件名
+		final String fileName = url.substring(url.lastIndexOf("/") + 1);
+		// 文件路径
+		final String filePath = OverallVariable.Update.APK_PATH + File.separator + fileName;
+		asyncHttpClient.setTimeout(10 * 60 * 1000);
+		asyncHttpClient.setURLEncodingEnabled(false);
+		RequestHandle requestHandler = asyncHttpClient.get(url, new FileAsyncHttpResponseHandler(new File(filePath)) {
+
+			private int flagNum;
+			private final int flagNumStandard = 1;
 
 			@Override
-			public void run() {
-				updateProgressBar(contentView, n);
-				while (n < 100) {
-					try {
-						Thread.sleep(300);
-					} catch (Exception e) {
-					}
-					n++;
-					mContext.runOnUiThread(new Runnable() {
-
-						@Override
-						public void run() {
-							updateProgressBar(contentView, n);
-						}
-					});
-					MyLog.d("正在下载，当前进度：" + n + "%");
-				}
-				mContext.runOnUiThread(new Runnable() {
-
-					@Override
-					public void run() {
-						dealWithUpdateDoneUI(contentView, "goodLuck", "上午10:55");
-					}
-				});
+			public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
+				ToastUtil.showCustomToast(mContext, "下载apk失败，请检查网络...");
 			}
-		}).start();*/
+
+			@Override
+			public void onProgress(int bytesWritten, int totalSize) {
+				super.onProgress(bytesWritten, totalSize);
+				// 实时更新ProgressBar的进度，这里每次增长1%
+				if (flagNum == 0 || (bytesWritten * 100 / totalSize - flagNumStandard) >= flagNum) {
+					flagNum += flagNumStandard;
+					MyLog.d("已下载：" + flagNum + "%");
+					updateProgressBar(contentView, flagNum);
+				}
+			}
+
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, File file) {
+				if (statusCode == HttpStatus.SC_OK) {
+					try {
+						// 移除缓存检查重复下载的任务
+						requestHandles.remove(url);
+						// 下载完成更新状态栏UI
+						dealWithUpdateDoneUI(contentView, filePath, fileName, AppUtil.getTimeFormatAm_Pm_HH_mm());
+					} catch (Exception e) {
+						e.printStackTrace();
+					} finally {
+						// 弹出安装界面
+						Message msg = new Message();
+						msg.what = OverallVariable.Update.INSTALLAPK;
+						Bundle bundle = new Bundle();
+						bundle.putString("path", filePath);
+						msg.setData(bundle);
+						mHandler.sendMessage(msg);
+					}
+				}
+			}
+		});
+		requestHandles.put(url, requestHandler);
+		if (checkDownLoadTask(url)) {
+			requestHandles.get(url).cancel(true);
+		}
+	}
+
+	/**
+	 * 检查是否存在相同的下载任务
+	 * 
+	 * @param url
+	 */
+	private boolean checkDownLoadTask(String url) {
+		final HashMap<String, Boolean> returnHM = new HashMap<String, Boolean>();
+		if (requestHandles.get(url) != null) {
+			AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("已经存在同一个下载任务，是否重新开始下载？").setNegativeButton("否", new OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					returnHM.put("flag", false);
+					dialog.dismiss();
+				}
+			}).setPositiveButton("是", new OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					returnHM.put("flag", true);
+					dialog.dismiss();
+				}
+			}).create();
+			dialog.show();
+		} else {
+			returnHM.put("flag", false);
+		}
+		return returnHM.get("flag");
 	}
 
 	/**
