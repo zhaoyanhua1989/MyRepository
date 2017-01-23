@@ -1,18 +1,13 @@
 package com.example.test;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 
 import com.example.test.util.AppUtil;
-import com.example.test.util.FileUtil;
 import com.example.test.util.MyLog;
-import com.example.test.util.OverallVariable;
 import com.example.test.util.PropertiesUtil;
 
 public class MyApplication extends Application {

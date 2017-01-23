@@ -26,6 +26,7 @@ import android.support.v4.app.NotificationCompat;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.example.test.base.AsyncHttpClientCancelTaskListener;
 import com.example.test.util.AppUtil;
 import com.example.test.util.FileUtil;
 import com.example.test.util.MyLog;
@@ -50,7 +51,9 @@ public class UpdateService {
 	private int update_done_AppnameTVId; // 下载完成后显示app名字的textView
 	private int update_done_timeTVId; // 下载完成后显示完成时间的textView
 	private final int RESPONDETIMEOUT = 5000; // 请求响应超时时间
+	// 用于控制限制重复下载同一文件
 	private HashMap<String, RequestHandle> requestHandles = new HashMap<String, RequestHandle>();
+	private AsyncHttpClientCancelTaskListener cancelTaskListener;
 
 	public UpdateService(Activity context, Handler handler) {
 		mContext = context;
@@ -128,12 +131,31 @@ public class UpdateService {
 	}
 
 	/**
-	 * 开始更新业务，下载apk
+	 * 开始更新业务，适合下载小文件
 	 * 
 	 * @param url
 	 *            更新包的下载地址
 	 */
 	public void downloadUpdateApk(final String url) {
+		if (!checkDownLoadTask(url)) {
+			// 如果没有相同下载任务，注册监听
+			cancelTaskListener = new AsyncHttpClientCancelTaskListener() {
+				@Override
+				public void cancelTask() {
+					// 取消旧任务，开始新任务
+					requestHandles.get(url).cancel(true);
+					requestHandles.remove(url);
+					doUpdateApk(url);
+				}
+			};
+		}
+		if (requestHandles.get(url) == null) {
+			// 如果没有任务，开始一项新任务
+			doUpdateApk(url);
+		}
+	}
+
+	private void doUpdateApk(final String url) {
 		// 显示顶部通知栏UI
 		final RemoteViews contentView = new RemoteViews(mContext.getPackageName(), RUtil.getLayout(mContext, "my_custom_updateprogress"));
 		initUpdateProgressUI(contentView);
@@ -151,6 +173,7 @@ public class UpdateService {
 					try {
 						// 移除缓存检查重复下载的任务
 						requestHandles.remove(url);
+						cancelTaskListener = null;
 						// 文件名
 						fileName = url.substring(url.lastIndexOf("/") + 1);
 						// 将文件写入SD卡
@@ -177,7 +200,7 @@ public class UpdateService {
 			public void onProgress(int bytesWritten, int totalSize) {
 				super.onProgress(bytesWritten, totalSize);
 				// 实时更新ProgressBar的进度，这里每次增长1%
-				if (flagNum == 0 || (bytesWritten * 100 / totalSize - flagNumStandard) >= flagNum) {
+				if (flagNum == 0 || (bytesWritten * 100D / totalSize - flagNumStandard) >= flagNum) {
 					flagNum += flagNumStandard;
 					updateProgressBar(contentView, flagNum);
 				}
@@ -188,18 +211,35 @@ public class UpdateService {
 				ToastUtil.showCustomToast(mContext, "下载apk失败，请检查网络...");
 			}
 		});
-		if (checkDownLoadTask(url)) {
-			requestHandles.get(url).cancel(true);
-		}
 		requestHandles.put(url, requestHandler);
 	}
 
 	/**
-	 * 下载大文件
+	 * 开始更新业务，适合下载大文件
 	 * 
 	 * @param url
+	 *            更新包的下载地址
 	 */
 	public void downloadBigUpdateApk(final String url) {
+		if (!checkDownLoadTask(url)) {
+			// 如果没有相同下载任务，注册监听
+			cancelTaskListener = new AsyncHttpClientCancelTaskListener() {
+				@Override
+				public void cancelTask() {
+					// 取消旧任务，开始新任务
+					requestHandles.get(url).cancel(true);
+					requestHandles.remove(url);
+					doBigUpdateApk(url);
+				}
+			};
+		}
+		if (requestHandles.get(url) == null) {
+			// 如果没有任务，开始一项新任务
+			doBigUpdateApk(url);
+		}
+	}
+
+	private void doBigUpdateApk(final String url) {
 		// 显示顶部通知栏UI
 		final RemoteViews contentView = new RemoteViews(mContext.getPackageName(), RUtil.getLayout(mContext, "my_custom_updateprogress"));
 		initUpdateProgressUI(contentView);
@@ -223,7 +263,7 @@ public class UpdateService {
 			public void onProgress(int bytesWritten, int totalSize) {
 				super.onProgress(bytesWritten, totalSize);
 				// 实时更新ProgressBar的进度，这里每次增长1%
-				if (flagNum == 0 || (bytesWritten * 100 / totalSize - flagNumStandard) >= flagNum) {
+				if (flagNum == 0 || (bytesWritten * 100D / totalSize - flagNumStandard) >= flagNum) {
 					flagNum += flagNumStandard;
 					MyLog.d("已下载：" + flagNum + "%");
 					updateProgressBar(contentView, flagNum);
@@ -236,6 +276,7 @@ public class UpdateService {
 					try {
 						// 移除缓存检查重复下载的任务
 						requestHandles.remove(url);
+						cancelTaskListener = null;
 						// 下载完成更新状态栏UI
 						dealWithUpdateDoneUI(contentView, filePath, fileName, AppUtil.getTimeFormatAm_Pm_HH_mm());
 					} catch (Exception e) {
@@ -253,39 +294,41 @@ public class UpdateService {
 			}
 		});
 		requestHandles.put(url, requestHandler);
-		if (checkDownLoadTask(url)) {
-			requestHandles.get(url).cancel(true);
-		}
 	}
 
 	/**
 	 * 检查是否存在相同的下载任务
 	 * 
 	 * @param url
+	 *            key
+	 * @param requestHandler
+	 *            新的任务
+	 * @return 如果存在则返回true
 	 */
-	private boolean checkDownLoadTask(String url) {
-		final HashMap<String, Boolean> returnHM = new HashMap<String, Boolean>();
-		if (requestHandles.get(url) != null) {
+	private synchronized boolean checkDownLoadTask(final String url) {
+		if (requestHandles.get(url) == null) {
+			return false;
+		} else if (requestHandles.get(url) != null && !requestHandles.get(url).isFinished()) {
 			AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("已经存在同一个下载任务，是否重新开始下载？").setNegativeButton("否", new OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					returnHM.put("flag", false);
 					dialog.dismiss();
 				}
 			}).setPositiveButton("是", new OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					returnHM.put("flag", true);
+					if (cancelTaskListener != null) {
+						cancelTaskListener.cancelTask();
+					}
 					dialog.dismiss();
 				}
 			}).create();
 			dialog.show();
-		} else {
-			returnHM.put("flag", false);
+			return true;
 		}
-		return returnHM.get("flag");
+		return false;
 	}
 
 	/**
