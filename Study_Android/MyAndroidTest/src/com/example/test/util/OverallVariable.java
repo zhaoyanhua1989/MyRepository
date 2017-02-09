@@ -26,7 +26,7 @@ public class OverallVariable {
 	// 验证码接收的Intent的action
 	public static final String RECEIVE_OK_OR_NOT = "RECEIVE_OK_OR_NOT";
 	// http请求的url
-	public static final String HTTP_REQUEST_HEAD = "http://10.20.72.80:8080/2.5_web_jsp";
+	public static final String HTTP_REQUEST_HEAD = "http://10.20.72.68:8080/2.5_web_jsp";
 	// 请求登录和注册
 	public static final String HTTP_REQUEST_LOGINORREGISTER = HTTP_REQUEST_HEAD + File.separator + "requestLogin.jsp";
 	// 请求获取更新信息

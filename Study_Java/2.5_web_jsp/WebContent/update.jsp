@@ -21,7 +21,7 @@
 			json.put("updateContent", content);
 			json.put("apkSize", sizeStr + " M");
 			json.put("updateDate", updateDate);
-			json.put("updateUrl", "http://10.20.72.80:8080/2.5_web_jsp/MyAndroidTest.apk");
+			json.put("updateUrl", "http://10.20.72.68:8080/2.5_web_jsp/MyAndroidTest.apk");
 		} catch (Exception e){}
 		out.println(json.toString());
 		path = null;

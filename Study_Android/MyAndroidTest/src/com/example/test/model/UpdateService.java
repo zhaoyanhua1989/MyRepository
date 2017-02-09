@@ -247,7 +247,7 @@ public class UpdateService {
 		final String fileName = url.substring(url.lastIndexOf("/") + 1);
 		// 文件路径
 		final String filePath = OverallVariable.Update.APK_PATH + File.separator + fileName;
-		asyncHttpClient.setTimeout(10 * 60 * 1000);
+		//asyncHttpClient.setTimeout(10 * 60 * 1000);
 		asyncHttpClient.setURLEncodingEnabled(false);
 		RequestHandle requestHandler = asyncHttpClient.get(url, new FileAsyncHttpResponseHandler(new File(filePath)) {
 

@@ -282,8 +282,13 @@
 
 十六、android-async-http
    1、AsyncHttpClient，发送get请求，如果监听不是AsyncHttpResponseHandler的实现类对象，则setTimeout无效；
-   2、AsyncHttpClient，发送get请求，下载大容量文件时，会出现OOM；
+   2、AsyncHttpClient，发送get请求，下载大容量文件时，会出现OOM(老版本不会)；
 
+
+十七、android新建经常
+   1、假设当前APP的包名为com.test.sdk，则获取到的进程名称也为：com.test.sdk；
+	    如果在AndroidManifest.xml的某个组件(activity,service,receiver,provider)中申明了android:process=":remote"，则获取到的进程名为：com.test.sdk:remote
+	    当申明了独立进程名的组件被打开时，Android系统认为一个新的进程被触发了，会首先执行SdkApplication的onCreate()方法，从而导致再次执行初始化。
 
 
 </body>

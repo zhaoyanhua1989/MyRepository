@@ -170,5 +170,81 @@
             android:onClick="doClick"
             android:text="@string/MainActivity_button15" />
     </LinearLayout>
+    
+        <Button
+        android:id="@+id/my_activity_main_buttonsBT6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="10dip"
+        android:visibility="gone"
+        android:background="@drawable/floatbutton6" >
+    </Button>
+
+    <Button
+        android:id="@+id/my_activity_main_buttonsBT5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="10dip"
+        android:visibility="gone"
+        android:background="@drawable/floatbutton5" >
+    </Button>
+
+    <Button
+        android:id="@+id/my_activity_main_buttonsBT4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="10dip"
+        android:visibility="gone"
+        android:background="@drawable/floatbutton4" >
+    </Button>
+
+    <Button
+        android:id="@+id/my_activity_main_buttonsBT3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="10dip"
+        android:visibility="gone"
+        android:background="@drawable/floatbutton3" >
+    </Button>
+
+    <Button
+        android:id="@+id/my_activity_main_buttonsBT2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="10dip"
+        android:visibility="gone"
+        android:background="@drawable/floatbutton2" >
+    </Button>
+
+    <Button
+        android:id="@+id/my_activity_main_buttonsBT1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="10dip"
+        android:visibility="gone"
+        android:background="@drawable/floatbutton1" >
+    </Button>
+
+    <Button
+        android:id="@+id/my_activity_main_buttonsBTInitial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="10dip"
+        android:background="@drawable/floatbuttoninitial" >
+    </Button>
 
 </RelativeLayout>
