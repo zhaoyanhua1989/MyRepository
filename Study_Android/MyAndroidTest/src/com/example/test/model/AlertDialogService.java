@@ -99,8 +99,8 @@ public class AlertDialogService {
 			view.findViewById(R.id.update_dialog_updateNow).setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					mUpdateService.downloadUpdateApk(updateUrl);
 					dialog.dismiss();
+					mUpdateService.downloadBigUpdateApk(updateUrl);
 				}
 			});
 		}
@@ -120,7 +120,7 @@ public class AlertDialogService {
 	 * @param dialog
 	 *            创建的dialog
 	 */
-	private static void initUpdateUI(final Activity activity, View view, final AlertDialog dialog) {
+	private static void initUpdateUI(final Activity activity, View view, final Dialog dialog) {
 		/**
 		 * 在安卓4.4到5.0之间系统的手机上，AlertDialog的顶部可能被剪切掉，所以需要设置Flags
 		 */
