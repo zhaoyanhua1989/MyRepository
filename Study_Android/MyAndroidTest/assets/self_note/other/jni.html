@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<b>jni</b>
+</head>
+<body>
+	<p>
+		<b>jni用法</b><br>
+		<br>
+		1、创建Android工程；<br>
+		2、创建java类(比如TextJNI)，编写调用底层接口的方法，如public static native int getInt();<br>
+		3、生成C++的.h文件：进入工程所在目录\bin\classes下面，cmd，然后输入：javah 包名.TextJNI，将新生成的.h文件拷贝进工程的jni目录;<br>
+		4、编译android.mk文件：在jni目录(没有则创建)新建android.mk文件，内容如下：<br>
+			&nbsp LOCAL_PATH := $(call my-dir)<br>
+			&nbsp include $(CLEAR_VARS)<br>
+			&nbsp LOCAL_MODULE    := jniinterface  //so.文件名<br>
+			&nbsp LOCAL_SRC_FILES := textjni.cpp  //C++类名<br>
+			&nbsp include $(BUILD_SHARED_LIBRARY)
+			<br>
+		5、创建C++文件(文件名为android.mk定义的textjni.cpp)，实现.h的接口(可以将.h的函数名拷过去，实现函数);<br>
+		6、编译生成so文件：
+			打开Cygwin，输入：cd /cygdrive/工程根目录/jni (比如/cygdive/d/workspace/TextJNI/jni)，切换完之后输入：$NDK_ROOT/ndk-build
+	</p>
+	<br />
+	<p>
+		<b>使用jni的前提</b><br>
+		1、安装了Cygwin，并配好了环境变量；<br>
+		2、安装了NDK，并配好了环境变量。
+	</p>
+</body>
+</html>
