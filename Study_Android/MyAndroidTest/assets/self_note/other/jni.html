@@ -11,11 +11,11 @@
 		2、创建java类(比如TextJNI)，编写调用底层接口的方法，如public static native int getInt();<br>
 		3、生成C++的.h文件：进入工程所在目录\bin\classes下面，cmd，然后输入：javah 包名.TextJNI，将新生成的.h文件拷贝进工程的jni目录;<br>
 		4、编译android.mk文件：在jni目录(没有则创建)新建android.mk文件，内容如下：<br>
-			&nbsp LOCAL_PATH := $(call my-dir)<br>
-			&nbsp include $(CLEAR_VARS)<br>
-			&nbsp LOCAL_MODULE    := jniinterface  //so.文件名<br>
-			&nbsp LOCAL_SRC_FILES := textjni.cpp  //C++类名<br>
-			&nbsp include $(BUILD_SHARED_LIBRARY)
+			&nbsp; LOCAL_PATH := $(call my-dir)<br>
+			&nbsp; include $(CLEAR_VARS)<br>
+			&nbsp; LOCAL_MODULE    := jniinterface  //so.文件名<br>
+			&nbsp; LOCAL_SRC_FILES := textjni.cpp  //C++类名<br>
+			&nbsp; include $(BUILD_SHARED_LIBRARY)
 			<br>
 		5、创建C++文件(文件名为android.mk定义的textjni.cpp)，实现.h的接口(可以将.h的函数名拷过去，实现函数);<br>
 		6、编译生成so文件：
@@ -26,6 +26,18 @@
 		<b>使用jni的前提</b><br>
 		1、安装了Cygwin，并配好了环境变量；<br>
 		2、安装了NDK，并配好了环境变量。
+	</p>
+	<br />
+	<p>
+		<b>如果调用了native方法的类继承了api里的类</b><br>
+		1、直接按以上方法编译.h，会出现错误：无法访问android.app.Activity；<br>
+		2、可以用以下方法解决(示例)：<br>
+		&nbsp; (1)、进入工程的bin目录下，cmd<br>
+		&nbsp; (2)、输入命令：javah -d header -classpath D:\ProgramFiles\android\sdk\platforms\android-14\android.jar;classes -jni com.example.textjni.MainActivity<br>
+		&nbsp;&nbsp; 说明：<br>
+		&nbsp;&nbsp; -d：为创建一个生成.h之后存放的文件夹<br>
+		&nbsp;&nbsp; -classpath：继承的类所在的api绝对路劲，路劲写完需要加上 ;classes<br>
+		&nbsp;&nbsp; -jni：需要生成.h的类位置，包含包名.类名
 	</p>
 </body>
 </html>
