@@ -320,6 +320,12 @@ public class AppUtil {
 		return processName.equals(packageName + ":" + processNameSuffix);
 	}
 
+	/**
+	 * 获取当前进程名
+	 * 
+	 * @param context
+	 * @return
+	 */
 	private static String getCurProcessName(Context context) {
 		int pid = Process.myPid();
 		ActivityManager mActivityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -795,7 +801,7 @@ public class AppUtil {
 	 * @return
 	 * @author SHANHY
 	 */
-	public static String getPsdnIp() {
+	public static String getGPRSIpString() {
 		try {
 			for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
 				NetworkInterface intf = en.nextElement();
@@ -809,6 +815,40 @@ public class AppUtil {
 		} catch (Exception e) {
 		}
 		return "";
+	}
+
+	/**
+	 * 获取wifi网络下的IP地址
+	 * 
+	 * @return
+	 */
+	public static String getWIFIIpString(Context context) {
+		// 获取wifi服务
+		WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+		// 判断wifi是否开启
+		if (!wifiManager.isWifiEnabled()) {
+			wifiManager.setWifiEnabled(true);
+		}
+		WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+		int ipAddress = wifiInfo.getIpAddress();
+		return intToIp(ipAddress);
+	}
+
+	private static String intToIp(int ipAddress) {
+		return (ipAddress & 0xFF) + "." + ((ipAddress >> 8) & 0xFF) + "." + ((ipAddress >> 16) & 0xFF) + "." + (ipAddress >> 24 & 0xFF);
+	}
+
+	public static String getIpString(Context context) {
+		String ip = null;
+		switch (ConnectedState(context)) {
+		case 0: //wifi
+			ip =  getWIFIIpString(context);
+			break;
+		case 1: //grps
+			ip = getGPRSIpString();
+			break;
+		}
+		return ip;
 	}
 
 	private static long lastClickTime; // 判断是否双击用到
