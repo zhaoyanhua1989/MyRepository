@@ -12,14 +12,14 @@ import android.annotation.SuppressLint;
 import com.example.test.util.HanziToPinyinUtil;
 
 /**
- * ººÓï×ªÆ´Òô´¦ÀíÒµÎñÀà
+ * æ±‰è¯­è½¬æ‹¼éŸ³å¤„ç†ä¸šåŠ¡ç±»
  * 
  * @author HKW2962
  *
  */
 public class LanguageConventService {
 
-	/********************** HanziToPinyinUtil¹¤¾ßÀà»ñÈ¡Æ´Òô ************************/
+	/********************** HanziToPinyinUtilå·¥å…·ç±»è·å–æ‹¼éŸ³ ************************/
 	@SuppressLint("DefaultLocale")
 	public static String getPinYin(String input) {
 		ArrayList<HanziToPinyinUtil.Token> tokens = HanziToPinyinUtil.getInstance().get(input);
@@ -38,13 +38,13 @@ public class LanguageConventService {
 		return sb.toString().toUpperCase();
 	}
 
-	/********************** pinyin4j-2.5.0.jar»ñÈ¡Æ´Òô ************************/
+	/********************** pinyin4j-2.5.0.jarè·å–æ‹¼éŸ³ ************************/
 	/**
-	 * »ñÈ¡ºº×Ö´®Æ´ÒôÊ××ÖÄ¸£¬Ó¢ÎÄ¼°ÌØÊâ×Ö·û×Ö·û²»±ä
+	 * è·å–æ±‰å­—ä¸²æ‹¼éŸ³é¦–å­—æ¯ï¼Œè‹±æ–‡åŠç‰¹æ®Šå­—ç¬¦å­—ç¬¦ä¸å˜
 	 * 
 	 * @param chinese
-	 *            ºº×Ö´®
-	 * @return ººÓïÆ´ÒôÊ××ÖÄ¸
+	 *            æ±‰å­—ä¸²
+	 * @return æ±‰è¯­æ‹¼éŸ³é¦–å­—æ¯
 	 */
 	@SuppressLint("DefaultLocale")
 	public static String cn2FirstSpell(String chinese) {
@@ -71,11 +71,11 @@ public class LanguageConventService {
 	}
 
 	/**
-	 * »ñÈ¡ºº×Ö´®Æ´Òô£¬Ó¢ÎÄ×Ö·û²»±ä
+	 * è·å–æ±‰å­—ä¸²æ‹¼éŸ³ï¼Œè‹±æ–‡å­—ç¬¦ä¸å˜
 	 * 
 	 * @param chinese
-	 *            ºº×Ö´®
-	 * @return ººÓïÆ´Òô
+	 *            æ±‰å­—ä¸²
+	 * @return æ±‰è¯­æ‹¼éŸ³
 	 */
 	public static String cn2Spell(String chinese) {
 		StringBuffer pybf = new StringBuffer();
